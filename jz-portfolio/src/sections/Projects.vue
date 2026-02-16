@@ -11,11 +11,11 @@
       </div>
 
       <!-- Projects Grid -->
-      <div class="grid gap-8 mb-12 md:grid-cols-3">
+      <div class="grid gap-8 mb-12 md:grid-cols-3 ">
         <div
           v-for="project in projects"
           :key="project.title"
-          class="overflow-hidden bg-gradient-project-card rounded-2xl card-hover"
+          class="overflow-hidden bg-[#e80560]/10 border border-[#e80560]/20 rounded-2xl card-hover"
         >
           <!-- Project Image -->
           <div
@@ -31,22 +31,35 @@
 
           <!-- Project Info -->
           <div class="p-6">
-            <h3 class="mb-3 text-2xl font-bold font-heading">{{ project.title }}</h3>
-
-            <div class="flex flex-wrap justify-end gap-2 mb-4">
-              <div class="relative group">
-                <Figma
-                  :size="24"
-                  class="transition-colors text-white/70 hover:text-orange-500"
-                />
-                <!-- Tooltip -->
-                <div
-                  class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gradient-to-r from-orange-300/50 to-pink-200/60 text-white text-sm font-semibold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap shadow-lg"
+            <div class="mb-3">
+              <h3 class="text-2xl font-bold font-heading">{{ project.title }}</h3>
+              <div class="mt-2 flex items-center justify-between">
+                <span
+                  :class="[
+                    'px-3 py-2 text-xs font-semibold rounded-full whitespace-nowrap',
+                    project.tag === 'Coreproc'
+                      ? 'bg-orange-500/20 text-orange-500'
+                      : 'bg-white/20 text-white'
+                  ]"
                 >
-                  Figma
+                  {{ project.tag }}
+                </span>
+
+                <div class="relative group">
+                  <Figma
+                    :size="24"
+                    class="transition-colors text-white/70 hover:text-orange-500"
+                  />
+
+                  <!-- Tooltip -->
                   <div
-                    class="absolute -translate-x-1/2 border-4 border-transparent top-full left-1/2 border-t-orange-500"
-                  ></div>
+                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gradient-to-r from-orange-300/50 to-pink-200/60 text-white text-sm font-semibold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap shadow-lg"
+                  >
+                    Figma
+                    <div
+                      class="absolute -translate-x-1/2 border-4 border-transparent top-full left-1/2 border-t-orange-500"
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,19 +143,22 @@ const projects = [
   {
     title: 'VibeTeams',
     image: vibeTeams,
+    tag: 'Coreproc',
   },
   {
     title: 'SynerPark',
     image: synerpark,
+    tag: 'Coreproc',
   },
   {
     title: 'Cozy Bean',
     image: cozyImage,
+    tag: 'Personal',
   },
-  
   {
     title: 'Crypto',
     image: cryptoImage,
+    tag: 'Personal',
   },
 ]
 </script>
