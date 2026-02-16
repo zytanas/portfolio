@@ -1,22 +1,22 @@
 <template>
   <nav class="fixed top-0 left-0 right-0 z-50 py-3 bg-dark-bg/20 backdrop-blur-md">
-    <div class="max-w-4xl mx-auto px-4">
-      <div class="bg-[#A6A6A6]/20 rounded-full px-4 md:px-12 py-3 shadow-lg">
+    <div class="max-w-4xl px-4 mx-auto">
+      <div :class="['bg-[#A6A6A6]/20 px-4 md:px-12 py-3 shadow-lg transition-all duration-300', mobileMenuOpen ? 'rounded-3xl' : 'rounded-full']">
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center justify-center gap-24">
+        <div class="items-center justify-center hidden gap-24 md:flex">
           <!-- Left Navigation -->
           <div class="flex items-center gap-12">
             <a 
               href="#home" 
               @click.prevent="scrollToSection('hero')"
-              class="text-white hover:text-purple-400 transition-colors"
+              :class="['transition-colors', activeSection === 'hero' ? 'text-purple-400 ' : 'text-white hover:text-purple-400']"
             >
               Home
             </a>
             <a 
               href="#about" 
               @click.prevent="scrollToSection('about')"
-              class="text-white hover:text-purple-400 transition-colors"
+              :class="['transition-colors', activeSection === 'about' ? 'text-purple-400' : 'text-white hover:text-purple-400']"
             >
               About
             </a>
@@ -25,7 +25,7 @@
           <!-- Center Logo -->
           <div class="flex-shrink-0">
             <a href="#" @click.prevent="scrollToSection('hero')" class="block">
-              <img src="/src/assets/images/j-logo.png" alt="Logo" class="h-12 w-auto" />
+              <img src="/src/assets/images/j-logo.png" alt="Logo" class="w-auto h-12" />
             </a>
           </div>
 
@@ -34,14 +34,14 @@
             <a 
               href="#projects" 
               @click.prevent="scrollToSection('projects')"
-              class="text-white hover:text-purple-400 transition-colors"
+              :class="['transition-colors', activeSection === 'projects' ? 'text-purple-400 ' : 'text-white hover:text-purple-400']"
             >
               Projects
             </a>
             <a 
               href="#contact" 
               @click.prevent="scrollToSection('contact')"
-              class="text-white hover:text-purple-400 transition-colors"
+              :class="['transition-colors', activeSection === 'contact' ? 'text-purple-400 ' : 'text-white hover:text-purple-400']"
             >
               Contact
             </a>
@@ -53,13 +53,13 @@
           <div class="flex items-center justify-between">
             <!-- Mobile Logo -->
             <a href="#" @click.prevent="scrollToSection('hero')" class="block">
-              <img src="/src/assets/images/j-logo.png" alt="Logo" class="h-10 w-auto" />
+              <img src="/src/assets/images/j-logo.png" alt="Logo" class="w-auto h-10" />
             </a>
 
             <!-- Hamburger Button -->
             <button 
               @click="mobileMenuOpen = !mobileMenuOpen"
-              class="text-white p-2 hover:text-purple-400 transition-colors"
+              class="p-2 text-white transition-colors hover:text-purple-400"
               aria-label="Toggle menu"
             >
               <svg 
@@ -88,42 +88,46 @@
 
           <!-- Mobile Menu Dropdown -->
           <transition
-            enter-active-class="transition ease-out duration-200"
-            enter-from-class="opacity-0 transform scale-95"
-            enter-to-class="opacity-100 transform scale-100"
-            leave-active-class="transition ease-in duration-150"
-            leave-from-class="opacity-100 transform scale-100"
-            leave-to-class="opacity-0 transform scale-95"
+            enter-active-class="transition duration-300 ease-out"
+            enter-from-class="transform -translate-y-4 opacity-0"
+            enter-to-class="transform translate-y-0 opacity-100"
+            leave-active-class="transition duration-200 ease-in"
+            leave-from-class="transform translate-y-0 opacity-100"
+            leave-to-class="transform -translate-y-4 opacity-0"
           >
-            <div v-if="mobileMenuOpen" class="mt-4 pt-4 border-t border-white/20">
-              <div class="flex flex-col items-center gap-4">
+            <div v-if="mobileMenuOpen" class="pt-6 mt-6 border-t border-white/10">
+              <div class="flex flex-col items-start gap-2 pb-2">
                 <a 
                   href="#home" 
                   @click.prevent="scrollToSection('hero'); mobileMenuOpen = false"
-                  class="text-white hover:text-purple-400 transition-colors w-full text-center py-2"
+                  class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
                 >
-                  Home
+                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'hero' ? 'from-orange-500/30 to-pink-600/30' : 'from-orange-500/0 to-pink-600/0 group-hover:from-orange-500/20 group-hover:to-pink-600/20']"></div>
+                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'hero' ? 'text-orange-400' : 'text-white group-hover:text-orange-400']">Home</span>
                 </a>
                 <a 
                   href="#about" 
                   @click.prevent="scrollToSection('about'); mobileMenuOpen = false"
-                  class="text-white hover:text-purple-400 transition-colors w-full text-center py-2"
+                  class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
                 >
-                  About
+                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'about' ? 'from-orange-500/30 to-pink-600/30' : 'from-orange-500/0 to-pink-600/0 group-hover:from-orange-500/20 group-hover:to-pink-600/20']"></div>
+                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'about' ? 'text-orange-400' : 'text-white group-hover:text-orange-400']">About</span>
                 </a>
                 <a 
                   href="#projects" 
                   @click.prevent="scrollToSection('projects'); mobileMenuOpen = false"
-                  class="text-white hover:text-purple-400 transition-colors w-full text-center py-2"
+                  class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
                 >
-                  Projects
+                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'projects' ? 'from-orange-500/30 to-pink-600/30' : 'from-orange-500/0 to-pink-600/0 group-hover:from-orange-500/20 group-hover:to-pink-600/20']"></div>
+                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'projects' ? 'text-orange-400' : 'text-white group-hover:text-orange-400']">Projects</span>
                 </a>
                 <a 
                   href="#contact" 
                   @click.prevent="scrollToSection('contact'); mobileMenuOpen = false"
-                  class="text-white hover:text-purple-400 transition-colors w-full text-center py-2"
+                  class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
                 >
-                  Contact
+                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'contact' ? 'from-orange-500/30 to-pink-600/30' : 'from-orange-500/0 to-pink-600/0 group-hover:from-orange-500/20 group-hover:to-pink-600/20']"></div>
+                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'contact' ? 'text-orange-400' : 'text-white group-hover:text-orange-400']">Contact</span>
                 </a>
               </div>
             </div>
@@ -135,9 +139,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const mobileMenuOpen = ref(false)
+const activeSection = ref('hero')
 
 const scrollToSection = (id) => {
   const element = document.getElementById(id)
@@ -152,6 +157,31 @@ const scrollToSection = (id) => {
     })
   }
 }
+
+const updateActiveSection = () => {
+  const sections = ['hero', 'about', 'projects', 'contact']
+  const scrollPosition = window.scrollY + 150 // Offset for better detection
+
+  for (const sectionId of sections) {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      const { offsetTop, offsetHeight } = element
+      if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+        activeSection.value = sectionId
+        break
+      }
+    }
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', updateActiveSection)
+  updateActiveSection() // Set initial active section
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateActiveSection)
+})
 </script>
 
 <style scoped>

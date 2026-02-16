@@ -1,24 +1,24 @@
 <template>
   <section
     id="about"
-    class="py-10 px-6 border-[#6192fb] border-2 rounded-3xl "
-    style="background: linear-gradient(180deg, #013ca917 0%, #33978808 100%)"
+    class="relative py-10 px-6 border-[#6192fb]/20 border-2 rounded-3xl overflow-hidden"
+    style="background: linear-gradient(180deg, #013ca917 0%, #33978b08 100%)"
   >
-    <div class="container mx-auto">
+    <div class="container relative z-10 mx-auto">
       <!-- Section Title -->
-      <h1 class="text-4xl md:text-5xl font-heading font-bold mb-16">What I Do</h1>
+      <h1 class="mb-16 text-4xl font-bold md:text-5xl font-heading">What I Do</h1>
 
       <!-- Skills Grid -->
-      <div class="grid md:grid-cols-3 gap-8 mb-16">
+      <div class="grid gap-8 mb-16 md:grid-cols-3">
         <div
           v-for="skill in skills"
           :key="skill.title"
-          class="bg-white/10 p-8 rounded-2xl card-hover border border-white/20"
+          class="p-8 border bg-white/10 rounded-2xl card-hover border-white/20"
         >
           <div class="mb-4" :style="{ color: skill.color }">
             <component :is="skill.icon" class="w-10 h-10 stroke-current" />
           </div>
-          <h3 class="text-xl font-heading font-semibold mb-3 text-[#FF834D]">{{ skill.title }}</h3>
+          <h3 class="mb-3 text-xl font-semibold text-orange-500 font-heading">{{ skill.title }}</h3>
           <p class="text-[#D1D5DC] font-body leading-relaxed">{{ skill.description }}</p>
         </div>
       </div>
@@ -26,35 +26,35 @@
       <!-- Experience & Education -->
       <div class="container mx-auto">
         <!-- Section Title -->
-        <h2 class="text-2xl md:text-3xl font-bold mb-12 text-white">Experience & Education</h2>
+        <h2 class="mb-12 text-2xl font-bold text-white md:text-3xl">Experience & Education</h2>
 
         <!-- Timeline Grid -->
-        <div class="grid md:grid-cols-2 bg-white/10 border border-white/20 rounded-2xl">
+        <div class="grid border md:grid-cols-2 bg-white/10 border-white/20 rounded-2xl">
           <!-- Experience Items -->
-          <div v-for="item in experienceEducation" :key="item.id" class="group relative p-6">
+          <div v-for="item in experienceEducation" :key="item.id" class="relative p-6 group">
             <!-- Icon Container -->
-            <div class="flex items-start gap-4">
+            <div class="flex items-start gap-2 lg:gap-4">
               <div
-                class="flex-shrink-0 w-12 h-12 bg-[#FF834D]/40 rounded-xl flex items-center justify-center"
+                class="flex items-center justify-center flex-shrink-0 w-8 h-8 lg:w-12 lg:h-12 bg-orange-500/40 rounded-xl"
               >
                 <component
                   :is="item.id === 4 ? GraduationCap : Briefcase"
-                  class="w-6 h-6 text-white"
+                  class="w-4 h-4 text-white lg:h-6 lg:w-6"
                 />
               </div>
 
               <!-- Content -->
-              <div class="flex-1 min-w-0 container">
+              <div class="container flex-1 min-w-0">
                 <div class="flex items-start justify-between gap-4">
-                  <h3 class="text-xl font-bold font-heading text-[#FF834D] leading-tight">
+                  <h3 class="text-base font-bold leading-tight text-orange-500 lg:text-xl font-heading">
                     {{ item.title }}
                   </h3>
-                  <span class="flex-shrink-0">
+                  <span class="flex-shrink-0 text-sm lg:text-base">
                     {{ item.period }}
                   </span>
                 </div>
 
-                <p>
+                <p class="text-xs lg:text-base text-[#D1D5DC] font-body leading-relaxed">
                   {{ item.company }}
                 </p>
               </div>
@@ -65,9 +65,9 @@
 
       <div class="container mx-auto mt-16">
         <!-- Section Title -->
-        <h2 class="text-2xl md:text-3xl font-bold mb-12 text-white">Tech Stack</h2>
+        <h2 class="mb-12 text-2xl font-bold text-white md:text-3xl">Tech Stack</h2>
 
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid gap-6 md:grid-cols-2">
           <!-- Design Section -->
           <div class="relative">
             <!-- Header -->
@@ -77,25 +77,19 @@
             </div>
 
             <!-- Cards Container with Gradient Background -->
-            <div class="relative overflow-hidden p-6 rounded-3xl shadow-lg bg-slate-900/50">
-              <!-- Gradient Background -->
-              <div
-                class="absolute inset-0 bg-cover bg-center opacity-10 rounded-3xl shadow-lg"
-                :style="{ backgroundImage: `url(${lineCard})` }"
-              ></div>
-
+            <div class="relative p-6 overflow-hidden border bg-white/10 border-white/20 rounded-3xl">
               <!-- Grid -->
-              <div class="relative grid lg:grid-cols-4 grid-cols-2 gap-4">
+              <div class="relative grid grid-cols-2 gap-4 lg:grid-cols-4">
                 <div
                   v-for="tool in designTools"
                   :key="tool.name"
-                  class="flex items-center justify-center p-5 hover:scale-105 transition-all duration-300 cursor-pointer"
+                  class="flex items-center justify-center p-5 transition-all duration-300 cursor-pointer hover:scale-110"
                   :title="tool.name"
                 >
                   <img
                     :src="tool.icon"
                     :alt="tool.name"
-                    class="w-16 h-16 object-contain drop-shadow-lg"
+                    class="object-contain w-16 h-16 drop-shadow-lg"
                   />
                 </div>
               </div>
@@ -111,25 +105,19 @@
             </div>
 
             <!-- Cards Container with Gradient Background -->
-            <div class="relative overflow-hidden p-6 rounded-3xl shadow-lg bg-slate-900/50">
-              <!-- Gradient Background -->
-              <div
-                class="absolute inset-0 bg-cover bg-center opacity-10 rounded-3xl shadow-lg"
-                :style="{ backgroundImage: `url(${lineCard})` }"
-              ></div>
-
+            <div class="relative p-6 overflow-hidden border bg-white/10 border-white/20 rounded-3xl">
               <!-- Grid -->
-              <div class="relative grid lg:grid-cols-4 grid-cols-2 gap-4">
+              <div class="relative grid grid-cols-2 gap-4 lg:grid-cols-4">
                 <div
                   v-for="tech in devTools"
                   :key="tech.name"
-                  class="flex items-center justify-center p-5 hover:scale-105 transition-all duration-300 cursor-pointer"
+                  class="flex items-center justify-center p-5 transition-all duration-300 cursor-pointer hover:scale-110"
                   :title="tech.name"
                 >
                   <img
                     :src="tech.icon"
                     :alt="tech.name"
-                    class="w-16 h-16 object-contain drop-shadow-lg"
+                    class="object-contain w-16 h-16 drop-shadow-lg"
                   />
                 </div>
               </div>
@@ -156,7 +144,6 @@ import tailwindIcon from '../assets/images/tech-stack/tailwid.svg'
 import htmlIcon from '../assets/images/tech-stack/html.svg'
 import cssIcon from '../assets/images/tech-stack/css.svg'
 import jsIcon from '../assets/images/tech-stack/js.svg'
-import lineCard from '../assets/images/line-card.png'
 
 const skills = [
   {

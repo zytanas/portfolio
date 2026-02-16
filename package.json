@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "dev": "cd jz-portfolio && npm run dev",
+    "build": "cd jz-portfolio && npm run build",
+    "preview": "cd jz-portfolio && npm run preview"
+  },
   "dependencies": {
     "lucide-vue-next": "^0.564.0"
   }

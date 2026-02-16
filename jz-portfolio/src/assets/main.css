@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,19 +7,20 @@
 @layer base {
   body {
     @apply text-white font-body;
-    background: linear-gradient(180deg, #1A0E2E 0%, #2D1B4E 50%, #1A0E2E 100%);
+    background: linear-gradient(180deg, #0D0718 0%, #1F1438 50%, #0D0718 100%);
     background-attachment: fixed;
     min-height: 100vh;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+    font-weight: 700;
   }
 }
 
 @layer utilities {
   .gradient-text {
-    @apply bg-gradient-to-r from-orange-400 to-pink-600 bg-clip-text text-transparent;
+    @apply text-transparent bg-gradient-to-r from-orange-400 to-pink-600 bg-clip-text;
   }
   
   .card-hover {
@@ -27,6 +28,6 @@
   }
 
   .bg-gradient-dark {
-    background: linear-gradient(180deg, #1A0E2E 0%, #2D1B4E 50%, #1A0E2E 100%);
+    background: linear-gradient(180deg, #0D0718 0%, #1F1438 50%, #0D0718 100%);
   }
 }
