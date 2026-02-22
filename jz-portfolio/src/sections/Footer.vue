@@ -2,7 +2,7 @@
   <footer class="px-6 py-12 border-t border-gray-500">
     <div class="container mx-auto">
       <div class="flex flex-col items-center justify-center">
-        <img src="/src/assets/images/j-logo.png" alt="Logo" class="w-20 h-20 mb-4" />
+        <img src="/src/assets/images/jz-circle.png" alt="Logo" class="w-auto h-20 object-cover mb-4" />
         <p>&copy; {{ currentYear }} Julia Almoite. All rights reserved.</p>
       </div>
     </div>

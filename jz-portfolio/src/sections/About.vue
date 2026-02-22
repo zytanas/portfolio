@@ -1,7 +1,7 @@
 <template>
   <section
     id="about"
-    class="relative py-10 px-6 border-[#6192fb]/20 border-2 rounded-3xl overflow-hidden"
+    class="relative py-10 px-6 border-[#A90109]/20 border-2 rounded-3xl overflow-hidden"
     style="background: linear-gradient(180deg, #013ca917 0%, #33978b08 100%)"
   >
     <div class="container relative z-10 mx-auto">
@@ -18,7 +18,7 @@
           <div class="mb-4" :style="{ color: skill.color }">
             <component :is="skill.icon" class="w-10 h-10 stroke-current" />
           </div>
-          <h3 class="mb-3 text-xl font-semibold text-orange-500 font-heading">{{ skill.title }}</h3>
+          <h3 class="mb-3 text-xl font-semibold text-red-500 font-heading">{{ skill.title }}</h3>
           <p class="text-[#D1D5DC] font-body leading-relaxed">{{ skill.description }}</p>
         </div>
       </div>
@@ -35,7 +35,7 @@
             <!-- Icon Container -->
             <div class="flex items-start gap-2 lg:gap-4">
               <div
-                class="flex items-center justify-center flex-shrink-0 w-8 h-8 lg:w-12 lg:h-12 bg-orange-500/40 rounded-xl"
+                class="flex items-center justify-center flex-shrink-0 w-8 h-8 lg:w-12 lg:h-12 bg-red-500/40 rounded-xl"
               >
                 <component
                   :is="item.id === 4 ? GraduationCap : Briefcase"
@@ -46,7 +46,7 @@
               <!-- Content -->
               <div class="container flex-1 min-w-0">
                 <div class="flex items-start justify-between gap-4">
-                  <h3 class="text-base font-bold leading-tight text-orange-500 lg:text-xl font-heading">
+                  <h3 class="text-base font-bold leading-tight text-red-500 lg:text-xl font-heading">
                     {{ item.title }}
                   </h3>
                   <span class="flex-shrink-0 text-sm lg:text-base">
@@ -72,7 +72,7 @@
           <div class="relative">
             <!-- Header -->
             <div class="flex items-center gap-3 mb-6">
-              <Palette class="w-10 h-10 text-orange-500" />
+              <Palette class="w-10 h-10 text-red-500" />
               <h3 class="text-2xl font-semibold text-white">Design</h3>
             </div>
 
@@ -100,7 +100,7 @@
           <div class="relative">
             <!-- Header -->
             <div class="flex items-center gap-3 mb-6">
-              <Code class="w-10 h-10 text-orange-500" />
+              <Code class="w-10 h-10 text-red-500" />
               <h3 class="text-2xl font-semibold text-white">Development</h3>
             </div>
 

@@ -25,6 +25,18 @@ export default {
           900: '#50230F',
           950: '#3A1708',
         },
+        red:{
+          100: '#FFE6E6',
+          200: '#FFB8B8',
+          300: '#FF8A8A',
+          400: '#FF5C5C',
+          500: '#FF3C3C',
+          600: '#FF0000',
+          700: '#D10000',
+          800: '#A30000',
+          900: '#750000',
+          950: '#470000',
+        },
         dark: {
           bg: '#0a0a0f',
           parcard: '#1a1a2e',
@@ -35,7 +47,7 @@ export default {
         }
       },
       backgroundImage: {
-        'gradient-dark': 'linear-gradient(180deg, #0D0718 0%, #1F1438 50%, #0D0718 100%)',
+        'gradient-dark': 'linear-gradient(180deg, #120404 0%, #CE0000 50%, #120404 100%)',
         'gradient-card': 'linear-gradient(180deg, #201e2e 10%, #443135 100%)',
       }
     },

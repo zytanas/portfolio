@@ -9,14 +9,14 @@
             <a 
               href="#home" 
               @click.prevent="scrollToSection('hero')"
-              :class="['transition-colors', activeSection === 'hero' ? 'text-purple-400 ' : 'text-white hover:text-purple-400']"
+              :class="['transition-colors', activeSection === 'hero' ? 'text-red-400 ' : 'text-white hover:text-red-400']"
             >
               Home
             </a>
             <a 
               href="#about" 
               @click.prevent="scrollToSection('about')"
-              :class="['transition-colors', activeSection === 'about' ? 'text-purple-400' : 'text-white hover:text-purple-400']"
+              :class="['transition-colors', activeSection === 'about' ? 'text-red-400' : 'text-white hover:text-red-400']"
             >
               About
             </a>
@@ -25,7 +25,7 @@
           <!-- Center Logo -->
           <div class="flex-shrink-0">
             <a href="#" @click.prevent="scrollToSection('hero')" class="block">
-              <img src="/src/assets/images/j-logo.png" alt="Logo" class="w-auto h-12" />
+              <img src="/src/assets/images/jz-circle.png" alt="Logo" class="w-auto h-12" />
             </a>
           </div>
 
@@ -34,14 +34,14 @@
             <a 
               href="#projects" 
               @click.prevent="scrollToSection('projects')"
-              :class="['transition-colors', activeSection === 'projects' ? 'text-purple-400 ' : 'text-white hover:text-purple-400']"
+              :class="['transition-colors', activeSection === 'projects' ? 'text-red-400 ' : 'text-white hover:text-red-400']"
             >
               Projects
             </a>
             <a 
               href="#contact" 
               @click.prevent="scrollToSection('contact')"
-              :class="['transition-colors', activeSection === 'contact' ? 'text-purple-400 ' : 'text-white hover:text-purple-400']"
+              :class="['transition-colors', activeSection === 'contact' ? 'text-red-400 ' : 'text-white hover:text-red-400']"
             >
               Contact
             </a>
@@ -53,13 +53,13 @@
           <div class="flex items-center justify-between">
             <!-- Mobile Logo -->
             <a href="#" @click.prevent="scrollToSection('hero')" class="block">
-              <img src="/src/assets/images/j-logo.png" alt="Logo" class="w-auto h-10" />
+              <img src="/src/assets/images/jz-circle.png" alt="Logo" class="w-auto h-10" />
             </a>
 
             <!-- Hamburger Button -->
             <button 
               @click="mobileMenuOpen = !mobileMenuOpen"
-              class="p-2 text-white transition-colors hover:text-purple-400"
+              class="p-2 text-white transition-colors hover:text-red-400"
               aria-label="Toggle menu"
             >
               <svg 

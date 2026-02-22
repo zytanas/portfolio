@@ -11,16 +11,16 @@
       </div>
 
       <!-- Projects Grid -->
-      <div class="grid gap-8 mb-12 md:grid-cols-3 ">
+      <div class="grid gap-8 mb-12 md:grid-cols-3">
         <div
           v-for="project in projects"
+          @click="openModal(project)"
           :key="project.title"
-          class="overflow-hidden bg-[#e80560]/10 border border-[#e80560]/20 rounded-2xl card-hover"
+          class="overflow-hidden bg-[#FF6668]/20 border border-[#FF6668]/50 rounded-2xl card-hover cursor-pointer"
         >
           <!-- Project Image -->
           <div
-            @click="openModal(project)"
-            class="relative h-64 overflow-hidden cursor-pointer bg-gradient-to-br from-orange-400/20 to-pink-600/50"
+            class="relative h-64 overflow-hidden cursor-pointer bg-gradient-to-br from-red-400/10 to-red-600/50"
           >
             <img
               :src="project.image"
@@ -38,26 +38,23 @@
                   :class="[
                     'px-3 py-2 text-xs font-semibold rounded-full whitespace-nowrap',
                     project.tag === 'Coreproc'
-                      ? 'bg-orange-500/20 text-orange-500'
-                      : 'bg-white/20 text-white'
+                      ? 'bg-red-500/20 text-red-500'
+                      : 'bg-white/20 text-white',
                   ]"
                 >
                   {{ project.tag }}
                 </span>
 
                 <div class="relative group">
-                  <Figma
-                    :size="24"
-                    class="transition-colors text-white/70 hover:text-orange-500"
-                  />
+                  <Figma :size="24" class="transition-colors text-white/70 hover:text-red-500" />
 
                   <!-- Tooltip -->
                   <div
-                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gradient-to-r from-orange-300/50 to-pink-200/60 text-white text-sm font-semibold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap shadow-lg"
+                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gradient-to-r from-red-300/50 to-pink-200/60 text-white text-sm font-semibold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap shadow-lg"
                   >
                     Figma
                     <div
-                      class="absolute -translate-x-1/2 border-4 border-transparent top-full left-1/2 border-t-orange-500"
+                      class="absolute -translate-x-1/2 border-4 border-transparent top-full left-1/2 border-t-red-500"
                     ></div>
                   </div>
                 </div>
@@ -70,7 +67,7 @@
       <!-- View All Projects Button -->
       <div class="text-center">
         <button
-          class="px-8 py-3 text-purple-500 transition-all duration-300 border-2 border-purple-500 rounded-full font-body hover:bg-purple-700 hover:text-white bg-purple-500/10"
+          class="px-8 py-3 text-red-500 transition-all duration-300 border-2 border-red-500 rounded-full font-body hover:bg-red-700/50 hover:text-white bg-red-500/10"
         >
           Explore All Projects
         </button>
@@ -87,7 +84,7 @@
         <!-- Close Button - Fixed Position -->
         <button
           @click="closeModal"
-          class="fixed top-4 right-4 z-[60] p-3 transition-colors rounded-full shadow-lg bg-white/20 hover:bg-orange-500/80"
+          class="fixed top-4 right-4 z-[60] p-3 transition-colors rounded-full shadow-lg bg-white/20 hover:bg-red-500/80"
         >
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path

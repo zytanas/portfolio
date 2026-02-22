@@ -33,7 +33,7 @@
         >
           <h1 class="text-5xl font-extrabold md:text-7xl font-heading">Hi!</h1>
           <h1 class="text-5xl font-extrabold md:text-7xl font-heading">
-            I'm <span class="text-orange-500">Julia</span>
+            I'm <span class="text-red-500">Julia</span>
           </h1>
           <p class="max-w-lg text-xl leading-relaxed font-body">
             From layout to code, every detail is crafted to deliver seamless, responsive, and
@@ -41,7 +41,7 @@
           </p>
           <button
             @click="scrollToContact"
-            class="px-8 py-3 text-white bg-orange-500 rounded-full font-body animate-bounce"
+            class="px-8 py-3 text-white bg-red-500 rounded-full font-body animate-bounce"
           >
             Let's Talk <MoveRight class="inline-block ml-2" />
           </button>
@@ -91,7 +91,7 @@ const scrollToContact = () => {
   position: absolute;
   opacity: 0.15;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e71414 0%, #05ff76 100%);
+  background: linear-gradient(135deg, #e9dddd 0%, #0516ff 100%);
   filter: blur(40px);
 }
 
