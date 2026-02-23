@@ -196,7 +196,7 @@ const experienceEducation = [
   },
   {
     id: 2,
-    title: 'Web Desingner',
+    title: 'Web Designer',
     company: 'Freelance - Remote ',
     period: '2023 - 2024',
   },
