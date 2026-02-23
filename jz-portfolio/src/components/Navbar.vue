@@ -102,32 +102,32 @@
                   @click.prevent="scrollToSection('hero'); mobileMenuOpen = false"
                   class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
                 >
-                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'hero' ? 'from-orange-500/30 to-pink-600/30' : 'from-orange-500/0 to-pink-600/0 group-hover:from-orange-500/20 group-hover:to-pink-600/20']"></div>
-                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'hero' ? 'text-orange-400' : 'text-white group-hover:text-orange-400']">Home</span>
+                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'hero' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
+                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'hero' ? 'text-red-400' : 'text-white group-hover:text-red-400']">Home</span>
                 </a>
                 <a 
                   href="#about" 
                   @click.prevent="scrollToSection('about'); mobileMenuOpen = false"
                   class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
                 >
-                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'about' ? 'from-orange-500/30 to-pink-600/30' : 'from-orange-500/0 to-pink-600/0 group-hover:from-orange-500/20 group-hover:to-pink-600/20']"></div>
-                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'about' ? 'text-orange-400' : 'text-white group-hover:text-orange-400']">About</span>
+                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'about' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
+                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'about' ? 'text-red-400' : 'text-white group-hover:text-red-400']">About</span>
                 </a>
                 <a 
                   href="#projects" 
                   @click.prevent="scrollToSection('projects'); mobileMenuOpen = false"
                   class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
                 >
-                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'projects' ? 'from-orange-500/30 to-pink-600/30' : 'from-orange-500/0 to-pink-600/0 group-hover:from-orange-500/20 group-hover:to-pink-600/20']"></div>
-                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'projects' ? 'text-orange-400' : 'text-white group-hover:text-orange-400']">Projects</span>
+                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'projects' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
+                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'projects' ? 'text-red-400' : 'text-white group-hover:text-red-400']">Projects</span>
                 </a>
                 <a 
                   href="#contact" 
                   @click.prevent="scrollToSection('contact'); mobileMenuOpen = false"
                   class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
                 >
-                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'contact' ? 'from-orange-500/30 to-pink-600/30' : 'from-orange-500/0 to-pink-600/0 group-hover:from-orange-500/20 group-hover:to-pink-600/20']"></div>
-                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'contact' ? 'text-orange-400' : 'text-white group-hover:text-orange-400']">Contact</span>
+                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'contact' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
+                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'contact' ? 'text-red-400' : 'text-white group-hover:text-red-400']">Contact</span>
                 </a>
               </div>
             </div>

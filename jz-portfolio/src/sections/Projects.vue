@@ -1,6 +1,18 @@
 <template>
-  <section id="projects" class="px-6 py-20">
-    <div class="container mx-auto">
+  <section id="projects" class="relative px-6 py-20 overflow-hidden">
+    <!-- Floating Code Symbols -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="code-symbol symbol-1">&lt;/&gt;</div>
+      <div class="code-symbol symbol-2">{ }</div>
+      <div class="code-symbol symbol-3">[ ]</div>
+      <div class="code-symbol symbol-4">&lt;div&gt;</div>
+      <div class="code-symbol symbol-5">( )</div>
+      <div class="code-symbol symbol-6">===</div>
+      <div class="code-symbol symbol-7">=&gt;</div>
+      <div class="code-symbol symbol-8">&lt;/&gt;</div>
+    </div>
+
+    <div class="container relative z-10 mx-auto">
       <!-- Section Title -->
       <div class="mb-16">
         <h2 class="mb-5 text-4xl font-bold md:text-5xl font-heading">Featured Projects</h2>
@@ -13,7 +25,7 @@
       <!-- Projects Grid -->
       <div class="grid gap-8 mb-12 md:grid-cols-3">
         <div
-          v-for="project in projects"
+          v-for="project in displayedProjects"
           @click="openModal(project)"
           :key="project.title"
           class="overflow-hidden bg-[#FF6668]/20 border border-[#FF6668]/50 rounded-2xl card-hover cursor-pointer"
@@ -33,12 +45,12 @@
           <div class="p-6">
             <div class="mb-3">
               <h3 class="text-2xl font-bold font-heading">{{ project.title }}</h3>
-              <div class="mt-2 flex items-center justify-between">
+              <div class="flex items-center justify-between mt-2">
                 <span
                   :class="[
                     'px-3 py-2 text-xs font-semibold rounded-full whitespace-nowrap',
                     project.tag === 'Coreproc'
-                      ? 'bg-red-500/20 text-red-500'
+                      ? 'bg-green-500/30 text-green-500'
                       : 'bg-white/20 text-white',
                   ]"
                 >
@@ -67,9 +79,18 @@
       <!-- View All Projects Button -->
       <div class="text-center">
         <button
+          v-if="!showAllProjects"
+          @click="exploreAllProjects"
           class="px-8 py-3 text-red-500 transition-all duration-300 border-2 border-red-500 rounded-full font-body hover:bg-red-700/50 hover:text-white bg-red-500/10"
         >
           Explore All Projects
+        </button>
+        <button
+          v-else
+          @click="showLessProjects"
+          class="px-8 py-3 text-red-500 transition-all duration-300 border-2 border-red-500 rounded-full font-body hover:bg-red-700/50 hover:text-white bg-red-500/10"
+        >
+          See Less
         </button>
       </div>
     </div>
@@ -114,7 +135,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { Figma } from 'lucide-vue-next'
 import cozyImage from '@/assets/images/cozy.png'
 import cryptoImage from '@/assets/images/crypto.png'
@@ -123,6 +144,7 @@ import synerpark from '@/assets/images/synerpark.png'
 
 const isModalOpen = ref(false)
 const selectedProject = ref(null)
+const showAllProjects = ref(false)
 
 const openModal = (project) => {
   selectedProject.value = project
@@ -136,7 +158,15 @@ const closeModal = () => {
   document.body.style.overflow = ''
 }
 
-const projects = [
+const exploreAllProjects = () => {
+  showAllProjects.value = true
+}
+
+const showLessProjects = () => {
+  showAllProjects.value = false
+}
+
+const allProjects = [
   {
     title: 'VibeTeams',
     image: vibeTeams,
@@ -157,7 +187,12 @@ const projects = [
     image: cryptoImage,
     tag: 'Personal',
   },
+  // Add more projects here as needed
 ]
+
+const displayedProjects = computed(() => {
+  return showAllProjects.value ? allProjects : allProjects.slice(0, 3)
+})
 </script>
 
 <style scoped>
@@ -180,5 +215,96 @@ const projects = [
 .modal-enter-from,
 .modal-leave-to {
   opacity: 0;
+}
+
+.code-symbol {
+  position: absolute;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #ffffff;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.symbol-1 {
+  font-size: 3rem;
+  top: 15%;
+  left: 10%;
+  animation: floatCode 8s ease-in-out infinite;
+}
+
+.symbol-2 {
+  font-size: 2.5rem;
+  top: 25%;
+  right: 15%;
+  animation: floatCode 7s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.symbol-3 {
+  font-size: 2rem;
+  top: 45%;
+  left: 20%;
+  animation: floatCode 9s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+.symbol-4 {
+  font-size: 2.8rem;
+  bottom: 30%;
+  right: 25%;
+  animation: floatCode 6.5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+
+.symbol-5 {
+  font-size: 2.2rem;
+  top: 60%;
+  left: 8%;
+  animation: floatCode 7.5s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.symbol-6 {
+  font-size: 2rem;
+  bottom: 20%;
+  left: 30%;
+  animation: floatCode 8.5s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+.symbol-7 {
+  font-size: 2.5rem;
+  top: 35%;
+  right: 8%;
+  animation: floatCode 7s ease-in-out infinite;
+  animation-delay: -6s;
+}
+
+.symbol-8 {
+  font-size: 2rem;
+  bottom: 15%;
+  right: 12%;
+  animation: floatCode 9s ease-in-out infinite;
+  animation-delay: -7s;
+}
+
+@keyframes floatCode {
+  0%, 100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.08;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(5deg);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translateY(-40px) translateX(-10px) rotate(-5deg);
+    opacity: 0.06;
+  }
+  75% {
+    transform: translateY(-20px) translateX(15px) rotate(3deg);
+    opacity: 0.1;
+  }
 }
 </style>
