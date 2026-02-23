@@ -58,7 +58,9 @@
               <!-- Content -->
               <div class="container flex-1 min-w-0">
                 <div class="flex items-start justify-between gap-4">
-                  <h3 class="text-base font-bold leading-tight text-red-500 lg:text-xl font-heading">
+                  <h3
+                    class="text-base font-bold leading-tight text-red-500 lg:text-xl font-heading"
+                  >
                     {{ item.title }}
                   </h3>
                   <span class="flex-shrink-0 text-sm lg:text-base">
@@ -89,7 +91,9 @@
             </div>
 
             <!-- Cards Container with Gradient Background -->
-            <div class="relative p-6 overflow-hidden border bg-white/10 border-white/20 rounded-3xl">
+            <div
+              class="relative p-6 overflow-hidden border bg-white/10 border-white/20 rounded-3xl"
+            >
               <!-- Grid -->
               <div class="relative grid grid-cols-2 gap-4 lg:grid-cols-4">
                 <div
@@ -117,7 +121,9 @@
             </div>
 
             <!-- Cards Container with Gradient Background -->
-            <div class="relative p-6 overflow-hidden border bg-white/10 border-white/20 rounded-3xl">
+            <div
+              class="relative p-6 overflow-hidden border bg-white/10 border-white/20 rounded-3xl"
+            >
               <!-- Grid -->
               <div class="relative grid grid-cols-2 gap-4 lg:grid-cols-4">
                 <div
@@ -190,15 +196,15 @@ const experienceEducation = [
   },
   {
     id: 2,
-    title: 'Web Developer',
-    company: 'Internship - Onsite',
-    period: '2023',
+    title: 'Web Desingner',
+    company: 'Freelance - Remote ',
+    period: '2023 - 2024',
   },
   {
     id: 3,
-    title: 'Web Designer',
-    company: 'Freelance - Remote',
-    period: '2023 - 2024',
+    title: 'Web Developer',
+    company: 'Internship - Onsite',
+    period: '2023',
   },
   {
     id: 4,
@@ -304,7 +310,8 @@ const devTools = [
 }
 
 @keyframes floatCode {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translateX(0) rotate(0deg);
     opacity: 0.08;
   }
