@@ -58,17 +58,7 @@
                 </span>
 
                 <div class="relative group">
-                  <Figma :size="24" class="transition-colors text-white/70 hover:text-red-500" />
-
-                  <!-- Tooltip -->
-                  <div
-                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gradient-to-r from-red-300/50 to-pink-200/60 text-white text-sm font-semibold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 whitespace-nowrap shadow-lg"
-                  >
-                    Figma
-                    <div
-                      class="absolute -translate-x-1/2 border-4 border-transparent top-full left-1/2 border-t-red-500"
-                    ></div>
-                  </div>
+                  <Figma :size="24" class="text-white/70" />
                 </div>
               </div>
             </div>
@@ -141,6 +131,7 @@ import cozyImage from '@/assets/images/cozy.png'
 import cryptoImage from '@/assets/images/crypto.png'
 import vibeTeams from '@/assets/images/vibeteams.png'
 import synerpark from '@/assets/images/synerpark.png'
+import msb from '@/assets/images/msb.png'
 
 const isModalOpen = ref(false)
 const selectedProject = ref(null)
@@ -175,6 +166,11 @@ const allProjects = [
   {
     title: 'SynerPark',
     image: synerpark,
+    tag: 'Coreproc',
+  },
+  {
+    title: 'My Shopping Box',
+    image: msb,
     tag: 'Coreproc',
   },
   {
@@ -290,7 +286,8 @@ const displayedProjects = computed(() => {
 }
 
 @keyframes floatCode {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translateX(0) rotate(0deg);
     opacity: 0.08;
   }
