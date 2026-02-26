@@ -28,10 +28,10 @@
             <a
               href="/Almoite_Julia_Zyrene - CV.pdf"
               download
-              class="download-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold font-body transition-all duration-300"
+              class="download-btn flex items-center gap-2 px-3 py-2.5 md:px-5 rounded-xl text-sm font-semibold font-body transition-all duration-300"
             >
               <Download class="w-4 h-4" />
-              Download
+              <span class="hidden md:inline">Download</span>
             </a>
 
             <!-- Close button -->
