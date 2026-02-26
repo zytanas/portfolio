@@ -104,13 +104,13 @@
 
         <div class="grid gap-5 md:grid-cols-3">
           <div
-            v-for="project in displayedPersonalProjects"
+            v-for="(project, index) in displayedPersonalProjects"
             :key="project.title"
             @click="openModal(project)"
-            class="flex flex-col overflow-hidden cursor-pointer project-card group rounded-2xl"
+            :class="['project-card group cursor-pointer rounded-2xl overflow-hidden flex flex-col', index === 0 ? 'md:col-span-1 card-featured' : 'card-small']"
           >
             <!-- Thumbnail -->
-            <div class="relative h-56 overflow-hidden thumbnail-wrap">
+            <div :class="['relative overflow-hidden thumbnail-wrap', index === 0 ? 'h-64' : 'h-44']">
               <img
                 :src="project.image"
                 :alt="project.title"
