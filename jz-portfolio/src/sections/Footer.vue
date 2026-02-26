@@ -13,7 +13,7 @@
             alt="Julia Zyrene Logo"
             class="object-contain w-auto h-20"
           />
-          <p class="text-sm leading-relaxed text-white/40 font-body ">
+          <p class="text-sm leading-relaxed text-white font-body ">
             UI/UX Designer & Frontend Developer crafting intentional digital experiences.
           </p>
         </div>
@@ -66,7 +66,7 @@
               :title="social.name"
               class="social-btn group"
             >
-              <component :is="social.icon" class="w-3.5 h-3.5 text-white/40 group-hover:text-white transition-colors duration-200" />
+              <component :is="social.icon" class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors duration-200" />
             </a>
           </div>
         </div>
@@ -78,11 +78,11 @@
 
       <!-- ── BOTTOM ROW ── -->
       <div class="flex flex-col items-center justify-between gap-3 md:flex-row">
-        <p class="font-mono text-xs text-white/30">
+        <p class="font-mono text-xs text-white">
           &copy; {{ currentYear }} Julia Almoite. All rights reserved.
         </p>
-        <p class="font-mono text-xs text-white/20">
-          Designed & built with <span class="text-[#FF6668]/60">♥</span> in Baguio City
+        <p class="font-mono text-xs text-white">
+          Designed & built with <span class="text-[#FF6668]/60">☕</span> in Baguio City
         </p>
       </div>
 
@@ -129,12 +129,12 @@ const scrollToSection = (id) => {
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgb(250, 250, 250);
 }
 
 .footer-link {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgb(255, 255, 255);
   font-family: inherit;
   background: none;
   border: none;

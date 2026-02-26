@@ -1,7 +1,7 @@
 <template>
   <nav class="fixed top-0 left-0 right-0 z-50 py-3 ">
     <div class="max-w-4xl px-4 mx-auto">
-      <div :class="['bg-[#A6A6A6]/20 backdrop-blur-md px-4 md:px-12 py-3 shadow-lg transition-all duration-300', mobileMenuOpen ? 'rounded-3xl' : 'rounded-full']">
+      <div class="bg-[#A6A6A6]/20 backdrop-blur-md px-4 md:px-12 py-3 shadow-lg rounded-3xl md:rounded-full">
         <!-- Desktop Navigation -->
         <div class="items-center justify-center hidden gap-24 md:flex">
           <!-- Left Navigation -->
@@ -87,51 +87,42 @@
           </div>
 
           <!-- Mobile Menu Dropdown -->
-          <transition
-            enter-active-class="transition duration-300 ease-out"
-            enter-from-class="transform -translate-y-4 opacity-0"
-            enter-to-class="transform translate-y-0 opacity-100"
-            leave-active-class="transition duration-200 ease-in"
-            leave-from-class="transform translate-y-0 opacity-100"
-            leave-to-class="transform -translate-y-4 opacity-0"
-          >
-            <div v-if="mobileMenuOpen" class="pt-6 mt-6 border-t border-white/10">
-              <div class="flex flex-col items-start gap-2 pb-2">
-                <a 
-                  href="#home" 
-                  @click.prevent="scrollToSection('hero'); mobileMenuOpen = false"
-                  class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
-                >
-                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'hero' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
-                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'hero' ? 'text-red-400' : 'text-white group-hover:text-red-400']">Home</span>
-                </a>
-                <a 
-                  href="#about" 
-                  @click.prevent="scrollToSection('about'); mobileMenuOpen = false"
-                  class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
-                >
-                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'about' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
-                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'about' ? 'text-red-400' : 'text-white group-hover:text-red-400']">About</span>
-                </a>
-                <a 
-                  href="#projects" 
-                  @click.prevent="scrollToSection('projects'); mobileMenuOpen = false"
-                  class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
-                >
-                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'projects' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
-                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'projects' ? 'text-red-400' : 'text-white group-hover:text-red-400']">Projects</span>
-                </a>
-                <a 
-                  href="#contact" 
-                  @click.prevent="scrollToSection('contact'); mobileMenuOpen = false"
-                  class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
-                >
-                  <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'contact' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
-                  <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'contact' ? 'text-red-400' : 'text-white group-hover:text-red-400']">Contact</span>
-                </a>
-              </div>
+          <div v-if="mobileMenuOpen" class="pt-6 mt-6 border-t border-white/10">
+            <div class="flex flex-col items-start gap-2 pb-2">
+              <a 
+                href="#home" 
+                @click.prevent="scrollToSection('hero'); mobileMenuOpen = false"
+                class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
+              >
+                <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'hero' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
+                <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'hero' ? 'text-red-400' : 'text-white group-hover:text-red-400']">Home</span>
+              </a>
+              <a 
+                href="#about" 
+                @click.prevent="scrollToSection('about'); mobileMenuOpen = false"
+                class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
+              >
+                <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'about' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
+                <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'about' ? 'text-red-400' : 'text-white group-hover:text-red-400']">About</span>
+              </a>
+              <a 
+                href="#projects" 
+                @click.prevent="scrollToSection('projects'); mobileMenuOpen = false"
+                class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
+              >
+                <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'projects' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
+                <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'projects' ? 'text-red-400' : 'text-white group-hover:text-red-400']">Projects</span>
+              </a>
+              <a 
+                href="#contact" 
+                @click.prevent="scrollToSection('contact'); mobileMenuOpen = false"
+                class="relative w-full px-6 py-4 overflow-hidden transition-all duration-300 group rounded-xl hover:scale-105"
+              >
+                <div :class="['absolute inset-0 transition-all duration-300 bg-gradient-to-r', activeSection === 'contact' ? 'from-red-500/30 to-blue-600/30' : 'from-red-500/0 to-blue-600/0 group-hover:from-red-500/20 group-hover:to-blue-600/20']"></div>
+                <span :class="['relative text-lg font-semibold transition-colors', activeSection === 'contact' ? 'text-red-400' : 'text-white group-hover:text-red-400']">Contact</span>
+              </a>
             </div>
-          </transition>
+          </div>
         </div>
       </div>
     </div>

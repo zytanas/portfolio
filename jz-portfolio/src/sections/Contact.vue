@@ -105,7 +105,7 @@
                 :title="social.name"
                 class="social-btn group"
               >
-                <component :is="social.icon" class="w-4 h-4 transition-colors duration-200 text-white/50 group-hover:text-white" />
+                <component :is="social.icon" class="w-4 h-4 text-white transition-colors duration-200 group-hover:text-white" />
               </a>
             </div>
           </div>
