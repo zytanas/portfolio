@@ -1,5 +1,5 @@
 <template>
-  <section id="contact" class="relative px-6 py-20 overflow-hidden bg-dark-card/30">
+  <section id="contact" class="relative px-6 py-20 overflow-hidden">
     <!-- Floating Code Symbols -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="code-symbol symbol-1">&lt;/&gt;</div>
@@ -13,29 +13,51 @@
     </div>
 
     <div class="container relative z-10 mx-auto">
-      <h1 class="mb-12 text-4xl font-bold md:text-5xl font-heading">Get In Touch</h1>
-      <div class="grid items-start gap-8 md:grid-cols-2">
-        <!-- Left Card - Contact Info -->
-        <div class="p-8 border border-white/20 bg-white/10 rounded-2xl">
-          <h2 class="mb-4 text-2xl font-bold text-red-500 font-heading">Let's Work Together</h2>
-          <p class="mb-8 font-body">
-            I'm always open to discussing new projects, creative ideas, or opportunities to be part
-            of your vision.
-          </p>
 
-          <!-- Contact Info -->
-          <div class="mb-8 space-y-6">
+      <!-- ── SECTION HEADER ── -->
+      <div class="flex items-end justify-between pb-6 mb-16 section-header-border">
+        <div>
+          <p class="section-eyebrow">// contact</p>
+          <h2 class="section-title font-heading">
+            Get In<br /><span class="text-[#FF6668]">Touch</span>
+          </h2>
+        </div>
+        <div class="hidden text-right md:block">
+          <div class="project-count-bg">Hi!</div>
+          <p class="mt-1 font-mono text-xs tracking-widest uppercase text-white/40">let's connect</p>
+        </div>
+      </div>
+
+      <!-- ── GROUP LABEL ── -->
+      <div class="flex items-center gap-3 mb-6">
+        <div class="group-dot bg-[#FF6668]"></div>
+        <span class="group-label-text">Send me a message</span>
+        <div class="flex-1 h-px group-line"></div>
+      </div>
+
+      <!-- ── TWO COLUMN LAYOUT ── -->
+      <div class="grid items-start gap-5 md:grid-cols-2">
+
+        <!-- LEFT — Contact Info -->
+        <div class="flex flex-col about-card rounded-2xl p-7 gap-7">
+          <div>
+            <h3 class="text-xl font-bold text-[#FF6668] font-heading mb-2">Let's Work Together</h3>
+            <p class="text-sm leading-relaxed text-white font-body">
+              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+            </p>
+          </div>
+
+          <!-- Contact Items -->
+          <div class="flex flex-col gap-5">
             <div class="flex items-start gap-4">
-              <div
-                class="flex items-center justify-center flex-shrink-0 w-12 h-12 rounded-lg bg-red-500/10"
-              >
-                <Mail class="w-5 h-5 text-red-500" />
+              <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#FF6668]/15 flex items-center justify-center">
+                <Mail class="w-4 h-4 text-[#FF6668]" />
               </div>
               <div>
-                <p class="mb-1 text-sm text-red-500 font-body">Email</p>
+                <p class="text-xs font-mono text-[#FF6668] tracking-widest uppercase mb-1">Email</p>
                 <a
                   href="mailto:juliazyrene23@gmail.com"
-                  class="text-white transition-colors hover:text-red-400 font-body"
+                  class="text-sm text-white hover:text-[#FF6668] transition-colors duration-200 font-body"
                 >
                   juliazyrene23@gmail.com
                 </a>
@@ -43,16 +65,14 @@
             </div>
 
             <div class="flex items-start gap-4">
-              <div
-                class="flex items-center justify-center flex-shrink-0 w-12 h-12 rounded-lg bg-red-500/10"
-              >
-                <Phone class="w-5 h-5 text-red-500" />
+              <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#FF6668]/15 flex items-center justify-center">
+                <Phone class="w-4 h-4 text-[#FF6668]" />
               </div>
               <div>
-                <p class="mb-1 text-sm text-red-500 font-body">Phone</p>
+                <p class="text-xs font-mono text-[#FF6668] tracking-widest uppercase mb-1">Phone</p>
                 <a
                   href="tel:09565595721"
-                  class="text-white transition-colors hover:text-red-400 font-body"
+                  class="text-sm text-white hover:text-[#FF6668] transition-colors duration-200 font-body"
                 >
                   09565595721
                 </a>
@@ -60,89 +80,88 @@
             </div>
 
             <div class="flex items-start gap-4">
-              <div
-                class="flex items-center justify-center flex-shrink-0 w-12 h-12 rounded-lg bg-red-500/10"
-              >
-                <MapPin class="w-5 h-5 text-red-500" />
+              <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#FF6668]/15 flex items-center justify-center">
+                <MapPin class="w-4 h-4 text-[#FF6668]" />
               </div>
               <div>
-                <p class="mb-1 text-sm text-red-500 font-body">Location</p>
-                <p class="text-white font-body">Baguio City, Philippines</p>
+                <p class="text-xs font-mono text-[#FF6668] tracking-widest uppercase mb-1">Location</p>
+                <p class="text-sm text-white font-body">Baguio City, Philippines</p>
               </div>
             </div>
           </div>
 
-          <hr class="mb-8 border-white/30" />
-          <!-- Social Links -->
+          <!-- Divider -->
+          <div class="h-px bg-[#FF6668]/15"></div>
+
+          <!-- Socials -->
           <div>
-            <p class="mb-4 text-sm font-body">Follow me on</p>
+            <p class="mb-4 font-mono text-xs tracking-widest text-white uppercase">Follow me on</p>
             <div class="flex gap-3">
               <a
                 v-for="social in socials"
                 :key="social.name"
                 :href="social.url"
                 target="_blank"
-                class="flex items-center justify-center w-12 h-12 transition-all duration-300 rounded-lg bg-red-500/10 hover:bg-red-500 hover:border-red-500 group"
                 :title="social.name"
+                class="social-btn group"
               >
-                <component
-                  :is="social.icon"
-                  class="w-5 h-5 group-hover:text-white"
-                />
+                <component :is="social.icon" class="w-4 h-4 transition-colors duration-200 text-white/50 group-hover:text-white" />
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Right Card - Contact Form -->
-        <div class="p-8 border border-white/20 bg-white/10 rounded-2xl">
-          <h2 class="mb-6 text-2xl font-bold text-red-500 font-heading">Send a Message</h2>
-          <form @submit.prevent="handleSubmit" class="space-y-5">
+        <!-- RIGHT — Contact Form -->
+        <div class="about-card rounded-2xl p-7">
+          <h3 class="text-xl font-bold text-[#FF6668] font-heading mb-6">Send a Message</h3>
+
+          <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
             <div>
-              <label for="name" class="block mb-2 text-sm text-white font-body">Your Name</label>
+              <label for="name" class="block mb-2 font-mono text-xs tracking-widest text-white uppercase">Your Name</label>
               <input
                 type="text"
                 id="name"
                 v-model="form.name"
                 required
-                class="w-full px-4 py-2 text-white transition-colors border rounded-lg border-white/20 bg-white/10 focus:border-red-400 focus:outline-none font-body placeholder:text-gray-500"
                 placeholder="Juan Dela Cruz"
+                class="form-input"
               />
             </div>
 
             <div>
-              <label for="email" class="block mb-2 text-sm text-white font-body">Your Email</label>
+              <label for="email" class="block mb-2 font-mono text-xs tracking-widest text-white uppercase">Your Email</label>
               <input
                 type="email"
                 id="email"
                 v-model="form.email"
                 required
-                class="w-full px-4 py-3 text-white transition-colors border rounded-lg border-white/20 bg-white/10 focus:border-red-400 focus:outline-none font-body placeholder:text-gray-500"
                 placeholder="juandelacruz@example.com"
+                class="form-input"
               />
             </div>
 
             <div>
-              <label for="message" class="block mb-2 text-sm text-white font-body">Message</label>
+              <label for="message" class="block mb-2 font-mono text-xs tracking-widest text-white uppercase">Message</label>
               <textarea
                 id="message"
                 v-model="form.message"
                 required
-                rows="4"
-                class="w-full px-4 py-3 text-white transition-colors border rounded-lg border-white/20 bg-white/10 focus:border-red-400 focus:outline-none font-body placeholder:text-gray-500"
+                rows="5"
                 placeholder="Tell me about your project..."
+                class="resize-none form-input"
               ></textarea>
             </div>
 
             <button
               type="submit"
-              class="flex items-center justify-center w-full gap-2 px-8 py-3 text-white transition-all duration-300 bg-red-500 rounded-full hover:bg-red-700 font-body "
+              class="flex items-center justify-center w-full gap-2 py-3 text-sm font-semibold transition-all duration-300 submit-btn rounded-xl font-body"
             >
               Send Message
               <Send class="w-4 h-4" />
             </button>
           </form>
         </div>
+
       </div>
     </div>
   </section>
@@ -164,11 +183,8 @@ const socials = [
 ]
 
 const handleSubmit = () => {
-  // Handle form submission
   console.log('Form submitted:', form)
   alert('Thank you for your message! I will get back to you soon.')
-
-  // Reset form
   form.name = ''
   form.email = ''
   form.message = ''
@@ -176,6 +192,124 @@ const handleSubmit = () => {
 </script>
 
 <style scoped>
+/* ── SECTION HEADER ── */
+.section-header-border {
+  border-bottom: 1px solid rgba(255, 102, 104, 0.18);
+}
+
+.section-eyebrow {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #FF6668;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: clamp(42px, 5vw, 72px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  color: #fff;
+}
+
+.project-count-bg {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  color: #FF6668;
+  opacity: 0.2;
+}
+
+/* ── GROUP LABELS ── */
+.group-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.group-label-text {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+}
+
+.group-line {
+  background: rgba(255, 102, 104, 0.15);
+}
+
+/* ── CARDS ── */
+.about-card {
+  background: rgba(255, 102, 104, 0.08);
+  border: 1px solid rgba(255, 102, 104, 0.2);
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.about-card:hover {
+  border-color: rgba(255, 102, 104, 0.38);
+  background: rgba(255, 102, 104, 0.11);
+}
+
+/* ── FORM INPUTS ── */
+.form-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 102, 104, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.form-input:focus {
+  border-color: #FF6668;
+  background: rgba(255, 102, 104, 0.08);
+}
+
+/* ── SUBMIT BUTTON ── */
+.submit-btn {
+  background: #FF6668;
+  color: #fff;
+  border: 1px solid #FF6668;
+}
+
+.submit-btn:hover {
+  background: transparent;
+  color: #FF6668;
+}
+
+/* ── SOCIAL BUTTONS ── */
+.social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255, 102, 104, 0.08);
+  border: 1px solid rgba(255, 102, 104, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.social-btn:hover {
+  background: #FF6668;
+  border-color: #FF6668;
+  transform: translateY(-2px);
+}
+
+/* ── FLOATING CODE SYMBOLS ── */
 .code-symbol {
   position: absolute;
   font-family: 'Courier New', monospace;
@@ -185,85 +319,19 @@ const handleSubmit = () => {
   pointer-events: none;
 }
 
-.symbol-1 {
-  font-size: 3rem;
-  top: 15%;
-  left: 10%;
-  animation: floatCode 8s ease-in-out infinite;
-}
-
-.symbol-2 {
-  font-size: 2.5rem;
-  top: 25%;
-  right: 15%;
-  animation: floatCode 7s ease-in-out infinite;
-  animation-delay: -2s;
-}
-
-.symbol-3 {
-  font-size: 2rem;
-  top: 45%;
-  left: 20%;
-  animation: floatCode 9s ease-in-out infinite;
-  animation-delay: -4s;
-}
-
-.symbol-4 {
-  font-size: 2.8rem;
-  bottom: 30%;
-  right: 25%;
-  animation: floatCode 6.5s ease-in-out infinite;
-  animation-delay: -1s;
-}
-
-.symbol-5 {
-  font-size: 2.2rem;
-  top: 60%;
-  left: 8%;
-  animation: floatCode 7.5s ease-in-out infinite;
-  animation-delay: -5s;
-}
-
-.symbol-6 {
-  font-size: 2rem;
-  bottom: 20%;
-  left: 30%;
-  animation: floatCode 8.5s ease-in-out infinite;
-  animation-delay: -3s;
-}
-
-.symbol-7 {
-  font-size: 2.5rem;
-  top: 35%;
-  right: 8%;
-  animation: floatCode 7s ease-in-out infinite;
-  animation-delay: -6s;
-}
-
-.symbol-8 {
-  font-size: 2rem;
-  bottom: 15%;
-  right: 12%;
-  animation: floatCode 9s ease-in-out infinite;
-  animation-delay: -7s;
-}
+.symbol-1 { font-size: 3rem; top: 15%; left: 10%; animation: floatCode 8s ease-in-out infinite; }
+.symbol-2 { font-size: 2.5rem; top: 25%; right: 15%; animation: floatCode 7s ease-in-out infinite; animation-delay: -2s; }
+.symbol-3 { font-size: 2rem; top: 45%; left: 20%; animation: floatCode 9s ease-in-out infinite; animation-delay: -4s; }
+.symbol-4 { font-size: 2.8rem; bottom: 30%; right: 25%; animation: floatCode 6.5s ease-in-out infinite; animation-delay: -1s; }
+.symbol-5 { font-size: 2.2rem; top: 60%; left: 8%; animation: floatCode 7.5s ease-in-out infinite; animation-delay: -5s; }
+.symbol-6 { font-size: 2rem; bottom: 20%; left: 30%; animation: floatCode 8.5s ease-in-out infinite; animation-delay: -3s; }
+.symbol-7 { font-size: 2.5rem; top: 35%; right: 8%; animation: floatCode 7s ease-in-out infinite; animation-delay: -6s; }
+.symbol-8 { font-size: 2rem; bottom: 15%; right: 12%; animation: floatCode 9s ease-in-out infinite; animation-delay: -7s; }
 
 @keyframes floatCode {
-  0%, 100% {
-    transform: translateY(0) translateX(0) rotate(0deg);
-    opacity: 0.08;
-  }
-  25% {
-    transform: translateY(-20px) translateX(10px) rotate(5deg);
-    opacity: 0.12;
-  }
-  50% {
-    transform: translateY(-40px) translateX(-10px) rotate(-5deg);
-    opacity: 0.06;
-  }
-  75% {
-    transform: translateY(-20px) translateX(15px) rotate(3deg);
-    opacity: 0.1;
-  }
+  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.08; }
+  25%       { transform: translateY(-20px) translateX(10px) rotate(5deg); opacity: 0.12; }
+  50%       { transform: translateY(-40px) translateX(-10px) rotate(-5deg); opacity: 0.06; }
+  75%       { transform: translateY(-20px) translateX(15px) rotate(3deg); opacity: 0.1; }
 }
 </style>

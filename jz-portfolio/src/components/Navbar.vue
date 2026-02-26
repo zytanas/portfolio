@@ -1,7 +1,7 @@
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-50 py-3 bg-dark-bg/20 backdrop-blur-md">
+  <nav class="fixed top-0 left-0 right-0 z-50 py-3 ">
     <div class="max-w-4xl px-4 mx-auto">
-      <div :class="['bg-[#A6A6A6]/20 px-4 md:px-12 py-3 shadow-lg transition-all duration-300', mobileMenuOpen ? 'rounded-3xl' : 'rounded-full']">
+      <div :class="['bg-[#A6A6A6]/20 backdrop-blur-md px-4 md:px-12 py-3 shadow-lg transition-all duration-300', mobileMenuOpen ? 'rounded-3xl' : 'rounded-full']">
         <!-- Desktop Navigation -->
         <div class="items-center justify-center hidden gap-24 md:flex">
           <!-- Left Navigation -->

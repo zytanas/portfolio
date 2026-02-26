@@ -1,157 +1,198 @@
 <template>
-  <Teleport to="body">
-    <Transition name="modal">
+  <Transition name="modal">
+    <div
+      v-if="isOpen"
+      @click="$emit('close')"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md md:p-8"
+    >
+      <!-- Panel -->
       <div
-        v-if="isOpen"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-        @click.self="closeModal"
+        @click.stop
+        class="modal-panel relative w-full max-w-6xl flex flex-col overflow-hidden rounded-2xl h-auto md:h-[95vh]"
       >
-        <div
-          class="relative w-full max-w-4xl max-h-[90vh] bg-dark-card border border-white/20 rounded-2xl shadow-2xl overflow-hidden"
-        >
-          <!-- Header -->
-          <div class="sticky top-0 z-10 flex items-center justify-between p-6 border-b bg-dark-bg/95 backdrop-blur-sm border-white/20">
-            <h2 class="text-2xl font-bold text-white font-heading">Resume</h2>
-            <div class="flex items-center gap-2">
-              <button
-                @click="downloadCV"
-                class="flex items-center gap-2 px-4 py-2 text-white transition-all duration-300 bg-red-500 rounded-lg hover:bg-red-600 font-body"
-                title="Download Resume"
-              >
-                <Download class="w-4 h-4" />
-                <span class="hidden sm:inline">Download</span>
-              </button>
-              <button
-                @click="closeModal"
-                class="p-2 text-white transition-colors rounded-lg hover:bg-white/10"
-                aria-label="Close modal"
-              >
-                <X class="w-6 h-6" />
-              </button>
+
+        <!-- ── HEADER ── -->
+        <div class="flex items-center justify-between flex-shrink-0 py-5 modal-header px-7">
+          <div class="flex items-center gap-3">
+            <div class="header-icon-wrap">
+              <FileText class="w-4 h-4 text-[#FF6668]" />
+            </div>
+            <div>
+              <p class="modal-eyebrow mb-0.5">// curriculum vitae</p>
+              <h2 class="modal-title font-heading">Resume</h2>
             </div>
           </div>
 
-          <!-- CV Content - PDF Viewer -->
-          <div class="relative overflow-hidden bg-gray-900 max-h-[calc(90vh-88px)]">
-            <iframe
-              :src="cvPath + '#toolbar=0&navpanes=0&scrollbar=1'"
-              class="w-full h-[calc(90vh-88px)]"
-              title="Resume PDF"
-              @error="handlePDFError"
+          <div class="flex items-center gap-3">
+            <!-- Download button -->
+            <a
+              href="/Almoite_Julia_Zyrene - CV.pdf"
+              download
+              class="download-btn flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold font-body transition-all duration-300"
             >
-              <!-- Fallback for browsers that don't support iframe -->
-              <p class="p-8 text-center text-white">
-                Your browser does not support viewing PDFs.
-                <a :href="cvPath" download class="text-red-400 underline hover:text-red-300">
-                  Click here to download the PDF
-                </a>
-              </p>
-            </iframe>
+              <Download class="w-4 h-4" />
+              Download
+            </a>
+
+            <!-- Close button -->
+            <button
+              @click="$emit('close')"
+              class="modal-close-btn"
+              title="Close"
+            >
+              <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         </div>
+
+        <!-- ── DIVIDER ── -->
+        <div class="h-px bg-[#FF6668]/15 flex-shrink-0"></div>
+
+        <!-- ── PDF VIEWER ── -->
+        <div class="modal-body">
+          <iframe
+            src="/Almoite_Julia_Zyrene - CV.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+            class="pdf-frame"
+            type="application/pdf"
+            title="Julia Zyrene Almoite — Resume"
+          />
+        </div>
+
       </div>
-    </Transition>
-  </Teleport>
+    </div>
+  </Transition>
 </template>
 
 <script setup>
-import { X, Download } from 'lucide-vue-next'
-import cvFile from '../docs/Almoite_Julia_Zyrene - CV.pdf'
+import { FileText, Download } from 'lucide-vue-next'
 
-const props = defineProps({
+defineProps({
   isOpen: {
     type: Boolean,
-    required: true
-  }
+    default: false,
+  },
 })
 
-const emit = defineEmits(['close'])
-
-// Path to CV PDF
-const cvPath = cvFile
-
-const closeModal = () => {
-  emit('close')
-}
-
-const downloadCV = () => {
-  // Create a temporary link element to trigger download
-  const link = document.createElement('a')
-  link.href = cvPath
-  link.download = 'Julia_Zyrene_Padasas_CV.pdf'
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-}
-
-const handlePDFError = () => {
-  console.error('Failed to load PDF. Make sure the file exists at:', cvPath)
-}
-
-// Close modal on Escape key
-const handleEscape = (e) => {
-  if (e.key === 'Escape' && props.isOpen) {
-    closeModal()
-  }
-}
-
-// Add/remove event listener
-import { onMounted, onUnmounted, watch } from 'vue'
-
-onMounted(() => {
-  document.addEventListener('keydown', handleEscape)
-})
-
-onUnmounted(() => {
-  document.removeEventListener('keydown', handleEscape)
-})
-
-// Prevent body scroll when modal is open
-watch(() => props.isOpen, (newVal) => {
-  if (newVal) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
-  }
-})
+defineEmits(['close'])
 </script>
 
 <style scoped>
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.3s ease;
+/* ── MODAL TRANSITION ── */
+.modal-enter-active, .modal-leave-active { transition: opacity 0.3s ease; }
+.modal-enter-from, .modal-leave-to { opacity: 0; }
+
+/* ── SCROLLBAR ── */
+.scrollbar-hidden { scrollbar-width: none; -ms-overflow-style: none; }
+.scrollbar-hidden::-webkit-scrollbar { display: none; }
+
+/* ── PANEL ── */
+.modal-panel {
+  background: #160c0c;
+  border: 1px solid rgba(255, 102, 104, 0.25);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 102, 104, 0.08);
 }
 
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
+/* ── HEADER ── */
+.modal-header {
+  background: #160c0c;
 }
 
-.modal-enter-active .relative,
-.modal-leave-active .relative {
-  transition: transform 0.3s ease;
+.header-icon-wrap {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(255, 102, 104, 0.12);
+  border: 1px solid rgba(255, 102, 104, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.modal-enter-from .relative,
-.modal-leave-to .relative {
-  transform: scale(0.95);
+.modal-eyebrow {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  display: block;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
+/* ── DOWNLOAD BUTTON ── */
+.download-btn {
+  background: #FF6668;
+  color: #fff;
+  border: 1px solid #FF6668;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(239, 68, 68, 0.5);
-  border-radius: 4px;
+.download-btn:hover {
+  background: transparent;
+  color: #FF6668;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(239, 68, 68, 0.7);
+/* ── CLOSE BUTTON ── */
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 102, 104, 0.08);
+  border: 1px solid rgba(255, 102, 104, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.modal-close-btn:hover {
+  background: #FF6668;
+  border-color: #FF6668;
+}
+
+.modal-close-btn:hover svg {
+  color: #fff;
+}
+
+/* ── BODY — mobile: natural A4 aspect ratio, desktop: fills remaining space ── */
+.modal-body {
+  background: #0e0606;
+  display: flex;
+  flex-direction: column;
+  /* Mobile: size to content so no dead space */
+  width: 100%;
+}
+
+/* ── PDF FRAME ── */
+.pdf-frame {
+  width: 100%;
+  border: none;
+  display: block;
+  /* A4 aspect ratio (1:1.414) so it fits neatly on mobile */
+  aspect-ratio: 1 / 1.414;
+}
+
+/* Desktop: stretch to fill the panel */
+@media (min-width: 768px) {
+  .modal-body {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .pdf-frame {
+    aspect-ratio: unset;
+    flex: 1;
+    height: 100%;
+    min-height: 0;
+  }
 }
 </style>
