@@ -17,82 +17,113 @@
     <div class="absolute inset-0 pointer-events-none scanlines z-2" />
 
     <!-- ── CONTENT ── -->
-    <div class="relative z-10 flex flex-col items-center w-full max-w-3xl px-6 py-24 mx-auto text-center">
+    <div class="relative z-10 flex flex-col items-center w-full max-w-5xl px-6 py-24 mx-auto">
 
-      <!-- Eyebrow -->
-      <div
-        class="flex items-center gap-3 mb-8 fade-up"
-        style="animation-delay:0.1s"
-      >
-        <span class="eyebrow-pip" />
-        <p class="section-eyebrow">// Hello World</p>
-        <span class="eyebrow-pip" />
-      </div>
+      <!-- layout: two-column on md+ -->
+      <div class="w-full hero-grid">
 
-      <!-- Name block -->
-      <div class="fade-up" style="animation-delay:0.25s">
-        <p class="hi-im font-heading">Hi, I'm</p>
-        <h1 class="hero-name font-heading">
-          <span
-            v-for="(char, i) in 'Julia'"
-            :key="i"
-            class="name-char"
-            :style="{ '--i': i }"
-          >{{ char }}</span>
-        </h1>
-      </div>
+        <!-- LEFT COLUMN -->
+        <div class="flex flex-col items-center text-center md:items-start md:text-left">
 
-      <!-- Typing role -->
-      <div
-        class="flex items-center justify-center gap-3 mt-4 fade-up"
-        style="animation-delay:0.42s"
-      >
-        <div class="role-icon-wrap">
-          <component :is="currentIcon" class="w-4 h-4 text-[#FF6668]" />
+          <!-- Eyebrow -->
+          <div
+            class="flex items-center gap-3 mb-8 fade-up"
+            style="animation-delay:0.1s"
+          >
+            <span class="eyebrow-pip" />
+            <p class="section-eyebrow">// Hello World</p>
+            <span class="eyebrow-pip" />
+          </div>
+
+          <!-- Name block -->
+          <div class="fade-up" style="animation-delay:0.25s">
+            <p class="hi-im font-heading">Hi, I'm</p>
+            <h1 class="hero-name font-heading">
+              <span
+                v-for="(char, i) in 'Julia'"
+                :key="i"
+                class="name-char"
+                :style="{ '--i': i }"
+              >{{ char }}</span>
+            </h1>
+          </div>
+
+          <!-- Description -->
+          <p
+            class="max-w-md text-base leading-relaxed mt-7 font-body desc-text fade-up"
+            style="animation-delay:0.58s"
+          >
+            I <strong class="font-semibold text-red-400">build</strong> what I <strong class="font-semibold text-red-400">design</strong> —
+            from pixel-perfect layouts to clean, production-ready code.
+            Every detail crafted for seamless, user-focused experiences.
+          </p>
+
+          <!-- Divider -->
+          <div class="mt-8 divider-line fade-up" style="animation-delay:0.68s" />
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap justify-center gap-3 mt-8 md:justify-start fade-up" style="animation-delay:0.78s">
+            <button
+              @click="scrollToContact"
+              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold transition-all duration-300 cta-primary rounded-xl font-body"
+            >
+              Let's Talk
+              <MoveRight class="w-4 h-4" />
+            </button>
+            <button
+              @click="showCVModal = true"
+              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold transition-all duration-300 cta-secondary rounded-xl font-body"
+            >
+              View Resume
+              <FileText class="w-4 h-4" />
+            </button>
+          </div>
+
+          <!-- Socials -->
+          <div class="flex items-center justify-center gap-3 mt-6 md:justify-start fade-up" style="animation-delay:0.92s">
+            <span class="font-mono text-xs tracking-widest uppercase social-label">Find me on</span>
+            <a href="https://www.linkedin.com/in/almoitejuliazyrene/" target="_blank" class="hero-social-btn group" title="LinkedIn">
+              <Linkedin class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors" />
+            </a>
+            <a href="https://github.com/zytanas" target="_blank" class="hero-social-btn group" title="GitHub">
+              <Github class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors" />
+            </a>
+          </div>
         </div>
-        <span class="text-[#FF6668] font-heading font-bold text-xl md:text-2xl">{{ typedText }}</span>
-        <span class="typing-cursor text-[#FF6668]">|</span>
-      </div>
 
-      <!-- Description -->
-      <p
-        class="max-w-md text-base leading-relaxed mt-7 font-body desc-text fade-up"
-        style="animation-delay:0.58s"
-      >
-        From layout to code, every detail is crafted to deliver seamless,
-        responsive, and user-focused digital experiences.
-      </p>
+        <!-- RIGHT COLUMN: split discipline panel -->
+        <div class="split-panel-wrap fade-up" style="animation-delay:0.35s">
 
-      <!-- Divider -->
-      <div class="mt-8 divider-line fade-up" style="animation-delay:0.68s" />
+          <!-- TOP: Developer -->
+          <div class="split-panel split-panel--dev">
+            <!-- floating code lines -->
+            <div class="font-mono code-float" aria-hidden="true">
+              <span class="cf-kw">const</span> julia = {<br>
+              &nbsp;&nbsp;role: <span class="cf-str">'developer'</span>,<br>
+              &nbsp;&nbsp;stack: [<span class="cf-str">'Vue'</span>, <span class="cf-str">'React'</span>, <span class="cf-str">'Tailwind'</span>]<br>
+              }
+            </div>
+            <div class="split-panel__body">
+              <div class="split-icon"><Code2 class="w-6 h-6" /></div>
+              <p class="split-role font-heading">Front-End Dev</p>
+              <p class="font-mono split-desc">Vue · React · Nuxt · Tailwind</p>
+            </div>
+          </div>
 
-      <!-- CTA Buttons -->
-      <div class="flex flex-wrap justify-center gap-3 mt-8 fade-up" style="animation-delay:0.78s">
-        <button
-          @click="scrollToContact"
-          class="flex items-center gap-2 px-6 py-3 text-sm font-semibold transition-all duration-300 cta-primary rounded-xl font-body"
-        >
-          Let's Talk
-          <MoveRight class="w-4 h-4" />
-        </button>
-        <button
-          @click="showCVModal = true"
-          class="flex items-center gap-2 px-6 py-3 text-sm font-semibold transition-all duration-300 cta-secondary rounded-xl font-body"
-        >
-          View Resume
-          <FileText class="w-4 h-4" />
-        </button>
-      </div>
+          <!-- BOTTOM: Designer -->
+          <div class="split-panel split-panel--design">
+            <!-- floating grid dots -->
+            <div class="design-dots" aria-hidden="true">
+              <span v-for="n in 12" :key="n" class="design-dot" />
+            </div>
+            <div class="split-panel__body">
+              <div class="split-icon"><Palette class="w-6 h-6" /></div>
+              <p class="split-role font-heading">Web Designer</p>
+              <p class="font-mono split-desc">UI/UX · Figma · Design Systems</p>
+            </div>
+          </div>
 
-      <!-- Socials -->
-      <div class="flex items-center justify-center gap-3 mt-6 fade-up" style="animation-delay:0.92s">
-        <span class="font-mono text-xs tracking-widest uppercase social-label">Find me on</span>
-        <a href="https://www.linkedin.com/in/almoitejuliazyrene/" target="_blank" class="hero-social-btn group" title="LinkedIn">
-          <Linkedin class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors" />
-        </a>
-        <a href="https://github.com/zytanas" target="_blank" class="hero-social-btn group" title="GitHub">
-          <Github class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors" />
-        </a>
+        </div>
       </div>
     </div>
 
@@ -103,7 +134,7 @@
     </div>
 
     <div class="stat-card fade-up" style="animation-delay:1.1s">
-      <p class="text-[#FF6668] font-bold text-xl leading-none font-heading">2+</p>
+      <p class="text-[#66ff99] font-bold text-xl leading-none font-heading">2+</p>
       <p class="font-mono text-xs mt-0.5 stat-lbl">yrs exp.</p>
     </div>
 
@@ -118,46 +149,11 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { MoveRight, FileText, Code2, Palette, Linkedin, Github } from 'lucide-vue-next'
 import CVModal from '../components/CVModal.vue'
 
-// ── TYPING ──
-const typedText = ref('')
 const showCVModal = ref(false)
-const titles = [
-  { text: 'Frontend Developer', icon: Code2 },
-  { text: 'Web Designer',       icon: Palette },
-]
-const currentTitleIndex = ref(0)
-let currentCharIndex = 0
-let isDeleting = false
-let typingTimeout = null
-const currentIcon = computed(() => titles[currentTitleIndex.value].icon)
-
-const typeText = () => {
-  const cur = titles[currentTitleIndex.value].text
-  if (isDeleting) {
-    typedText.value = cur.substring(0, currentCharIndex - 1)
-    currentCharIndex--
-    if (currentCharIndex === 0) {
-      isDeleting = false
-      currentTitleIndex.value = (currentTitleIndex.value + 1) % titles.length
-      typingTimeout = setTimeout(typeText, 500)
-      return
-    }
-    typingTimeout = setTimeout(typeText, 50)
-  } else {
-    typedText.value = cur.substring(0, currentCharIndex + 1)
-    currentCharIndex++
-    if (currentCharIndex === cur.length) {
-      isDeleting = true
-      typingTimeout = setTimeout(typeText, 1000)
-      return
-    }
-    typingTimeout = setTimeout(typeText, 100)
-  }
-}
 
 // ── CANVAS ──
 const bgCanvas = ref(null)
@@ -198,11 +194,9 @@ function initParticles() {
 function draw() {
   ctx.clearRect(0, 0, W, H)
 
-  // base bg
   ctx.fillStyle = '#080808'
   ctx.fillRect(0, 0, W, H)
 
-  // mouse glow pool
   if (isMouseInside && smoothMouse.x > 0) {
     const gm = ctx.createRadialGradient(smoothMouse.x, smoothMouse.y, 0, smoothMouse.x, smoothMouse.y, ATTRACT_RADIUS * 1.5)
     gm.addColorStop(0,   'rgba(255,102,104,0.11)')
@@ -212,7 +206,6 @@ function draw() {
     ctx.fillRect(0, 0, W, H)
   }
 
-  // ambient glows
   ;[
     [W * 0.08, H * 0.12, W * 0.44, 'rgba(255,102,104,0.07)'],
     [W * 0.92, H * 0.88, W * 0.38, 'rgba(200,60,60,0.05)'],
@@ -224,7 +217,6 @@ function draw() {
     ctx.fillRect(0, 0, W, H)
   })
 
-  // particles
   particles.forEach(p => {
     p.x += p.vx
     p.y += p.vy
@@ -263,7 +255,6 @@ function draw() {
     ctx.fill()
   })
 
-  // connections
   for (let i = 0; i < particles.length; i++) {
     for (let j = i + 1; j < particles.length; j++) {
       const dx = particles[i].x - particles[j].x
@@ -281,7 +272,6 @@ function draw() {
     }
   }
 
-  // cursor rings
   if (isMouseInside && smoothMouse.x > 0) {
     ctx.beginPath()
     ctx.arc(smoothMouse.x, smoothMouse.y, REPEL_RADIUS, 0, Math.PI * 2)
@@ -313,21 +303,18 @@ function onMouseMove(e) {
   const rect = bgCanvas.value.getBoundingClientRect()
   targetMouse.x = e.clientX - rect.left
   targetMouse.y = e.clientY - rect.top
-  
-  // Initialize smoothMouse to target on first entry to avoid lag
+
   if (!isMouseInside) {
     smoothMouse.x = targetMouse.x
     smoothMouse.y = targetMouse.y
   }
-  
+
   isMouseInside = true
   if (!hasInteracted.value) hasInteracted.value = true
 }
 
 function onMouseLeave() {
   isMouseInside = false
-  // Keep positions instead of resetting to -9999
-  // This prevents the cursor from jumping when re-entering
 }
 
 function resize() {
@@ -346,12 +333,10 @@ onMounted(() => {
   ctx = bgCanvas.value.getContext('2d')
   resize()
   loop()
-  setTimeout(typeText, 800)
   window.addEventListener('resize', resize, { passive: true })
 })
 
 onUnmounted(() => {
-  if (typingTimeout) clearTimeout(typingTimeout)
   if (rafId) cancelAnimationFrame(rafId)
   window.removeEventListener('resize', resize)
 })
@@ -385,7 +370,7 @@ onUnmounted(() => {
   font-size: 12px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #FF6668;
+  color: #66ff99;
 }
 .eyebrow-pip {
   display: block;
@@ -405,12 +390,15 @@ onUnmounted(() => {
 
 /* ── HERO NAME ── */
 .hero-name {
-  font-size: clamp(128px, 16vw, 200px);
+  font-size: clamp(96px, 11vw, 160px);
   font-weight: 800;
   line-height: 0.88;
   letter-spacing: -0.03em;
   display: flex;
   justify-content: center;
+}
+@media (min-width: 768px) {
+  .hero-name { justify-content: flex-start; }
 }
 .name-char {
   display: inline-block;
@@ -427,24 +415,56 @@ onUnmounted(() => {
   50%     { transform: translateY(-8px); }
 }
 
-/* ── ROLE ICON ── */
-.role-icon-wrap {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: rgba(255,102,104,0.1);
-  border: 1px solid rgba(255,102,104,0.22);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+/* ── HERO GRID ── */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
 }
 
-/* ── CURSOR ── */
-.typing-cursor {
-  display: inline-block;
-  animation: blink 1s step-end infinite;
+/* ── DUAL ROLE TAGS ── */
+.role-tags {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-@keyframes blink {
-  0%,50%  { opacity: 1; }
-  51%,100%{ opacity: 0; }
+@media (min-width: 768px) {
+  .role-tags { justify-content: flex-start; }
+}
+
+.role-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: box-shadow 0.3s;
+}
+
+.role-tag--outline {
+  background: transparent;
+  color: #66ff99;
+  border: 1.5px solid #66ff99;
+}
+.role-divider {
+  font-size: 0.7rem;
+  color: rgba(255,102,104,0.45);
+  letter-spacing: 0.1em;
 }
 
 /* ── DESC ── */
@@ -487,6 +507,128 @@ onUnmounted(() => {
   transform: translateY(-2px);
 }
 
+/* ── SPLIT PANEL ── */
+.split-panel-wrap {
+  display: flex;
+  flex-direction: row; /* side by side on mobile */
+  height: 160px;
+  border: 1px solid rgba(255,102,104,0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  gap: 1px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .split-panel-wrap {
+    flex-direction: column; /* stacked on desktop (sits in right grid column) */
+    height: 400px;
+  }
+}
+
+.split-panel {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem 1.1rem;
+  overflow: hidden;
+  transition: flex 0.45s cubic-bezier(0.4,0,0.2,1);
+  cursor: default;
+}
+.split-panel:hover { flex: 1.8; }
+@media (min-width: 768px) {
+  .split-panel { padding: 1.5rem 1.75rem; }
+}
+
+.split-panel--dev {
+  background: linear-gradient(135deg, #0d0d10 0%, #141420 100%);
+  border-bottom: 1px solid rgba(255,102,104,0.08);
+}
+.split-panel--dev::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 24px,
+    rgba(255,102,104,0.04) 24px,
+    rgba(255,102,104,0.04) 25px
+  );
+}
+
+.split-panel--design {
+  background: linear-gradient(135deg, #0f0a0b 0%, #18080a 100%);
+}
+.split-panel--design::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(255,102,104,0.07) 0%, transparent 70%);
+}
+
+/* floating code snippet */
+.code-float {
+  position: absolute;
+  top: 1rem; right: 1.25rem;
+  font-size: 0.6rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.18);
+  text-align: right;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.cf-kw  { color: rgba(255,102,104,0.7); }
+.cf-str { color: rgba(126,200,164,0.7); }
+
+/* floating grid dots */
+.design-dots {
+  position: absolute;
+  top: 1rem; right: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(4, 12px);
+  grid-template-rows: repeat(3, 12px);
+  gap: 5px;
+  opacity: 0.25;
+  pointer-events: none;
+}
+.design-dot {
+  display: block;
+  background: #FF6668;
+  border-radius: 2px;
+  width: 100%; height: 100%;
+}
+.design-dot:nth-child(3n) { opacity: 0.4; }
+.design-dot:nth-child(2n) { opacity: 0.6; }
+
+.split-panel__body { position: relative; z-index: 1; }
+
+.split-icon {
+  font-size: 1.1rem;
+  color: #FF6668;
+  opacity: 0.65;
+  margin-bottom: 0.25rem;
+  line-height: 1;
+}
+@media (min-width: 768px) {
+  .split-icon { font-size: 1.6rem; margin-bottom: 0.35rem; }
+}
+.split-role {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+@media (min-width: 768px) {
+  .split-role { font-size: 1.3rem; margin-bottom: 0.35rem; }
+}
+.split-desc {
+  font-size: 0.65rem;
+  color: rgba(255,102,104,0.55);
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+
 /* ── BADGES ── */
 .role-badge {
   position: absolute;
@@ -511,7 +653,7 @@ onUnmounted(() => {
   position: absolute;
   top: clamp(88px, 11vh, 130px); right: clamp(20px, 5vw, 80px);
   background: rgba(10,4,4,0.84);
-  border: 1px solid rgba(255,102,104,0.28);
+  border: 1px solid #66ff99;
   border-radius: 14px; padding: 12px 18px;
   backdrop-filter: blur(12px); text-align: center; z-index: 20;
 }
@@ -523,7 +665,7 @@ onUnmounted(() => {
   bottom: 48px; right: clamp(20px, 5vw, 80px);
   font-size: 10px; letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: rgba(255, 102, 105, 0.74);
+  color: #2ef377;
   z-index: 20; pointer-events: none;
   transition: opacity 0.8s ease;
   animation: hintPulse 2.5s ease-in-out infinite;
