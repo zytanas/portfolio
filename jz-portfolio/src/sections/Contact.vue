@@ -115,12 +115,32 @@
         <div class="about-card rounded-2xl p-7">
           <h3 class="text-xl font-bold text-[#FF6668] font-heading mb-6">Send a Message</h3>
 
-          <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
+          <!-- Success/Error Messages -->
+          <div v-if="formStatus === 'success'" class="mb-5 p-4 rounded-lg bg-green-500/20 border border-green-500/40">
+            <p class="text-sm text-green-400">✓ Thank you! Your message has been sent successfully.</p>
+          </div>
+          <div v-if="formStatus === 'error'" class="mb-5 p-4 rounded-lg bg-red-500/20 border border-red-500/40">
+            <p class="text-sm text-red-400">✗ Something went wrong. Please try again or email me directly.</p>
+          </div>
+
+          <form 
+            name="contact" 
+            method="POST" 
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            @submit.prevent="handleSubmit" 
+            class="flex flex-col gap-5"
+          >
+            <!-- Hidden fields for Netlify -->
+            <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="bot-field" />
+
             <div>
               <label for="name" class="block mb-2 font-mono text-xs tracking-widest text-white uppercase">Your Name</label>
               <input
                 type="text"
                 id="name"
+                name="name"
                 v-model="form.name"
                 required
                 placeholder="Juan Dela Cruz"
@@ -133,6 +153,7 @@
               <input
                 type="email"
                 id="email"
+                name="email"
                 v-model="form.email"
                 required
                 placeholder="juandelacruz@example.com"
@@ -144,6 +165,7 @@
               <label for="message" class="block mb-2 font-mono text-xs tracking-widest text-white uppercase">Message</label>
               <textarea
                 id="message"
+                name="message"
                 v-model="form.message"
                 required
                 rows="5"
@@ -154,10 +176,12 @@
 
             <button
               type="submit"
-              class="flex items-center justify-center w-full gap-2 py-3 text-sm font-semibold transition-all duration-300 submit-btn rounded-xl font-body"
+              :disabled="isSubmitting"
+              class="flex items-center justify-center w-full gap-2 py-3 text-sm font-semibold transition-all duration-300 submit-btn rounded-xl font-body disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send Message
-              <Send class="w-4 h-4" />
+              <span v-if="!isSubmitting">Send Message</span>
+              <span v-else>Sending...</span>
+              <Send v-if="!isSubmitting" class="w-4 h-4" />
             </button>
           </form>
         </div>
@@ -168,7 +192,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { Mail, Phone, MapPin, Linkedin, Github, Send } from 'lucide-vue-next'
 
 const form = reactive({
@@ -177,17 +201,51 @@ const form = reactive({
   message: '',
 })
 
+const isSubmitting = ref(false)
+const formStatus = ref(null) // 'success', 'error', or null
+
 const socials = [
   { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/almoitejuliazyrene/' },
   { name: 'GitHub', icon: Github, url: 'https://github.com/zytanas' },
 ]
 
-const handleSubmit = () => {
-  console.log('Form submitted:', form)
-  alert('Thank you for your message! I will get back to you soon.')
-  form.name = ''
-  form.email = ''
-  form.message = ''
+const handleSubmit = async () => {
+  isSubmitting.value = true
+  formStatus.value = null
+
+  try {
+    const formData = new FormData()
+    formData.append('form-name', 'contact')
+    formData.append('name', form.name)
+    formData.append('email', form.email)
+    formData.append('message', form.message)
+
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    })
+
+    if (response.ok) {
+      formStatus.value = 'success'
+      // Clear form
+      form.name = ''
+      form.email = ''
+      form.message = ''
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        formStatus.value = null
+      }, 5000)
+    } else {
+      formStatus.value = 'error'
+    }
+  } catch (error) {
+    console.error('Form submission error:', error)
+    formStatus.value = 'error'
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
