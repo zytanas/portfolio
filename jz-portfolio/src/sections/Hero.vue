@@ -17,7 +17,7 @@
     <div class="absolute inset-0 pointer-events-none scanlines z-2" />
 
     <!-- ── CONTENT ── -->
-    <div class="relative z-10 flex flex-col items-center w-full max-w-5xl px-6 py-24 mx-auto">
+    <div class="relative z-10 flex flex-col items-center w-full max-w-6xl px-6 py-24 mx-auto">
 
       <!-- layout: two-column on md+ -->
       <div class="w-full hero-grid">
