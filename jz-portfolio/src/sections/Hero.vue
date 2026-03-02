@@ -382,7 +382,7 @@ onUnmounted(() => {
 /* ── EYEBROW ── */
 .section-eyebrow {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 18px;
+  font-size: 12px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #FF6668;
@@ -520,8 +520,8 @@ onUnmounted(() => {
 /* ── MOUSE HINT ── */
 .mouse-hint {
   position: absolute;
-  bottom: 44px; right: clamp(20px, 5vw, 80px);
-  font-size: 11px; letter-spacing: 0.15em;
+  bottom: 48px; right: clamp(20px, 5vw, 80px);
+  font-size: 10px; letter-spacing: 0.15em;
   text-transform: uppercase;
   color: rgba(255, 102, 105, 0.74);
   z-index: 20; pointer-events: none;
