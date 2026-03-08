@@ -604,7 +604,7 @@ onUnmounted(() => {
 
 .split-icon {
   font-size: 1.1rem;
-  color: #FF6668;
+  color: #66ff99;
   opacity: 0.65;
   margin-bottom: 0.25rem;
   line-height: 1;
@@ -624,7 +624,7 @@ onUnmounted(() => {
 }
 .split-desc {
   font-size: 0.65rem;
-  color: rgba(255,102,104,0.55);
+  color: #66ff99;
   letter-spacing: 0.06em;
   line-height: 1.6;
 }
