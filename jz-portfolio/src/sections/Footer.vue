@@ -1,11 +1,8 @@
 <template>
   <footer class="relative px-6 pt-12 pb-8 overflow-hidden footer-border">
-
     <div class="container relative z-10 mx-auto">
-
       <!-- ── MAIN FOOTER ROW ── -->
       <div class="grid gap-10 mb-10 md:grid-cols-3">
-
         <!-- Brand -->
         <div class="flex flex-col items-start gap-4">
           <img
@@ -13,7 +10,7 @@
             alt="Julia Zyrene Logo"
             class="object-contain w-auto h-20"
           />
-          <p class="text-sm leading-relaxed text-white font-body ">
+          <p class="text-sm leading-relaxed text-white font-body">
             UI/UX Designer & Frontend Developer crafting intentional digital experiences.
           </p>
         </div>
@@ -43,7 +40,10 @@
             <span class="footer-label">Contact</span>
           </div>
           <div class="flex flex-col gap-3">
-            <a href="mailto:juliazyrene23@gmail.com" class="flex items-center gap-2 footer-link">
+            <a
+              href="mailto:juliazyrene23@gmail.com"
+              class="flex items-center gap-2 footer-link"
+            >
               <Mail class="w-3.5 h-3.5 text-[#FF6668] flex-shrink-0" />
               juliazyrene23@gmail.com
             </a>
@@ -51,7 +51,9 @@
               <Phone class="w-3.5 h-3.5 text-[#FF6668] flex-shrink-0" />
               09565595721
             </a>
-            <p class="flex items-center gap-2 cursor-default footer-link hover:text-white/50">
+            <p
+              class="flex items-center gap-2 cursor-default footer-link hover:text-white/50"
+            >
               <MapPin class="w-3.5 h-3.5 text-[#FF6668] flex-shrink-0" />
               Baguio City, Philippines
             </p>
@@ -66,11 +68,13 @@
               :title="social.name"
               class="social-btn group"
             >
-              <component :is="social.icon" class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors duration-200" />
+              <component
+                :is="social.icon"
+                class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors duration-200"
+              />
             </a>
           </div>
         </div>
-
       </div>
 
       <!-- ── DIVIDER ── -->
@@ -78,45 +82,48 @@
 
       <!-- ── BOTTOM ROW ── -->
       <div class="flex flex-col items-center justify-between gap-3 md:flex-row">
-        <p class="font-mono text-xs text-white">
+        <p class="font-mono text-xs text-[#66ff99]">
           &copy; {{ currentYear }} Julia Almoite. All rights reserved.
         </p>
         <p class="font-mono text-xs text-white">
           Designed & built with <span class="text-[#FF6668]/60">☕</span> in Baguio City
         </p>
       </div>
-
     </div>
   </footer>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { Linkedin, Github, Mail, Phone, MapPin } from 'lucide-vue-next'
+import { ref, computed } from "vue";
+import { Linkedin, Github, Mail, Phone, MapPin } from "lucide-vue-next";
 
-const currentYear = computed(() => new Date().getFullYear())
+const currentYear = computed(() => new Date().getFullYear());
 
 const quickLinks = [
-  { id: 'hero', name: 'Home' },
-  { id: 'about', name: 'About' },
-  { id: 'projects', name: 'Projects' },
-  { id: 'contact', name: 'Contact' },
-]
+  { id: "hero", name: "Home" },
+  { id: "about", name: "About" },
+  { id: "projects", name: "Projects" },
+  { id: "contact", name: "Contact" },
+];
 
 const socials = [
-  { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/almoitejuliazyrene/' },
-  { name: 'GitHub', icon: Github, url: 'https://github.com/zytanas' },
-]
+  {
+    name: "LinkedIn",
+    icon: Linkedin,
+    url: "https://www.linkedin.com/in/almoitejuliazyrene/",
+  },
+  { name: "GitHub", icon: Github, url: "https://github.com/zytanas" },
+];
 
 const scrollToSection = (id) => {
-  const element = document.getElementById(id)
+  const element = document.getElementById(id);
   if (element) {
-    const navHeight = 80
-    const elementPosition = element.getBoundingClientRect().top
-    const offsetPosition = elementPosition + window.pageYOffset - navHeight
-    window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
+    const navHeight = 80;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
   }
-}
+};
 </script>
 
 <style scoped>
@@ -125,11 +132,11 @@ const scrollToSection = (id) => {
 }
 
 .footer-label {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgb(250, 250, 250);
+  color: #66ff99;
 }
 
 .footer-link {
@@ -145,11 +152,11 @@ const scrollToSection = (id) => {
 }
 
 .footer-link:hover {
-  color: #FF6668;
+  color: #ff6668;
 }
 
 .footer-link-arrow {
-  color: #FF6668;
+  color: #ff6668;
   opacity: 0;
   margin-right: 2px;
   display: inline-block;
@@ -175,8 +182,8 @@ const scrollToSection = (id) => {
 }
 
 .social-btn:hover {
-  background: #FF6668;
-  border-color: #FF6668;
+  background: #ff6668;
+  border-color: #ff6668;
   transform: translateY(-2px);
 }
 </style>

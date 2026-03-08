@@ -13,7 +13,6 @@
     </div>
 
     <div class="container relative z-10 mx-auto">
-
       <!-- ── SECTION HEADER ── -->
       <div class="flex items-end justify-between pb-6 mb-16 section-header-border">
         <div>
@@ -24,7 +23,9 @@
         </div>
         <div class="hidden text-right md:block">
           <div class="project-count-bg">Hi!</div>
-          <p class="mt-1 font-mono text-xs tracking-widest uppercase text-white/40">let's connect</p>
+          <p class="mt-1 font-mono text-xs tracking-widest uppercase text-white/40">
+            let's connect
+          </p>
         </div>
       </div>
 
@@ -37,24 +38,32 @@
 
       <!-- ── TWO COLUMN LAYOUT ── -->
       <div class="grid items-start gap-5 md:grid-cols-2">
-
         <!-- LEFT — Contact Info -->
         <div class="flex flex-col about-card rounded-2xl p-7 gap-7">
           <div>
-            <h3 class="text-xl font-bold text-[#FF6668] font-heading mb-2">Let's Work Together</h3>
+            <h3 class="text-xl font-bold text-[#FF6668] font-heading mb-2">
+              Let's Work Together
+            </h3>
             <p class="text-sm leading-relaxed text-white font-body">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+              I'm always open to discussing new projects, creative ideas, or opportunities
+              to be part of your vision.
             </p>
           </div>
 
           <!-- Contact Items -->
           <div class="flex flex-col gap-5">
             <div class="flex items-start gap-4">
-              <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#FF6668]/15 flex items-center justify-center">
+              <div
+                class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#FF6668]/15 flex items-center justify-center"
+              >
                 <Mail class="w-4 h-4 text-[#FF6668]" />
               </div>
               <div>
-                <p class="text-xs font-mono text-[#FF6668] tracking-widest uppercase mb-1">Email</p>
+                <p
+                  class="text-xs font-mono text-[#FF6668] tracking-widest uppercase mb-1"
+                >
+                  Email
+                </p>
                 <a
                   href="mailto:juliazyrene23@gmail.com"
                   class="text-sm text-white hover:text-[#FF6668] transition-colors duration-200 font-body"
@@ -65,11 +74,17 @@
             </div>
 
             <div class="flex items-start gap-4">
-              <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#FF6668]/15 flex items-center justify-center">
+              <div
+                class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#FF6668]/15 flex items-center justify-center"
+              >
                 <Phone class="w-4 h-4 text-[#FF6668]" />
               </div>
               <div>
-                <p class="text-xs font-mono text-[#FF6668] tracking-widest uppercase mb-1">Phone</p>
+                <p
+                  class="text-xs font-mono text-[#FF6668] tracking-widest uppercase mb-1"
+                >
+                  Phone
+                </p>
                 <a
                   href="tel:09565595721"
                   class="text-sm text-white hover:text-[#FF6668] transition-colors duration-200 font-body"
@@ -80,11 +95,17 @@
             </div>
 
             <div class="flex items-start gap-4">
-              <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#FF6668]/15 flex items-center justify-center">
+              <div
+                class="flex-shrink-0 w-10 h-10 rounded-xl bg-[#FF6668]/15 flex items-center justify-center"
+              >
                 <MapPin class="w-4 h-4 text-[#FF6668]" />
               </div>
               <div>
-                <p class="text-xs font-mono text-[#FF6668] tracking-widest uppercase mb-1">Location</p>
+                <p
+                  class="text-xs font-mono text-[#FF6668] tracking-widest uppercase mb-1"
+                >
+                  Location
+                </p>
                 <p class="text-sm text-white font-body">Baguio City, Philippines</p>
               </div>
             </div>
@@ -95,7 +116,9 @@
 
           <!-- Socials -->
           <div>
-            <p class="mb-4 font-mono text-xs tracking-widest text-white uppercase">Follow me on</p>
+            <p class="mb-4 font-mono text-xs tracking-widest text-white uppercase">
+              Follow me on
+            </p>
             <div class="flex gap-3">
               <a
                 v-for="social in socials"
@@ -105,7 +128,10 @@
                 :title="social.name"
                 class="social-btn group"
               >
-                <component :is="social.icon" class="w-4 h-4 text-white transition-colors duration-200 group-hover:text-white" />
+                <component
+                  :is="social.icon"
+                  class="w-4 h-4 text-white transition-colors duration-200 group-hover:text-white"
+                />
               </a>
             </div>
           </div>
@@ -113,22 +139,34 @@
 
         <!-- RIGHT — Contact Form -->
         <div class="about-card rounded-2xl p-7">
-          <h3 class="text-xl font-bold text-[#FF6668] font-heading mb-6">Send a Message</h3>
+          <h3 class="text-xl font-bold text-[#FF6668] font-heading mb-6">
+            Send a Message
+          </h3>
 
           <!-- Success/Error Messages -->
-          <div v-if="formStatus === 'success'" class="mb-5 p-4 rounded-lg bg-green-500/20 border border-green-500/40">
-            <p class="text-sm text-green-400">✓ Thank you! Your message has been sent successfully.</p>
+          <div
+            v-if="formStatus === 'success'"
+            class="mb-5 p-4 rounded-lg bg-green-500/20 border border-green-500/40"
+          >
+            <p class="text-sm text-green-400">
+              ✓ Thank you! Your message has been sent successfully.
+            </p>
           </div>
-          <div v-if="formStatus === 'error'" class="mb-5 p-4 rounded-lg bg-red-500/20 border border-red-500/40">
-            <p class="text-sm text-red-400">✗ Something went wrong. Please try again or email me directly.</p>
+          <div
+            v-if="formStatus === 'error'"
+            class="mb-5 p-4 rounded-lg bg-red-500/20 border border-red-500/40"
+          >
+            <p class="text-sm text-red-400">
+              ✗ Something went wrong. Please try again or email me directly.
+            </p>
           </div>
 
-          <form 
-            name="contact" 
-            method="POST" 
+          <form
+            name="contact"
+            method="POST"
             data-netlify="true"
             data-netlify-honeypot="bot-field"
-            @submit.prevent="handleSubmit" 
+            @submit.prevent="handleSubmit"
             class="flex flex-col gap-5"
           >
             <!-- Hidden fields for Netlify -->
@@ -136,7 +174,11 @@
             <input type="hidden" name="bot-field" />
 
             <div>
-              <label for="name" class="block mb-2 font-mono text-xs tracking-widest text-white uppercase">Your Name</label>
+              <label
+                for="name"
+                class="block mb-2 font-mono text-xs tracking-widest text-white uppercase"
+                >Your Name</label
+              >
               <input
                 type="text"
                 id="name"
@@ -149,7 +191,11 @@
             </div>
 
             <div>
-              <label for="email" class="block mb-2 font-mono text-xs tracking-widest text-white uppercase">Your Email</label>
+              <label
+                for="email"
+                class="block mb-2 font-mono text-xs tracking-widest text-white uppercase"
+                >Your Email</label
+              >
               <input
                 type="email"
                 id="email"
@@ -162,7 +208,11 @@
             </div>
 
             <div>
-              <label for="message" class="block mb-2 font-mono text-xs tracking-widest text-white uppercase">Message</label>
+              <label
+                for="message"
+                class="block mb-2 font-mono text-xs tracking-widest text-white uppercase"
+                >Message</label
+              >
               <textarea
                 id="message"
                 name="message"
@@ -185,68 +235,71 @@
             </button>
           </form>
         </div>
-
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
-import { Mail, Phone, MapPin, Linkedin, Github, Send } from 'lucide-vue-next'
+import { reactive, ref } from "vue";
+import { Mail, Phone, MapPin, Linkedin, Github, Send } from "lucide-vue-next";
 
 const form = reactive({
-  name: '',
-  email: '',
-  message: '',
-})
+  name: "",
+  email: "",
+  message: "",
+});
 
-const isSubmitting = ref(false)
-const formStatus = ref(null) // 'success', 'error', or null
+const isSubmitting = ref(false);
+const formStatus = ref(null); // 'success', 'error', or null
 
 const socials = [
-  { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/almoitejuliazyrene/' },
-  { name: 'GitHub', icon: Github, url: 'https://github.com/zytanas' },
-]
+  {
+    name: "LinkedIn",
+    icon: Linkedin,
+    url: "https://www.linkedin.com/in/almoitejuliazyrene/",
+  },
+  { name: "GitHub", icon: Github, url: "https://github.com/zytanas" },
+];
 
 const handleSubmit = async () => {
-  isSubmitting.value = true
-  formStatus.value = null
+  isSubmitting.value = true;
+  formStatus.value = null;
 
   try {
-    const formData = new FormData()
-    formData.append('form-name', 'contact')
-    formData.append('name', form.name)
-    formData.append('email', form.email)
-    formData.append('message', form.message)
+    const formData = new FormData();
+    formData.append("form-name", "contact");
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("message", form.message);
 
-    const response = await fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData).toString()
-    })
+    const response = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData).toString(),
+    });
 
     if (response.ok) {
-      formStatus.value = 'success'
+      formStatus.value = "success";
       // Clear form
-      form.name = ''
-      form.email = ''
-      form.message = ''
-      
+      form.name = "";
+      form.email = "";
+      form.message = "";
+
       // Hide success message after 5 seconds
       setTimeout(() => {
-        formStatus.value = null
-      }, 5000)
+        formStatus.value = null;
+      }, 5000);
     } else {
-      formStatus.value = 'error'
+      formStatus.value = "error";
     }
   } catch (error) {
-    console.error('Form submission error:', error)
-    formStatus.value = 'error'
+    console.error("Form submission error:", error);
+    formStatus.value = "error";
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
-}
+};
 </script>
 
 <style scoped>
@@ -256,11 +309,11 @@ const handleSubmit = async () => {
 }
 
 .section-eyebrow {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #FF6668;
+  color: #ff6668;
   margin-bottom: 10px;
 }
 
@@ -276,7 +329,7 @@ const handleSubmit = async () => {
   font-size: 64px;
   font-weight: 700;
   line-height: 1;
-  color: #FF6668;
+  color: #ff6668;
   opacity: 0.2;
 }
 
@@ -289,11 +342,11 @@ const handleSubmit = async () => {
 }
 
 .group-label-text {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: #66ff99;
   white-space: nowrap;
 }
 
@@ -332,20 +385,20 @@ const handleSubmit = async () => {
 }
 
 .form-input:focus {
-  border-color: #FF6668;
+  border-color: #ff6668;
   background: rgba(255, 102, 104, 0.08);
 }
 
 /* ── SUBMIT BUTTON ── */
 .submit-btn {
-  background: #FF6668;
+  background: #ff6668;
   color: #fff;
-  border: 1px solid #FF6668;
+  border: 1px solid #ff6668;
 }
 
 .submit-btn:hover {
   background: transparent;
-  color: #FF6668;
+  color: #ff6668;
 }
 
 /* ── SOCIAL BUTTONS ── */
@@ -362,34 +415,94 @@ const handleSubmit = async () => {
 }
 
 .social-btn:hover {
-  background: #FF6668;
-  border-color: #FF6668;
+  background: #ff6668;
+  border-color: #ff6668;
   transform: translateY(-2px);
 }
 
 /* ── FLOATING CODE SYMBOLS ── */
 .code-symbol {
   position: absolute;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-weight: 600;
   color: #ffffff;
   opacity: 0.08;
   pointer-events: none;
 }
 
-.symbol-1 { font-size: 3rem; top: 15%; left: 10%; animation: floatCode 8s ease-in-out infinite; }
-.symbol-2 { font-size: 2.5rem; top: 25%; right: 15%; animation: floatCode 7s ease-in-out infinite; animation-delay: -2s; }
-.symbol-3 { font-size: 2rem; top: 45%; left: 20%; animation: floatCode 9s ease-in-out infinite; animation-delay: -4s; }
-.symbol-4 { font-size: 2.8rem; bottom: 30%; right: 25%; animation: floatCode 6.5s ease-in-out infinite; animation-delay: -1s; }
-.symbol-5 { font-size: 2.2rem; top: 60%; left: 8%; animation: floatCode 7.5s ease-in-out infinite; animation-delay: -5s; }
-.symbol-6 { font-size: 2rem; bottom: 20%; left: 30%; animation: floatCode 8.5s ease-in-out infinite; animation-delay: -3s; }
-.symbol-7 { font-size: 2.5rem; top: 35%; right: 8%; animation: floatCode 7s ease-in-out infinite; animation-delay: -6s; }
-.symbol-8 { font-size: 2rem; bottom: 15%; right: 12%; animation: floatCode 9s ease-in-out infinite; animation-delay: -7s; }
+.symbol-1 {
+  font-size: 3rem;
+  top: 15%;
+  left: 10%;
+  animation: floatCode 8s ease-in-out infinite;
+}
+.symbol-2 {
+  font-size: 2.5rem;
+  top: 25%;
+  right: 15%;
+  animation: floatCode 7s ease-in-out infinite;
+  animation-delay: -2s;
+}
+.symbol-3 {
+  font-size: 2rem;
+  top: 45%;
+  left: 20%;
+  animation: floatCode 9s ease-in-out infinite;
+  animation-delay: -4s;
+}
+.symbol-4 {
+  font-size: 2.8rem;
+  bottom: 30%;
+  right: 25%;
+  animation: floatCode 6.5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+.symbol-5 {
+  font-size: 2.2rem;
+  top: 60%;
+  left: 8%;
+  animation: floatCode 7.5s ease-in-out infinite;
+  animation-delay: -5s;
+}
+.symbol-6 {
+  font-size: 2rem;
+  bottom: 20%;
+  left: 30%;
+  animation: floatCode 8.5s ease-in-out infinite;
+  animation-delay: -3s;
+}
+.symbol-7 {
+  font-size: 2.5rem;
+  top: 35%;
+  right: 8%;
+  animation: floatCode 7s ease-in-out infinite;
+  animation-delay: -6s;
+}
+.symbol-8 {
+  font-size: 2rem;
+  bottom: 15%;
+  right: 12%;
+  animation: floatCode 9s ease-in-out infinite;
+  animation-delay: -7s;
+}
 
 @keyframes floatCode {
-  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.08; }
-  25%       { transform: translateY(-20px) translateX(10px) rotate(5deg); opacity: 0.12; }
-  50%       { transform: translateY(-40px) translateX(-10px) rotate(-5deg); opacity: 0.06; }
-  75%       { transform: translateY(-20px) translateX(15px) rotate(3deg); opacity: 0.1; }
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.08;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(5deg);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translateY(-40px) translateX(-10px) rotate(-5deg);
+    opacity: 0.06;
+  }
+  75% {
+    transform: translateY(-20px) translateX(15px) rotate(3deg);
+    opacity: 0.1;
+  }
 }
 </style>

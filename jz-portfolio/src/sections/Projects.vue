@@ -13,9 +13,10 @@
     </div>
 
     <div class="container relative z-10 mx-auto">
-
       <!-- Section Header -->
-      <div class="flex items-end justify-between pb-6 mb-16 border-b section-header-border">
+      <div
+        class="flex items-end justify-between pb-6 mb-16 border-b section-header-border"
+      >
         <div>
           <p class="section-eyebrow">// selected work</p>
           <h2 class="section-title font-heading">
@@ -24,7 +25,9 @@
         </div>
         <div class="text-right">
           <div class="project-count-bg">0{{ allProjects.length }}</div>
-          <p class="mt-1 font-mono text-xs tracking-widest uppercase text-white/40">total projects</p>
+          <p class="mt-1 font-mono text-xs tracking-widest uppercase text-white/40">
+            total projects
+          </p>
         </div>
       </div>
 
@@ -43,10 +46,18 @@
             v-for="(project, index) in displayedClientProjects"
             :key="project.title"
             @click="openModal(project)"
-            :class="['project-card group cursor-pointer rounded-2xl overflow-hidden flex flex-col', index === 0 ? 'md:col-span-1 card-featured' : 'card-small']"
+            :class="[
+              'project-card group cursor-pointer rounded-2xl overflow-hidden flex flex-col',
+              index === 0 ? 'md:col-span-1 card-featured' : 'card-small',
+            ]"
           >
             <!-- Thumbnail -->
-            <div :class="['relative overflow-hidden thumbnail-wrap', index === 0 ? 'h-64' : 'h-44']">
+            <div
+              :class="[
+                'relative overflow-hidden thumbnail-wrap',
+                index === 0 ? 'h-64' : 'h-44',
+              ]"
+            >
               <img
                 :src="project.image"
                 :alt="project.title"
@@ -60,7 +71,14 @@
               <div class="flex items-start justify-between gap-3">
                 <h3 class="card-title font-heading">{{ project.title }}</h3>
                 <div class="arrow-icon">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
                     <path d="M3 13L13 3M13 3H6M13 3v7" />
                   </svg>
                 </div>
@@ -70,10 +88,25 @@
 
               <div class="flex items-center justify-between pt-3 mt-auto">
                 <div class="flex flex-wrap items-center gap-2">
-                  <span :class="['tag', project.tag === 'Coreproc' ? 'tag-client' : project.tag === 'Freelance' ? 'tag-freelance' : 'tag-personal']">{{ project.tag }}</span>
-                  <span v-for="tech in project.techs" :key="tech" class="tag tag-tech">{{ tech }}</span>
+                  <span
+                    :class="[
+                      'tag',
+                      project.tag === 'Coreproc'
+                        ? 'tag-client'
+                        : project.tag === 'Freelance'
+                        ? 'tag-freelance'
+                        : 'tag-personal',
+                    ]"
+                    >{{ project.tag }}</span
+                  >
+                  <span v-for="tech in project.techs" :key="tech" class="tag tag-tech">{{
+                    tech
+                  }}</span>
                 </div>
-                <Figma :size="18" class="figma-icon text-white/30 group-hover:text-[#FF6668] transition-colors duration-200" />
+                <Figma
+                  :size="18"
+                  class="figma-icon text-white/30 group-hover:text-[#FF6668] transition-colors duration-200"
+                />
               </div>
             </div>
           </div>
@@ -81,13 +114,20 @@
 
         <!-- See More Button -->
         <div v-if="allClientProjects.length > 3" class="flex justify-center mt-6">
-          <button
-            @click="showAllClient = !showAllClient"
-            class="see-more-btn"
-          >
-            {{ showAllClient ? 'See Less' : 'See More' }}
-            <svg :class="['w-3 h-3 transition-transform', showAllClient && 'rotate-180']" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <button @click="showAllClient = !showAllClient" class="see-more-btn">
+            {{ showAllClient ? "See Less" : "See More" }}
+            <svg
+              :class="['w-3 h-3 transition-transform', showAllClient && 'rotate-180']"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </button>
         </div>
@@ -97,7 +137,7 @@
       <div class="mb-14">
         <!-- Group Label -->
         <div class="flex items-center gap-3 mb-6">
-          <div class="group-dot bg-white/30"></div>
+          <div class="group-dot bg-red-400"></div>
           <span class="group-label-text text-white/40">Personal Projects</span>
           <div class="flex-1 h-px group-line"></div>
         </div>
@@ -107,10 +147,18 @@
             v-for="(project, index) in displayedPersonalProjects"
             :key="project.title"
             @click="openModal(project)"
-            :class="['project-card group cursor-pointer rounded-2xl overflow-hidden flex flex-col', index === 0 ? 'md:col-span-1 card-featured' : 'card-small']"
+            :class="[
+              'project-card group cursor-pointer rounded-2xl overflow-hidden flex flex-col',
+              index === 0 ? 'md:col-span-1 card-featured' : 'card-small',
+            ]"
           >
             <!-- Thumbnail -->
-            <div :class="['relative overflow-hidden thumbnail-wrap', index === 0 ? 'h-64' : 'h-44']">
+            <div
+              :class="[
+                'relative overflow-hidden thumbnail-wrap',
+                index === 0 ? 'h-64' : 'h-44',
+              ]"
+            >
               <img
                 :src="project.image"
                 :alt="project.title"
@@ -124,7 +172,14 @@
               <div class="flex items-start justify-between gap-3">
                 <h3 class="card-title font-heading">{{ project.title }}</h3>
                 <div class="arrow-icon">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
                     <path d="M3 13L13 3M13 3H6M13 3v7" />
                   </svg>
                 </div>
@@ -134,10 +189,25 @@
 
               <div class="flex items-center justify-between pt-3 mt-auto">
                 <div class="flex flex-wrap items-center gap-2">
-                  <span :class="['tag', project.tag === 'Coreproc' ? 'tag-client' : project.tag === 'Freelance' ? 'tag-freelance' : 'tag-personal']">{{ project.tag }}</span>
-                  <span v-for="tech in project.techs" :key="tech" class="tag tag-tech">{{ tech }}</span>
+                  <span
+                    :class="[
+                      'tag',
+                      project.tag === 'Coreproc'
+                        ? 'tag-client'
+                        : project.tag === 'Freelance'
+                        ? 'tag-freelance'
+                        : 'tag-personal',
+                    ]"
+                    >{{ project.tag }}</span
+                  >
+                  <span v-for="tech in project.techs" :key="tech" class="tag tag-tech">{{
+                    tech
+                  }}</span>
                 </div>
-                <Figma :size="18" class="figma-icon text-white/30 group-hover:text-[#FF6668] transition-colors duration-200" />
+                <Figma
+                  :size="18"
+                  class="figma-icon text-white/30 group-hover:text-[#FF6668] transition-colors duration-200"
+                />
               </div>
             </div>
           </div>
@@ -145,19 +215,24 @@
 
         <!-- See More Button -->
         <div v-if="allPersonalProjects.length > 3" class="flex justify-center mt-6">
-          <button
-            @click="showAllPersonal = !showAllPersonal"
-            class="see-more-btn"
-          >
-            {{ showAllPersonal ? 'See Less' : 'See More' }}
-            <svg :class="['w-3 h-3 transition-transform', showAllPersonal && 'rotate-180']" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <button @click="showAllPersonal = !showAllPersonal" class="see-more-btn">
+            {{ showAllPersonal ? "See Less" : "See More" }}
+            <svg
+              :class="['w-3 h-3 transition-transform', showAllPersonal && 'rotate-180']"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </button>
         </div>
       </div>
-
-   
     </div>
 
     <!-- ── PROJECT MODAL ── -->
@@ -178,13 +253,25 @@
             class="absolute z-10 modal-close-btn top-4 right-4"
             title="Close"
           >
-            <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              class="w-4 h-4 text-white/60"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
 
           <!-- LEFT — Scrollable image -->
-          <div class="modal-image-pane scrollbar-hidden overflow-y-auto md:w-[62%] flex-shrink-0">
+          <div
+            class="modal-image-pane scrollbar-hidden overflow-y-auto md:w-[62%] flex-shrink-0"
+          >
             <img
               :src="selectedProject?.image"
               :alt="selectedProject?.title"
@@ -193,8 +280,9 @@
           </div>
 
           <!-- RIGHT — Project info -->
-          <div class="flex flex-col flex-1 gap-5 overflow-y-auto modal-info-pane p-7 md:p-8 scrollbar-hidden">
-
+          <div
+            class="flex flex-col flex-1 gap-5 overflow-y-auto modal-info-pane p-7 md:p-8 scrollbar-hidden"
+          >
             <!-- Eyebrow -->
             <div class="flex items-center gap-2">
               <div class="w-1.5 h-1.5 rounded-full bg-[#FF6668]"></div>
@@ -209,16 +297,20 @@
               <span
                 :class="[
                   'tag',
-                  selectedProject?.tag === 'Coreproc' ? 'tag-client' : 
-                  selectedProject?.tag === 'Freelance' ? 'tag-freelance' : 
-                  'tag-personal'
+                  selectedProject?.tag === 'Coreproc'
+                    ? 'tag-client'
+                    : selectedProject?.tag === 'Freelance'
+                    ? 'tag-freelance'
+                    : 'tag-personal',
                 ]"
-              >{{ selectedProject?.tag }}</span>
+                >{{ selectedProject?.tag }}</span
+              >
               <span
                 v-for="tech in selectedProject?.techs"
                 :key="tech"
                 class="tag tag-tech"
-              >{{ tech }}</span>
+                >{{ tech }}</span
+              >
             </div>
 
             <!-- Divider -->
@@ -227,12 +319,32 @@
             <!-- Description -->
             <p class="modal-desc font-body">{{ selectedProject?.desc }}</p>
 
-            <!-- Figma row -->
-            <div class="flex items-center gap-2 pt-2 mt-auto">
-              <Figma :size="15" class="text-[#FF6668]/60" />
-              <span class="modal-eyebrow">Designed in Figma</span>
+            <!-- Bottom row: Figma + Visit button -->
+            <div class="flex items-center justify-between pt-2 mt-auto">
+              <div class="flex items-center gap-2">
+                <Figma :size="15" class="text-[#FF6668]/60" />
+                <span class="modal-eyebrow">Designed in Figma</span>
+              </div>
+              <a
+                v-if="selectedProject?.url"
+                :href="selectedProject.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="visit-btn"
+              >
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M3 13L13 3M13 3H6M13 3v7" />
+                </svg>
+                Visit Site
+              </a>
             </div>
-
           </div>
         </div>
       </div>
@@ -241,122 +353,148 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { Figma } from 'lucide-vue-next'
-import cozyImage from '@/assets/images/cozy.png'
-import cryptoImage from '@/assets/images/crypto.png'
-import vibeTeams from '@/assets/images/vibeteams.png'
-import synerpark from '@/assets/images/synerpark.png'
-import msb from '@/assets/images/msb.png'
-import prestige from '@/assets/images/prestige.png'
-import thirsty from '@/assets/images/thirsty.png'
+import { ref, computed } from "vue";
+import { Figma } from "lucide-vue-next";
+import cozyImage from "@/assets/images/cozy.png";
+import cryptoImage from "@/assets/images/crypto.png";
+import vibeTeams from "@/assets/images/vibeteams.png";
+import synerpark from "@/assets/images/synerpark.png";
+import msb from "@/assets/images/msb.png";
+import prestige from "@/assets/images/prestige.png";
+import thirsty from "@/assets/images/thirsty.png";
 
-const isModalOpen = ref(false)
-const selectedProject = ref(null)
-const showAllClient = ref(false)
-const showAllPersonal = ref(false)
+const isModalOpen = ref(false);
+const selectedProject = ref(null);
+const showAllClient = ref(false);
+const showAllPersonal = ref(false);
 
 const openModal = (project) => {
-  selectedProject.value = project
-  isModalOpen.value = true
-  document.body.style.overflow = 'hidden'
-}
+  selectedProject.value = project;
+  isModalOpen.value = true;
+  document.body.style.overflow = "hidden";
+};
 
 const closeModal = () => {
-  isModalOpen.value = false
-  selectedProject.value = null
-  document.body.style.overflow = ''
-}
+  isModalOpen.value = false;
+  selectedProject.value = null;
+  document.body.style.overflow = "";
+};
 
 const allProjects = [
   {
-    title: 'VibeTeams',
+    title: "VibeTeams",
     image: vibeTeams,
-    tag: 'Coreproc',
-    desc: 'Team collaboration SaaS where smart decisions happen — dashboard-driven platform with analytics and reporting.',
-    techs: ['UI/UX', 'SaaS'],
+    tag: "Coreproc",
+    desc:
+      "Team collaboration SaaS where smart decisions happen — dashboard-driven platform with analytics and reporting.",
+    techs: ["UI/UX", "SaaS"],
+    url: "https://vibeteams.ai/",
   },
   {
-    title: 'SynerPark',
+    title: "SynerPark",
     image: synerpark,
-    tag: 'Coreproc',
-    desc: 'Smart parking payment platform with seamless mobile onboarding and QR-based flow.',
-    techs: ['Mobile'],
+    tag: "Coreproc",
+    desc:
+      "Smart parking payment platform with seamless mobile onboarding and QR-based flow.",
+    techs: ["Mobile"],
+    url: "https://synerpark.com/",
   },
   {
-    title: 'Prestige Paper Products',
+    title: "Prestige Paper Products",
     image: prestige,
-    tag: 'Coreproc',
-    desc: 'Brand identity and e-commerce site for a paper goods company, featuring editorial-style product showcases and a cohesive brand system.',
-    techs: ['Branding', 'E-commerce'],
+    tag: "Coreproc",
+    desc:
+      "Brand identity and e-commerce site for a paper goods company, featuring editorial-style product showcases and a cohesive brand system.",
+    techs: ["Revamp", "E-commerce"],
   },
   {
-    title: 'Thirsty Oasis',
-    image: thirsty,
-    tag: 'Freelance',
-    desc: 'Livestream platform for a mature audience, with a sleek landing page design and intuitive UI for content discovery.',
-    techs: ['Landing Page', 'Branding'],
-  },
-  {
-    title: 'My Shopping Box',
+    title: "My Shopping Box",
     image: msb,
-    tag: 'Coreproc',
-    desc: 'E-commerce product showcase with editorial-style layout and brand-forward identity.',
-    techs: ['E-commerce'],
+    tag: "Coreproc",
+    desc:
+      "E-commerce product showcase with editorial-style layout and brand-forward identity.",
+    techs: ["E-commerce"],
+    url: "https://my-shoppingbox.com/ph",
   },
   {
-    title: 'Cozy Bean',
+    title: "Thirsty Oasis",
+    image: thirsty,
+    tag: "Freelance",
+    desc:
+      "Livestream platform for a mature audience, with a sleek landing page design and intuitive UI for content discovery.",
+    techs: ["Landing Page", "Branding"],
+  },
+
+  {
+    title: "Cozy Bean",
     image: cozyImage,
-    tag: 'Personal',
-    desc: 'A warm café brand & web experience featuring handcrafted menu design and a cozy product gallery.',
-    techs: ['Branding', 'Web'],
+    tag: "Personal",
+    desc:
+      "A warm café brand & web experience featuring handcrafted menu design and a cozy product gallery.",
+    techs: ["Branding", "Web"],
   },
   {
-    title: 'Crypto',
+    title: "Crypto",
     image: cryptoImage,
-    tag: 'Personal',
-    desc: 'Empowering digital currency journeys — bridging traditional finance with the crypto world.',
-    techs: ['Fintech', 'Landing'],
+    tag: "Personal",
+    desc:
+      "Empowering digital currency journeys — bridging traditional finance with the crypto world.",
+    techs: ["Fintech", "Landing"],
   },
-]
+];
 
 // All projects split by group
 const allClientProjects = computed(() =>
-  allProjects.filter((p) => p.tag === 'Coreproc' || p.tag === 'Freelance')
-)
+  allProjects.filter((p) => p.tag === "Coreproc" || p.tag === "Freelance")
+);
 
 const allPersonalProjects = computed(() =>
-  allProjects.filter((p) => p.tag === 'Personal')
-)
+  allProjects.filter((p) => p.tag === "Personal")
+);
 
 // Show 3 by default, all when expanded
 const displayedClientProjects = computed(() =>
   showAllClient.value ? allClientProjects.value : allClientProjects.value.slice(0, 3)
-)
+);
 
 const displayedPersonalProjects = computed(() =>
-  showAllPersonal.value ? allPersonalProjects.value : allPersonalProjects.value.slice(0, 3)
-)
+  showAllPersonal.value
+    ? allPersonalProjects.value
+    : allPersonalProjects.value.slice(0, 3)
+);
 </script>
 
 <style scoped>
 /* ── SCROLLBAR ── */
-.scrollbar-hidden { scrollbar-width: none; -ms-overflow-style: none; }
-.scrollbar-hidden::-webkit-scrollbar { display: none; }
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
 
 /* ── MODAL ── */
-.modal-enter-active, .modal-leave-active { transition: opacity 0.3s ease; }
-.modal-enter-from, .modal-leave-to { opacity: 0; }
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
 
 /* ── SECTION HEADER ── */
-.section-header-border { border-color: rgba(255, 102, 104, 0.18); }
+.section-header-border {
+  border-color: rgba(255, 102, 104, 0.18);
+}
 
 .section-eyebrow {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #FF6668;
+  color: #ff6668;
   margin-bottom: 10px;
 }
 
@@ -372,7 +510,7 @@ const displayedPersonalProjects = computed(() =>
   font-size: 64px;
   font-weight: 700;
   line-height: 1;
-  color: #FF6668;
+  color: #ff6668;
   opacity: 0.2;
   font-family: inherit;
 }
@@ -386,22 +524,24 @@ const displayedPersonalProjects = computed(() =>
 }
 
 .group-label-text {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
+  color: #66ff99;
   white-space: nowrap;
 }
 
-.group-line { background: rgba(255, 102, 104, 0.15); }
+.group-line {
+  background: rgba(255, 102, 104, 0.15);
+}
 
 /* ── SEE MORE BUTTON ── */
 .see-more-btn {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -436,7 +576,7 @@ const displayedPersonalProjects = computed(() =>
 
 /* Thumbnail overlay */
 .thumbnail-wrap::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(10, 3, 3, 0.65) 0%, transparent 55%);
@@ -444,20 +584,24 @@ const displayedPersonalProjects = computed(() =>
   transition: opacity 0.3s;
 }
 
-.project-card:hover .thumbnail-wrap::after { opacity: 1; }
+.project-card:hover .thumbnail-wrap::after {
+  opacity: 1;
+}
 
 /* Card body text */
 .card-title {
   font-size: 22px;
   font-weight: 700;
-  color: #FF6668;
+  color: #ff6668;
   line-height: 1.1;
 }
 
-.card-featured .card-title { font-size: 26px; }
+.card-featured .card-title {
+  font-size: 26px;
+}
 
 .card-desc {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 300;
   line-height: 1.65;
 }
@@ -472,7 +616,7 @@ const displayedPersonalProjects = computed(() =>
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #FF6668;
+  color: #ff6668;
   opacity: 0;
   transform: translate(-4px, 4px);
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -485,7 +629,7 @@ const displayedPersonalProjects = computed(() =>
 
 /* Tags */
 .tag {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
   font-size: 10px;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -506,15 +650,15 @@ const displayedPersonalProjects = computed(() =>
 }
 
 .tag-personal {
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.74);
-  border: 1px solid rgba(255, 255, 255, 0.76);
+  background: rgba(255, 218, 54, 0.144);
+  color: rgb(255, 218, 54);
+  border: 1px solid rgb(255, 218, 54);
 }
 
 .tag-tech {
   background: transparent;
-  color: rgba(255,255,255,0.3);
-  border: 1px solid rgba(255, 102, 104, 0.15);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgba(255, 255, 255, 0.616);
 }
 
 /* ── MODAL ── */
@@ -539,7 +683,7 @@ const displayedPersonalProjects = computed(() =>
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: rgba(255, 102, 104, 0.08);
+  background: rgba(255, 102, 105, 0.692);
   border: 1px solid rgba(255, 102, 104, 0.2);
   display: flex;
   align-items: center;
@@ -548,8 +692,8 @@ const displayedPersonalProjects = computed(() =>
 }
 
 .modal-close-btn:hover {
-  background: #FF6668;
-  border-color: #FF6668;
+  background: #ff6668;
+  border-color: #ff6668;
 }
 
 .modal-close-btn:hover svg {
@@ -557,11 +701,11 @@ const displayedPersonalProjects = computed(() =>
 }
 
 .modal-eyebrow {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 10px;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.35);
+  color: #66ff99;
 }
 
 .modal-title {
@@ -572,35 +716,119 @@ const displayedPersonalProjects = computed(() =>
 }
 
 .modal-desc {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgb(255, 255, 255);
   line-height: 1.7;
+}
+
+/* ── VISIT BUTTON ── */
+.visit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ff6668;
+  background: rgba(255, 102, 104, 0.1);
+  border: 1px solid rgba(255, 102, 104, 0.35);
+  border-radius: 999px;
+  padding: 6px 14px;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.visit-btn:hover {
+  background: #ff6668;
+  border-color: #ff6668;
+  color: #fff;
 }
 
 /* ── FLOATING CODE SYMBOLS ── */
 .code-symbol {
   position: absolute;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-weight: 600;
   color: #ffffff;
   opacity: 0.08;
   pointer-events: none;
 }
 
-.symbol-1 { font-size: 3rem; top: 15%; left: 10%; animation: floatCode 8s ease-in-out infinite; }
-.symbol-2 { font-size: 2.5rem; top: 25%; right: 15%; animation: floatCode 7s ease-in-out infinite; animation-delay: -2s; }
-.symbol-3 { font-size: 2rem; top: 45%; left: 20%; animation: floatCode 9s ease-in-out infinite; animation-delay: -4s; }
-.symbol-4 { font-size: 2.8rem; bottom: 30%; right: 25%; animation: floatCode 6.5s ease-in-out infinite; animation-delay: -1s; }
-.symbol-5 { font-size: 2.2rem; top: 60%; left: 8%; animation: floatCode 7.5s ease-in-out infinite; animation-delay: -5s; }
-.symbol-6 { font-size: 2rem; bottom: 20%; left: 30%; animation: floatCode 8.5s ease-in-out infinite; animation-delay: -3s; }
-.symbol-7 { font-size: 2.5rem; top: 35%; right: 8%; animation: floatCode 7s ease-in-out infinite; animation-delay: -6s; }
-.symbol-8 { font-size: 2rem; bottom: 15%; right: 12%; animation: floatCode 9s ease-in-out infinite; animation-delay: -7s; }
+.symbol-1 {
+  font-size: 3rem;
+  top: 15%;
+  left: 10%;
+  animation: floatCode 8s ease-in-out infinite;
+}
+.symbol-2 {
+  font-size: 2.5rem;
+  top: 25%;
+  right: 15%;
+  animation: floatCode 7s ease-in-out infinite;
+  animation-delay: -2s;
+}
+.symbol-3 {
+  font-size: 2rem;
+  top: 45%;
+  left: 20%;
+  animation: floatCode 9s ease-in-out infinite;
+  animation-delay: -4s;
+}
+.symbol-4 {
+  font-size: 2.8rem;
+  bottom: 30%;
+  right: 25%;
+  animation: floatCode 6.5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+.symbol-5 {
+  font-size: 2.2rem;
+  top: 60%;
+  left: 8%;
+  animation: floatCode 7.5s ease-in-out infinite;
+  animation-delay: -5s;
+}
+.symbol-6 {
+  font-size: 2rem;
+  bottom: 20%;
+  left: 30%;
+  animation: floatCode 8.5s ease-in-out infinite;
+  animation-delay: -3s;
+}
+.symbol-7 {
+  font-size: 2.5rem;
+  top: 35%;
+  right: 8%;
+  animation: floatCode 7s ease-in-out infinite;
+  animation-delay: -6s;
+}
+.symbol-8 {
+  font-size: 2rem;
+  bottom: 15%;
+  right: 12%;
+  animation: floatCode 9s ease-in-out infinite;
+  animation-delay: -7s;
+}
 
 @keyframes floatCode {
-  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.08; }
-  25%       { transform: translateY(-20px) translateX(10px) rotate(5deg); opacity: 0.12; }
-  50%       { transform: translateY(-40px) translateX(-10px) rotate(-5deg); opacity: 0.06; }
-  75%       { transform: translateY(-20px) translateX(15px) rotate(3deg); opacity: 0.1; }
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.08;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(5deg);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translateY(-40px) translateX(-10px) rotate(-5deg);
+    opacity: 0.06;
+  }
+  75% {
+    transform: translateY(-20px) translateX(15px) rotate(3deg);
+    opacity: 0.1;
+  }
 }
 </style>

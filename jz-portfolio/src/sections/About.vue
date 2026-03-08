@@ -284,7 +284,7 @@ const devTools = [
   font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: #66ff99;
   white-space: nowrap;
 }
 
