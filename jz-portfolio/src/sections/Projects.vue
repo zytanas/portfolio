@@ -386,7 +386,7 @@ const allProjects = [
     image: vibeTeams,
     tag: "Coreproc",
     desc:
-      "Team collaboration SaaS where smart decisions happen — dashboard-driven platform with analytics and reporting.",
+      "Team collaboration SaaS with analytics, reporting, and a dashboard-driven workflow.",
     techs: ["UI/UX", "SaaS"],
     url: "https://vibeteams.ai/",
     projectType: "development",
@@ -408,7 +408,7 @@ const allProjects = [
     image: prestige,
     tag: "Coreproc",
     desc:
-      "Brand identity and e-commerce site for a paper goods company, featuring editorial-style product showcases and a cohesive brand system.",
+      "Brand identity and e-commerce site for a paper goods brand with editorial-style product showcases.",
     techs: ["Revamp", "E-commerce"],
     projectType: "development",
     developedWith: "Vue",
@@ -429,7 +429,7 @@ const allProjects = [
     image: thirsty,
     tag: "Freelance",
     desc:
-      "Livestream platform for a mature audience, with a sleek landing page design and intuitive UI for content discovery.",
+      "Livestream platform for a mature audience with a sleek landing page and intuitive content discovery.",
     techs: ["Landing Page", "Branding"],
     projectType: "design",
   },
@@ -439,7 +439,7 @@ const allProjects = [
     image: portfolio,
     tag: "Personal",
     desc:
-      "A personal portfolio site showcasing a curated selection of design projects, featuring a clean layout and interactive elements to highlight key work.",
+      "Personal portfolio featuring curated design projects in a clean, interactive layout.",
     techs: ["Web", "Personal"],
     url: "https://lemonadezzz.vercel.app/",
     projectType: "development",
