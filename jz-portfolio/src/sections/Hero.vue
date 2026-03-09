@@ -669,6 +669,10 @@ onUnmounted(() => {
   z-index: 20; pointer-events: none;
   transition: opacity 0.8s ease;
   animation: hintPulse 2.5s ease-in-out infinite;
+  display: none; /* Hidden on mobile by default */
+}
+@media (min-width: 768px) {
+  .mouse-hint { display: block; }
 }
 .mouse-hint.gone { opacity: 0; }
 @keyframes hintPulse {

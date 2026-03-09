@@ -40,24 +40,16 @@
           <div class="flex-1 h-px group-line"></div>
         </div>
 
-        <!-- 1 featured + 2 smaller grid -->
+        <!-- Grid -->
         <div class="grid gap-5 md:grid-cols-3">
           <div
             v-for="(project, index) in displayedClientProjects"
             :key="project.title"
             @click="openModal(project)"
-            :class="[
-              'project-card group cursor-pointer rounded-2xl overflow-hidden flex flex-col',
-              index === 0 ? 'md:col-span-1 card-featured' : 'card-small',
-            ]"
+            class="flex flex-col overflow-hidden cursor-pointer project-card group rounded-2xl"
           >
             <!-- Thumbnail -->
-            <div
-              :class="[
-                'relative overflow-hidden thumbnail-wrap',
-                index === 0 ? 'h-64' : 'h-44',
-              ]"
-            >
+            <div class="relative h-64 overflow-hidden thumbnail-wrap">
               <img
                 :src="project.image"
                 :alt="project.title"
@@ -137,7 +129,7 @@
       <div class="mb-14">
         <!-- Group Label -->
         <div class="flex items-center gap-3 mb-6">
-          <div class="group-dot bg-red-400"></div>
+          <div class="bg-red-400 group-dot"></div>
           <span class="group-label-text text-white/40">Personal Projects</span>
           <div class="flex-1 h-px group-line"></div>
         </div>
@@ -147,18 +139,10 @@
             v-for="(project, index) in displayedPersonalProjects"
             :key="project.title"
             @click="openModal(project)"
-            :class="[
-              'project-card group cursor-pointer rounded-2xl overflow-hidden flex flex-col',
-              index === 0 ? 'md:col-span-1 card-featured' : 'card-small',
-            ]"
+            class="flex flex-col overflow-hidden cursor-pointer project-card group rounded-2xl"
           >
             <!-- Thumbnail -->
-            <div
-              :class="[
-                'relative overflow-hidden thumbnail-wrap',
-                index === 0 ? 'h-64' : 'h-44',
-              ]"
-            >
+            <div class="relative h-64 overflow-hidden thumbnail-wrap">
               <img
                 :src="project.image"
                 :alt="project.title"
@@ -362,6 +346,7 @@ import synerpark from "@/assets/images/synerpark.png";
 import msb from "@/assets/images/msb.png";
 import prestige from "@/assets/images/prestige.png";
 import thirsty from "@/assets/images/thirsty.png";
+import portfolio from "@/assets/images/portfolio.png";
 
 const isModalOpen = ref(false);
 const selectedProject = ref(null);
@@ -425,6 +410,15 @@ const allProjects = [
     techs: ["Landing Page", "Branding"],
   },
 
+  {
+    title: "Adrian's Portfolio",
+    image: portfolio,
+    tag: "Personal",
+    desc:
+      "A personal portfolio site showcasing a curated selection of design projects, featuring a clean layout and interactive elements to highlight key work.",
+    techs: ["Web", "Personal"],
+    url: "https://lemonadezzz.vercel.app/",
+  },
   {
     title: "Cozy Bean",
     image: cozyImage,
@@ -716,10 +710,10 @@ const displayedPersonalProjects = computed(() =>
 }
 
 .modal-desc {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 300;
   color: rgb(255, 255, 255);
-  line-height: 1.7;
+  /* line-height: 1.7; */
 }
 
 /* ── VISIT BUTTON ── */
