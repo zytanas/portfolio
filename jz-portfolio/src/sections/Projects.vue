@@ -96,6 +96,12 @@
                   }}</span>
                 </div>
                 <Figma
+                  v-if="project.projectType === 'design'"
+                  :size="18"
+                  class="figma-icon text-white/30 group-hover:text-[#FF6668] transition-colors duration-200"
+                />
+                <Code2
+                  v-else
                   :size="18"
                   class="figma-icon text-white/30 group-hover:text-[#FF6668] transition-colors duration-200"
                 />
@@ -189,6 +195,12 @@
                   }}</span>
                 </div>
                 <Figma
+                  v-if="project.projectType === 'design'"
+                  :size="18"
+                  class="figma-icon text-white/30 group-hover:text-[#FF6668] transition-colors duration-200"
+                />
+                <Code2
+                  v-else
                   :size="18"
                   class="figma-icon text-white/30 group-hover:text-[#FF6668] transition-colors duration-200"
                 />
@@ -306,8 +318,11 @@
             <!-- Bottom row: Figma + Visit button -->
             <div class="flex items-center justify-between pt-2 mt-auto">
               <div class="flex items-center gap-2">
-                <Figma :size="15" class="text-[#FF6668]/60" />
-                <span class="modal-eyebrow">Designed in Figma</span>
+                <Figma v-if="selectedProject?.projectType === 'design'" :size="15" class="text-[#FF6668]/60" />
+                <Code2 v-else :size="15" class="text-[#FF6668]/60" />
+                <span class="modal-eyebrow">
+                  {{ selectedProject?.projectType === 'design' ? 'Designed in Figma' : `Developed with ${selectedProject?.developedWith}` }}
+                </span>
               </div>
               <a
                 v-if="selectedProject?.url"
@@ -338,7 +353,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { Figma } from "lucide-vue-next";
+import { Figma, Code2 } from "lucide-vue-next";
 import cozyImage from "@/assets/images/cozy.png";
 import cryptoImage from "@/assets/images/crypto.png";
 import vibeTeams from "@/assets/images/vibeteams.png";
@@ -374,6 +389,8 @@ const allProjects = [
       "Team collaboration SaaS where smart decisions happen — dashboard-driven platform with analytics and reporting.",
     techs: ["UI/UX", "SaaS"],
     url: "https://vibeteams.ai/",
+    projectType: "development",
+    developedWith: "Vue",
   },
   {
     title: "SynerPark",
@@ -383,6 +400,8 @@ const allProjects = [
       "Smart parking payment platform with seamless mobile onboarding and QR-based flow.",
     techs: ["Mobile"],
     url: "https://synerpark.com/",
+    projectType: "development",
+    developedWith: "Nuxt",
   },
   {
     title: "Prestige Paper Products",
@@ -391,6 +410,8 @@ const allProjects = [
     desc:
       "Brand identity and e-commerce site for a paper goods company, featuring editorial-style product showcases and a cohesive brand system.",
     techs: ["Revamp", "E-commerce"],
+    projectType: "development",
+    developedWith: "Vue",
   },
   {
     title: "My Shopping Box",
@@ -400,6 +421,8 @@ const allProjects = [
       "E-commerce product showcase with editorial-style layout and brand-forward identity.",
     techs: ["E-commerce"],
     url: "https://my-shoppingbox.com/ph",
+    projectType: "development",
+    developedWith: "Blade",
   },
   {
     title: "Thirsty Oasis",
@@ -408,6 +431,7 @@ const allProjects = [
     desc:
       "Livestream platform for a mature audience, with a sleek landing page design and intuitive UI for content discovery.",
     techs: ["Landing Page", "Branding"],
+    projectType: "design",
   },
 
   {
@@ -418,6 +442,8 @@ const allProjects = [
       "A personal portfolio site showcasing a curated selection of design projects, featuring a clean layout and interactive elements to highlight key work.",
     techs: ["Web", "Personal"],
     url: "https://lemonadezzz.vercel.app/",
+    projectType: "development",
+    developedWith: "TSX",
   },
   {
     title: "Cozy Bean",
@@ -426,6 +452,7 @@ const allProjects = [
     desc:
       "A warm café brand & web experience featuring handcrafted menu design and a cozy product gallery.",
     techs: ["Branding", "Web"],
+    projectType: "design",
   },
   {
     title: "Crypto",
@@ -434,6 +461,7 @@ const allProjects = [
     desc:
       "Empowering digital currency journeys — bridging traditional finance with the crypto world.",
     techs: ["Fintech", "Landing"],
+    projectType: "design",
   },
 ];
 
