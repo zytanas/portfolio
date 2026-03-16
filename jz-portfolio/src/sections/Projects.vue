@@ -1,5 +1,5 @@
 <template>
-  <section id="projects" class="relative px-6 py-24 overflow-hidden">
+  <section id="projects" class="relative px-6 py-24 overflow-hidden perf-optimize">
 
     <!-- Floating Code Symbols -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -7,10 +7,6 @@
       <div class="code-symbol symbol-2">{ }</div>
       <div class="code-symbol symbol-3">[ ]</div>
       <div class="code-symbol symbol-4">&lt;div&gt;</div>
-      <div class="code-symbol symbol-5">( )</div>
-      <div class="code-symbol symbol-6">===</div>
-      <div class="code-symbol symbol-7">=&gt;</div>
-      <div class="code-symbol symbol-8">&lt;/&gt;</div>
     </div>
 
     <div class="ambient-glow glow-tl" />
@@ -218,14 +214,14 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { Figma, Code2 } from 'lucide-vue-next'
-import cozyImage    from '@/assets/images/cozy.png'
-import cryptoImage  from '@/assets/images/crypto.png'
-import vibeTeams    from '@/assets/images/vibeteams.png'
-import synerpark    from '@/assets/images/synerpark.png'
-import msb          from '@/assets/images/msb.png'
-import prestige     from '@/assets/images/prestige.png'
-import thirsty      from '@/assets/images/thirsty.png'
-import portfolio    from '@/assets/images/portfolio.png'
+import cozyImage    from '@/assets/images/cozy.webp'
+import cryptoImage  from '@/assets/images/crypto.webp'
+import vibeTeams    from '@/assets/images/vibeteams.webp'
+import synerpark    from '@/assets/images/synerpark.webp'
+import msb          from '@/assets/images/msb.webp'
+import prestige     from '@/assets/images/prestige.webp'
+import thirsty      from '@/assets/images/thirsty.webp'
+import portfolio    from '@/assets/images/portfolio.webp'
 
 const isModalOpen     = ref(false)
 const selectedProject = ref(null)

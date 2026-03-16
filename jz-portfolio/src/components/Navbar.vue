@@ -23,7 +23,7 @@
           <!-- Center Logo -->
           <div class="flex-shrink-0">
             <a href="#" @click.prevent="scrollToSection('hero')" class="block">
-              <img src="/src/assets/images/jz-circle.png" alt="Logo" class="w-auto h-12" />
+              <img src="/src/assets/images/jz-circle.webp" alt="Logo" class="w-auto h-12" />
             </a>
           </div>
 
@@ -51,7 +51,7 @@
         <div class="md:hidden">
           <div class="flex items-center justify-between">
             <a href="#" @click.prevent="scrollToSection('hero')" class="nav-logo-wrap">
-              <img src="/src/assets/images/jz-circle.png" alt="Logo" class="w-auto h-12" />
+              <img src="/src/assets/images/jz-circle.webp" alt="Logo" class="w-auto h-12" />
             </a>
             <button
               @click="mobileMenuOpen = !mobileMenuOpen"

@@ -138,6 +138,7 @@ let ctx, W, H, rafId
 let targetMouse  = { x: -9999, y: -9999 }
 let smoothMouse  = { x: -9999, y: -9999 }
 let isMouseInside = false
+let isVisible = true // Track visibility
 
 // Updated repel/attract colors to violet palette
 const ACCENT_R = 123, ACCENT_G = 92, ACCENT_B = 250  // #7B5CFA violet
@@ -146,6 +147,9 @@ const REPEL_STRENGTH = 3.0
 const ATTRACT_RADIUS = 260
 const ATTRACT_STR    = 0.10
 const CONN_DIST      = 125
+
+// Detect mobile devices
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
 class Particle {
   constructor() { this.init() }
@@ -165,7 +169,9 @@ class Particle {
 let particles = []
 
 function initParticles() {
-  const count = Math.floor((W * H) / 8500)
+  // Reduce particle count on mobile for better performance
+  const divisor = isMobile ? 15000 : 8500
+  const count = Math.floor((W * H) / divisor)
   particles = Array.from({ length: count }, () => new Particle())
 }
 
@@ -275,6 +281,12 @@ function draw() {
 }
 
 function loop() {
+  // Only animate when visible
+  if (!isVisible) {
+    rafId = requestAnimationFrame(loop)
+    return
+  }
+  
   smoothMouse.x += (targetMouse.x - smoothMouse.x) * 0.18
   smoothMouse.y += (targetMouse.y - smoothMouse.y) * 0.18
   draw()
@@ -313,11 +325,33 @@ onMounted(() => {
   resize()
   loop()
   window.addEventListener('resize', resize, { passive: true })
+  
+  // Intersection Observer to pause animation when not visible
+  const heroSection = bgCanvas.value.closest('section')
+  if (heroSection) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          isVisible = entry.isIntersecting
+        })
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(heroSection)
+    
+    // Store observer to disconnect later
+    bgCanvas.value._observer = observer
+  }
 })
 
 onUnmounted(() => {
   if (rafId) cancelAnimationFrame(rafId)
   window.removeEventListener('resize', resize)
+  
+  // Disconnect intersection observer
+  if (bgCanvas.value?._observer) {
+    bgCanvas.value._observer.disconnect()
+  }
 })
 </script>
 

@@ -12,7 +12,7 @@
         <div class="footer-brand">
           <a href="#" @click.prevent="scrollToTop" class="footer-logo-wrap">
             <img
-              src="/src/assets/images/jz-circle.png"
+              src="/src/assets/images/jz-circle.webp"
               alt="Julia Almoite"
               class="footer-logo-img"
             />

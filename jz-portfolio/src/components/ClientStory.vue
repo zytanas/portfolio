@@ -1,15 +1,11 @@
 <template>
-  <section id="testimonials" class="relative px-6 py-24 overflow-hidden">
+  <section id="testimonials" class="relative px-6 py-24 overflow-hidden perf-optimize">
     <!-- Floating Code Symbols -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="code-symbol symbol-1">&lt;/&gt;</div>
       <div class="code-symbol symbol-2">{ }</div>
       <div class="code-symbol symbol-3">[ ]</div>
       <div class="code-symbol symbol-4">&lt;div&gt;</div>
-      <div class="code-symbol symbol-5">( )</div>
-      <div class="code-symbol symbol-6">===</div>
-      <div class="code-symbol symbol-7">=&gt;</div>
-      <div class="code-symbol symbol-8">&lt;/&gt;</div>
     </div>
 
     <div class="stories-glow glow-center" />

@@ -5,14 +5,40 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     vue(),
-    vueDevTools(),
-  ],
+    // Only use devtools in development
+    mode === 'development' && vueDevTools(),
+  ].filter(Boolean),
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-})
+  build: {
+    // Optimize chunks
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'lucide': ['lucide-vue-next'],
+          'vue-vendor': ['vue', 'vue-router'],
+        }
+      }
+    },
+    // Increase chunk size warning limit for large assets
+    chunkSizeWarningLimit: 1000,
+    // Minify and optimize
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['vue', 'vue-router', 'lucide-vue-next']
+  }
+}))
