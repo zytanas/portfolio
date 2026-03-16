@@ -25,58 +25,56 @@
         <!-- LEFT COLUMN -->
         <div class="flex flex-col items-center text-center md:items-start md:text-left">
 
-          <!-- Eyebrow -->
-          <div
-            class="flex items-center gap-3 mb-8 fade-up"
-            style="animation-delay:0.1s"
-          >
-            <span class="eyebrow-pip" />
-            <p class="section-eyebrow">// Hello World</p>
-            <span class="eyebrow-pip" />
+          <!-- Available tag -->
+          <div class="hero-tag fade-up" style="animation-delay:0.1s">
+            <span class="hero-tag-dot" />
+            Available for freelance &amp; full-time
           </div>
 
-          <!-- Name block -->
-          <div class="fade-up" style="animation-delay:0.25s">
-            <p class="hi-im font-heading">Hi, I'm</p>
-            <h1 class="hero-name font-heading">
-              <span
-                v-for="(char, i) in 'Julia'"
-                :key="i"
-                class="name-char"
-                :style="{ '--i': i }"
-              >{{ char }}</span>
-            </h1>
-          </div>
+          <!-- Headline -->
+          <h1 class="hero-headline font-heading fade-up" style="animation-delay:0.25s">
+            Crafting Digital<br>
+            <span class="headline-accent">Products People</span><br>
+            Actually Love.
+          </h1>
 
-          <!-- Description -->
+          <!-- Value prop -->
           <p
-            class="max-w-md text-base leading-relaxed mt-7 font-body desc-text fade-up"
-            style="animation-delay:0.58s"
+            class="max-w-md mt-6 text-base leading-relaxed font-body desc-text fade-up"
+            style="animation-delay:0.45s"
           >
-            I <strong class="font-semibold text-red-400">build</strong> what I <strong class="font-semibold text-red-400">design</strong> —
-            from pixel-perfect layouts to clean, production-ready code.
-            Every detail crafted for seamless, user-focused experiences.
+            I'm <strong class="font-semibold text-accent-strong">Julia Almoite</strong> — a UI/UX Designer &amp; Frontend Developer
+            who <strong class="font-semibold text-accent-strong">builds</strong> what she <strong class="font-semibold text-accent-strong">designs</strong>.
+            Pixel-perfect layouts, clean code, seamless experiences.
           </p>
 
-          <!-- Divider -->
-          <div class="mt-8 divider-line fade-up" style="animation-delay:0.68s" />
-
           <!-- CTA Buttons -->
-          <div class="flex flex-wrap justify-center gap-3 mt-8 md:justify-start fade-up" style="animation-delay:0.78s">
+          <div class="flex flex-wrap justify-center gap-3 mt-8 md:justify-start fade-up" style="animation-delay:0.62s">
             <button
               @click="scrollToContact"
               class="flex items-center gap-2 px-6 py-3 text-sm font-semibold transition-all duration-300 cta-primary rounded-xl font-body"
             >
-              Let's Talk
+              Start a Project
               <MoveRight class="w-4 h-4" />
             </button>
-            <button
-              @click="showCVModal = true"
-              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold transition-all duration-300 cta-secondary rounded-xl font-body"
-            >
-              View Resume
-              <FileText class="w-4 h-4" />
-            </button>
+          </div>
+
+          <!-- Stats row -->
+          <div class="hero-stats fade-up" style="animation-delay:0.78s">
+            <div class="hero-stat">
+              <p class="hero-stat-num font-heading">8<span>+</span></p>
+              <p class="font-mono hero-stat-label">Projects Shipped</p>
+            </div>
+            <div class="hero-stat-divider" />
+            <div class="hero-stat">
+              <p class="hero-stat-num font-heading">2<span>yrs</span></p>
+              <p class="font-mono hero-stat-label">Experience</p>
+            </div>
+            <div class="hero-stat-divider" />
+            <div class="hero-stat">
+              <p class="hero-stat-num font-heading">100<span>%</span></p>
+              <p class="font-mono hero-stat-label">Remote-Ready</p>
+            </div>
           </div>
 
           <!-- Socials -->
@@ -118,7 +116,7 @@
             </div>
             <div class="split-panel__body">
               <div class="split-icon"><Palette class="w-6 h-6" /></div>
-              <p class="split-role font-heading">Web Designer</p>
+              <p class="split-role font-heading">UI/UX Designer</p>
               <p class="font-mono split-desc">UI/UX · Figma · Design Systems</p>
             </div>
           </div>
@@ -126,44 +124,23 @@
         </div>
       </div>
     </div>
-
-    <!-- ── CORNER BADGES ── -->
-    <div class="role-badge fade-up" style="animation-delay:1.05s">
-      <span class="role-badge-dot" />
-      <span class="font-mono text-xs text-white">Available for work</span>
-    </div>
-
-    <div class="stat-card fade-up" style="animation-delay:1.1s">
-      <p class="text-[#66ff99] font-bold text-xl leading-none font-heading">2+</p>
-      <p class="font-mono text-xs mt-0.5 stat-lbl">yrs exp.</p>
-    </div>
-
-    <!-- Mouse hint fades once user interacts -->
-    <p class="font-mono mouse-hint" :class="{ gone: hasInteracted }">
-      move cursor to interact
-    </p>
-
-    <!-- CV Modal -->
-    <CVModal :isOpen="showCVModal" @close="showCVModal = false" />
   </section>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { MoveRight, FileText, Code2, Palette, Linkedin, Github } from 'lucide-vue-next'
-import CVModal from '../components/CVModal.vue'
-
-const showCVModal = ref(false)
+import { MoveRight, Code2, Palette, Linkedin, Github } from 'lucide-vue-next'
 
 // ── CANVAS ──
 const bgCanvas = ref(null)
-const hasInteracted = ref(false)
 
 let ctx, W, H, rafId
 let targetMouse  = { x: -9999, y: -9999 }
 let smoothMouse  = { x: -9999, y: -9999 }
 let isMouseInside = false
 
+// Updated repel/attract colors to violet palette
+const ACCENT_R = 123, ACCENT_G = 92, ACCENT_B = 250  // #7B5CFA violet
 const REPEL_RADIUS   = 100
 const REPEL_STRENGTH = 3.0
 const ATTRACT_RADIUS = 260
@@ -180,7 +157,8 @@ class Particle {
     this.r  = Math.random() * 1.5 + 0.35
     this.base = Math.random() * 0.38 + 0.07
     this.opacity = this.base
-    this.warm = Math.random() > 0.65
+    // warm = violet-ish, cool = teal-ish
+    this.warm = Math.random() > 0.5
   }
 }
 
@@ -194,21 +172,23 @@ function initParticles() {
 function draw() {
   ctx.clearRect(0, 0, W, H)
 
-  ctx.fillStyle = '#080808'
+  ctx.fillStyle = '#0A0A0F'
   ctx.fillRect(0, 0, W, H)
 
+  // Mouse aura — violet
   if (isMouseInside && smoothMouse.x > 0) {
     const gm = ctx.createRadialGradient(smoothMouse.x, smoothMouse.y, 0, smoothMouse.x, smoothMouse.y, ATTRACT_RADIUS * 1.5)
-    gm.addColorStop(0,   'rgba(255,102,104,0.11)')
-    gm.addColorStop(0.5, 'rgba(255,102,104,0.04)')
+    gm.addColorStop(0,   `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.13)`)
+    gm.addColorStop(0.5, `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.05)`)
     gm.addColorStop(1,   'transparent')
     ctx.fillStyle = gm
     ctx.fillRect(0, 0, W, H)
   }
 
+  // Static ambient glows
   ;[
-    [W * 0.08, H * 0.12, W * 0.44, 'rgba(255,102,104,0.07)'],
-    [W * 0.92, H * 0.88, W * 0.38, 'rgba(200,60,60,0.05)'],
+    [W * 0.08, H * 0.12, W * 0.44, `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.07)`],
+    [W * 0.92, H * 0.88, W * 0.38, 'rgba(45,212,191,0.04)'],   // teal corner
   ].forEach(([cx, cy, r, color]) => {
     const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r)
     g.addColorStop(0, color)
@@ -247,11 +227,12 @@ function draw() {
     p.vx *= 0.97
     p.vy *= 0.97
 
+    // Violet particles + teal accent particles
     ctx.beginPath()
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
     ctx.fillStyle = p.warm
-      ? `rgba(255,102,104,${p.opacity})`
-      : `rgba(255,170,150,${p.opacity * 0.65})`
+      ? `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},${p.opacity})`
+      : `rgba(45,212,191,${p.opacity * 0.55})`
     ctx.fill()
   })
 
@@ -265,29 +246,30 @@ function draw() {
         ctx.beginPath()
         ctx.moveTo(particles[i].x, particles[i].y)
         ctx.lineTo(particles[j].x, particles[j].y)
-        ctx.strokeStyle = `rgba(255,102,104,${0.05 * (1 - d / CONN_DIST)})`
+        ctx.strokeStyle = `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},${0.05 * (1 - d / CONN_DIST)})`
         ctx.lineWidth = 0.55
         ctx.stroke()
       }
     }
   }
 
+  // Mouse cursor rings
   if (isMouseInside && smoothMouse.x > 0) {
     ctx.beginPath()
     ctx.arc(smoothMouse.x, smoothMouse.y, REPEL_RADIUS, 0, Math.PI * 2)
-    ctx.strokeStyle = 'rgba(255,102,104,0.08)'
+    ctx.strokeStyle = `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.10)`
     ctx.lineWidth = 1
     ctx.stroke()
 
     ctx.beginPath()
     ctx.arc(smoothMouse.x, smoothMouse.y, REPEL_RADIUS * 0.38, 0, Math.PI * 2)
-    ctx.strokeStyle = 'rgba(255,102,104,0.20)'
+    ctx.strokeStyle = `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.22)`
     ctx.lineWidth = 1
     ctx.stroke()
 
     ctx.beginPath()
     ctx.arc(smoothMouse.x, smoothMouse.y, 3, 0, Math.PI * 2)
-    ctx.fillStyle = 'rgba(255,102,104,0.75)'
+    ctx.fillStyle = `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.8)`
     ctx.fill()
   }
 }
@@ -303,14 +285,11 @@ function onMouseMove(e) {
   const rect = bgCanvas.value.getBoundingClientRect()
   targetMouse.x = e.clientX - rect.left
   targetMouse.y = e.clientY - rect.top
-
   if (!isMouseInside) {
     smoothMouse.x = targetMouse.x
     smoothMouse.y = targetMouse.y
   }
-
   isMouseInside = true
-  if (!hasInteracted.value) hasInteracted.value = true
 }
 
 function onMouseLeave() {
@@ -353,66 +332,98 @@ onUnmounted(() => {
 
 /* ── VIGNETTE ── */
 .vignette {
-  background: radial-gradient(ellipse at 50% 50%, transparent 32%, rgba(4,4,4,0.78) 100%);
+  background: radial-gradient(ellipse at 50% 50%, transparent 32%, rgba(4,4,10,0.82) 100%);
 }
 
 /* ── SCANLINES ── */
 .scanlines {
   background: repeating-linear-gradient(
     0deg, transparent, transparent 2px,
-    rgba(0,0,0,0.035) 2px, rgba(0,0,0,0.035) 4px
+    rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px
   );
 }
 
-/* ── EYEBROW ── */
-.section-eyebrow {
+/* ── AVAILABLE TAG ── */
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border: 1px solid rgba(123, 92, 250, 0.25);
+  border-radius: 999px;
   font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #66ff99;
+  font-size: 0.75rem;
+  color: #C4B5FD;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.75rem;
+  background: rgba(123, 92, 250, 0.07);
 }
-.eyebrow-pip {
+.hero-tag-dot {
   display: block;
-  width: 36px; height: 1px;
-  background: rgba(255,102,104,0.45);
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #2DD4BF;
+  box-shadow: 0 0 6px #2DD4BF;
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
-/* ── HI I'M ── */
-.hi-im {
-  font-size: clamp(48px, 3.5vw, 56px);
+/* ── HEADLINE ── */
+.hero-headline {
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
   font-weight: 800;
-  color: rgba(255,255,255,0.72);
-  letter-spacing: -0.02em;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-/* ── HERO NAME ── */
-.hero-name {
-  font-size: clamp(96px, 11vw, 160px);
-  font-weight: 800;
-  line-height: 0.88;
+  line-height: 1.05;
   letter-spacing: -0.03em;
+  color: #F0EDF8;
+  margin-bottom: 0;
+}
+.headline-accent {
+  color: #7B5CFA;
+  text-shadow:
+    0 0 40px rgba(123, 92, 250, 0.45),
+    0 0 80px rgba(123, 92, 250, 0.18);
+}
+
+/* ── STATS ROW ── */
+.hero-stats {
   display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
   justify-content: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(123, 92, 250, 0.12);
+  width: 100%;
+  max-width: 420px;
 }
 @media (min-width: 768px) {
-  .hero-name { justify-content: flex-start; }
+  .hero-stats { justify-content: flex-start; }
 }
-.name-char {
-  display: inline-block;
-  color: #FF6668;
-  text-shadow:
-    0 0 40px rgba(255,102,104,0.55),
-    0 0 80px rgba(255,102,104,0.22),
-    0 0 160px rgba(255,102,104,0.08);
-  animation: charFloat 3s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 0.12s);
+.hero-stat { text-align: center; }
+@media (min-width: 768px) { .hero-stat { text-align: left; } }
+.hero-stat-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #F0EDF8;
+  line-height: 1;
+  margin-bottom: 0.2rem;
 }
-@keyframes charFloat {
-  0%,100% { transform: translateY(0px); }
-  50%     { transform: translateY(-8px); }
+.hero-stat-num span {
+  font-size: 1rem;
+  color: #A78BFA;
+}
+.hero-stat-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(240, 237, 248);
+}
+.hero-stat-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(123, 92, 250, 0.18);
+  flex-shrink: 0;
 }
 
 /* ── HERO GRID ── */
@@ -429,98 +440,64 @@ onUnmounted(() => {
   }
 }
 
-/* ── DUAL ROLE TAGS ── */
-.role-tags {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-@media (min-width: 768px) {
-  .role-tags { justify-content: flex-start; }
-}
-
-.role-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 1rem;
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: box-shadow 0.3s;
-}
-
-.role-tag--outline {
-  background: transparent;
-  color: #66ff99;
-  border: 1.5px solid #66ff99;
-}
-.role-divider {
-  font-size: 0.7rem;
-  color: rgba(255,102,104,0.45);
-  letter-spacing: 0.1em;
-}
-
-/* ── DESC ── */
-.desc-text { color: rgb(255, 255, 255); }
-
-/* ── DIVIDER ── */
-.divider-line {
-  width: 100%; max-width: 360px;
-  height: 1px;
-  background: rgba(255,102,104,0.12);
-}
+/* ── SHARED TEXT UTILS ── */
+.text-accent-strong { color: #A78BFA; }
+.desc-text { color: rgba(240, 237, 248, 0.82); }
 
 /* ── CTA ── */
 .cta-primary {
-  background: #FF6668; color: #fff;
-  border: 1px solid #FF6668;
+  background: #7B5CFA;
+  color: #fff;
+  border: 1px solid #7B5CFA;
 }
-.cta-primary:hover { background: transparent; color: #FF6668; }
+.cta-primary:hover {
+  background: transparent;
+  color: #A78BFA;
+  border-color: #A78BFA;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(123, 92, 250, 0.3);
+}
 .cta-secondary {
-  background: rgba(255,102,104,0.08); color: #fff;
-  border: 1px solid rgba(255,102,104,0.28);
+  background: rgba(123, 92, 250, 0.08);
+  color: #fff;
+  border: 1px solid rgba(123, 92, 250, 0.28);
 }
 .cta-secondary:hover {
-  background: rgba(255,102,104,0.16);
-  border-color: rgba(255,102,104,0.6);
+  background: rgba(123, 92, 250, 0.16);
+  border-color: rgba(167, 139, 250, 0.6);
+  transform: translateY(-2px);
 }
 
 /* ── SOCIALS ── */
-.social-label { color: rgb(255, 255, 255); }
+.social-label { color: rgb(240, 237, 248); }
 .hero-social-btn {
   width: 32px; height: 32px;
   border-radius: 8px;
-  background: rgba(255,102,104,0.08);
-  border: 1px solid rgba(255,102,104,0.18);
+  background: rgba(123, 92, 250, 0.08);
+  border: 1px solid rgba(123, 92, 250, 0.2);
   display: flex; align-items: center; justify-content: center;
   transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
 .hero-social-btn:hover {
-  background: #FF6668; border-color: #FF6668;
+  background: #7B5CFA;
+  border-color: #7B5CFA;
   transform: translateY(-2px);
 }
 
 /* ── SPLIT PANEL ── */
 .split-panel-wrap {
   display: flex;
-  flex-direction: row; /* side by side on mobile */
+  flex-direction: row;
   height: 160px;
-  border: 1px solid rgba(255,102,104,0.12);
-  border-radius: 12px;
+  border: 1px solid rgba(123, 92, 250, 0.14);
+  border-radius: 14px;
   overflow: hidden;
   gap: 1px;
   width: 100%;
 }
 @media (min-width: 768px) {
   .split-panel-wrap {
-    flex-direction: column; /* stacked on desktop (sits in right grid column) */
+    flex-direction: column;
     height: 400px;
   }
 }
@@ -542,8 +519,8 @@ onUnmounted(() => {
 }
 
 .split-panel--dev {
-  background: linear-gradient(135deg, #0d0d10 0%, #141420 100%);
-  border-bottom: 1px solid rgba(255,102,104,0.08);
+  background: linear-gradient(135deg, #0d0d18 0%, #141428 100%);
+  border-bottom: 1px solid rgba(123, 92, 250, 0.1);
 }
 .split-panel--dev::before {
   content: '';
@@ -552,18 +529,18 @@ onUnmounted(() => {
     0deg,
     transparent,
     transparent 24px,
-    rgba(255,102,104,0.04) 24px,
-    rgba(255,102,104,0.04) 25px
+    rgba(123, 92, 250, 0.04) 24px,
+    rgba(123, 92, 250, 0.04) 25px
   );
 }
 
 .split-panel--design {
-  background: linear-gradient(135deg, #0f0a0b 0%, #18080a 100%);
+  background: linear-gradient(135deg, #0a0a14 0%, #12102a 100%);
 }
 .split-panel--design::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(255,102,104,0.07) 0%, transparent 70%);
+  background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(45, 212, 191, 0.06) 0%, transparent 70%);
 }
 
 /* floating code snippet */
@@ -572,13 +549,13 @@ onUnmounted(() => {
   top: 1rem; right: 1.25rem;
   font-size: 0.6rem;
   line-height: 1.9;
-  color: rgba(255,255,255,0.18);
+  color: rgb(255, 255, 255);
   text-align: right;
   pointer-events: none;
   opacity: 0.7;
 }
-.cf-kw  { color: rgba(255,102,104,0.7); }
-.cf-str { color: rgba(126,200,164,0.7); }
+.cf-kw  { color: rgb(250, 139, 139); }
+.cf-str { color: rgba(45, 212, 190, 0.993); }
 
 /* floating grid dots */
 .design-dots {
@@ -593,7 +570,7 @@ onUnmounted(() => {
 }
 .design-dot {
   display: block;
-  background: #FF6668;
+  background: #7B5CFA;
   border-radius: 2px;
   width: 100%; height: 100%;
 }
@@ -604,8 +581,8 @@ onUnmounted(() => {
 
 .split-icon {
   font-size: 1.1rem;
-  color: #66ff99;
-  opacity: 0.65;
+  color: #2DD4BF;
+  opacity: 0.8;
   margin-bottom: 0.25rem;
   line-height: 1;
 }
@@ -615,7 +592,7 @@ onUnmounted(() => {
 .split-role {
   font-size: 0.95rem;
   font-weight: 800;
-  color: #fff;
+  color: #F0EDF8;
   line-height: 1;
   margin-bottom: 0.25rem;
 }
@@ -624,61 +601,12 @@ onUnmounted(() => {
 }
 .split-desc {
   font-size: 0.65rem;
-  color: #66ff99;
+  color: #2DD4BF;
   letter-spacing: 0.06em;
   line-height: 1.6;
 }
 
-/* ── BADGES ── */
-.role-badge {
-  position: absolute;
-  bottom: 44px; left: clamp(20px, 5vw, 80px);
-  display: flex; align-items: center; gap: 8px;
-  background: rgba(10,4,4,0.84);
-  border: 1px solid rgba(255,102,104,0.28);
-  border-radius: 999px; padding: 6px 14px;
-  backdrop-filter: blur(12px); z-index: 20;
-}
-.role-badge-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: #22c55e; box-shadow: 0 0 6px #22c55e;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%,100% { opacity:1; transform:scale(1); }
-  50%     { opacity:0.5; transform:scale(1.3); }
-}
 
-.stat-card {
-  position: absolute;
-  top: clamp(88px, 11vh, 130px); right: clamp(20px, 5vw, 80px);
-  background: rgba(10,4,4,0.84);
-  border: 1px solid #66ff99;
-  border-radius: 14px; padding: 12px 18px;
-  backdrop-filter: blur(12px); text-align: center; z-index: 20;
-}
-.stat-lbl { color: rgb(255, 255, 255); }
-
-/* ── MOUSE HINT ── */
-.mouse-hint {
-  position: absolute;
-  bottom: 48px; right: clamp(20px, 5vw, 80px);
-  font-size: 10px; letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #2ef377;
-  z-index: 20; pointer-events: none;
-  transition: opacity 0.8s ease;
-  animation: hintPulse 2.5s ease-in-out infinite;
-  display: none; /* Hidden on mobile by default */
-}
-@media (min-width: 768px) {
-  .mouse-hint { display: block; }
-}
-.mouse-hint.gone { opacity: 0; }
-@keyframes hintPulse {
-  0%,100% { opacity: 0.35; }
-  50%     { opacity: 0.65; }
-}
 
 /* ── FADE UP ── */
 .fade-up {

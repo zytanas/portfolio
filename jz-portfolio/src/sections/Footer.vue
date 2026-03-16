@@ -1,189 +1,136 @@
 <template>
-  <footer class="relative px-6 pt-12 pb-8 overflow-hidden footer-border">
-    <div class="container relative z-10 mx-auto">
-      <!-- ── MAIN FOOTER ROW ── -->
-      <div class="grid gap-10 mb-10 md:grid-cols-3">
+  <footer class="relative px-6 py-10 overflow-hidden footer-border">
+
+    <div class="footer-glow" />
+
+    <div class="container relative z-10 max-w-6xl mx-auto">
+
+      <!-- ── MAIN ROW ── -->
+      <div class="footer-inner">
+
         <!-- Brand -->
-        <div class="flex flex-col items-start gap-4">
-          <img
-            src="/src/assets/images/jz-circle.png"
-            alt="Julia Zyrene Logo"
-            class="object-contain w-auto h-20"
-          />
-          <p class="text-sm leading-relaxed text-white font-body">
-            UI/UX Designer & Frontend Developer crafting intentional digital experiences.
+        <div class="footer-brand">
+          <a href="#" @click.prevent="scrollToTop" class="footer-logo-wrap">
+            <img
+              src="/src/assets/images/jz-circle.png"
+              alt="Julia Almoite"
+              class="footer-logo-img"
+            />
+          </a>
+          <p class="footer-desc">
+            UI/UX Designer &amp; Frontend Developer crafting intentional digital experiences.
           </p>
         </div>
 
-        <!-- Quick Links -->
-        <div class="flex flex-col gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-1.5 h-1.5 rounded-full bg-[#FF6668]"></div>
-            <span class="footer-label">Quick Links</span>
+        <!-- Right: availability + socials -->
+        <div class="footer-right">
+          <div class="footer-avail">
+            <span class="avail-dot" />
+            <span class="font-mono text-xs">Open to work · Remote</span>
           </div>
-          <nav class="flex flex-col gap-2">
-            <button
-              v-for="link in quickLinks"
-              :key="link.id"
-              @click="scrollToSection(link.id)"
-              class="text-left footer-link w-fit"
-            >
-              <span class="footer-link-arrow">→</span> {{ link.name }}
-            </button>
-          </nav>
         </div>
 
-        <!-- Contact Snapshot -->
-        <div class="flex flex-col gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-1.5 h-1.5 rounded-full bg-[#FF6668]"></div>
-            <span class="footer-label">Contact</span>
-          </div>
-          <div class="flex flex-col gap-3">
-            <a
-              href="mailto:juliazyrene23@gmail.com"
-              class="flex items-center gap-2 footer-link"
-            >
-              <Mail class="w-3.5 h-3.5 text-[#FF6668] flex-shrink-0" />
-              juliazyrene23@gmail.com
-            </a>
-            <a href="tel:09565595721" class="flex items-center gap-2 footer-link">
-              <Phone class="w-3.5 h-3.5 text-[#FF6668] flex-shrink-0" />
-              09565595721
-            </a>
-            <p
-              class="flex items-center gap-2 cursor-default footer-link hover:text-white/50"
-            >
-              <MapPin class="w-3.5 h-3.5 text-[#FF6668] flex-shrink-0" />
-              Baguio City, Philippines
-            </p>
-          </div>
-          <!-- Socials -->
-          <div class="flex gap-2 mt-1">
-            <a
-              v-for="social in socials"
-              :key="social.name"
-              :href="social.url"
-              target="_blank"
-              :title="social.name"
-              class="social-btn group"
-            >
-              <component
-                :is="social.icon"
-                class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors duration-200"
-              />
-            </a>
-          </div>
-        </div>
       </div>
 
       <!-- ── DIVIDER ── -->
-      <div class="h-px bg-[#FF6668]/15 mb-6"></div>
+      <div class="footer-divider" />
 
       <!-- ── BOTTOM ROW ── -->
-      <div class="flex flex-col items-center justify-between gap-3 md:flex-row">
-        <p class="font-mono text-xs text-[#66ff99]">
+      <div class="footer-bottom">
+        <p class="font-mono footer-copy">
           &copy; {{ currentYear }} Julia Almoite. All rights reserved.
         </p>
-        <p class="font-mono text-xs text-white">
-          Designed & built with <span class="text-[#FF6668]/60">☕</span> in Baguio City
+        <p class="font-mono footer-made">
+          Designed &amp; built with <span class="coffee">☕</span> in Baguio City
         </p>
       </div>
+
     </div>
   </footer>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { Linkedin, Github, Mail, Phone, MapPin } from "lucide-vue-next";
+import { computed } from 'vue'
 
-const currentYear = computed(() => new Date().getFullYear());
+const currentYear = computed(() => new Date().getFullYear())
 
-const quickLinks = [
-  { id: "hero", name: "Home" },
-  { id: "about", name: "About" },
-  { id: "projects", name: "Projects" },
-  { id: "contact", name: "Contact" },
-];
-
-const socials = [
-  {
-    name: "LinkedIn",
-    icon: Linkedin,
-    url: "https://www.linkedin.com/in/almoitejuliazyrene/",
-  },
-  { name: "GitHub", icon: Github, url: "https://github.com/zytanas" },
-];
-
-const scrollToSection = (id) => {
-  const element = document.getElementById(id);
-  if (element) {
-    const navHeight = 80;
-    const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-  }
-};
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 </script>
 
 <style scoped>
 .footer-border {
-  border-top: 1px solid rgba(255, 102, 104, 0.18);
+  border-top: 1px solid rgba(123,92,250,0.12);
 }
 
-.footer-label {
-  font-family: "JetBrains Mono", "Courier New", monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #66ff99;
+.footer-glow {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 200px;
+  background: radial-gradient(ellipse at bottom, rgba(123,92,250,0.06), transparent 70%);
+  pointer-events: none;
 }
 
-.footer-link {
-  font-size: 13px;
-  color: rgb(255, 255, 255);
-  font-family: inherit;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  text-decoration: none;
-}
-
-.footer-link:hover {
-  color: #ff6668;
-}
-
-.footer-link-arrow {
-  color: #ff6668;
-  opacity: 0;
-  margin-right: 2px;
-  display: inline-block;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.footer-link:hover .footer-link-arrow {
-  opacity: 1;
-  transform: translateX(2px);
-}
-
-.social-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: rgba(255, 102, 104, 0.08);
-  border: 1px solid rgba(255, 102, 104, 0.18);
+/* ── MAIN ROW ── */
+.footer-inner {
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-  text-decoration: none;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
 }
 
-.social-btn:hover {
-  background: #ff6668;
-  border-color: #ff6668;
-  transform: translateY(-2px);
+/* Brand */
+.footer-brand {
+  display: flex; align-items: center; gap: 1.1rem;
 }
+.footer-logo-wrap { display: block; flex-shrink: 0; }
+.footer-logo-img { height: 52px; width: auto; object-fit: contain; }
+.footer-desc {
+  font-size: 0.82rem;
+  color: rgb(240, 237, 248);
+  line-height: 1.65;
+  max-width: 260px;
+}
+
+/* Right */
+.footer-right {
+  display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+}
+.footer-avail {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.28rem 0.8rem; border-radius: 999px;
+  background: rgba(34,197,94,0.07);
+  border: 1px solid rgba(34, 197, 94, 0.986);
+  font-size: 0.72rem; color: rgb(240, 237, 248);
+}
+.avail-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #22c55e; box-shadow: 0 0 5px #22c55e;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.4; transform:scale(1.3); }
+}
+
+
+/* Divider */
+.footer-divider { height: 1px; background: rgba(123,92,250,0.08); margin-bottom: 1.5rem; }
+
+/* Bottom row */
+.footer-bottom {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+.footer-copy {
+  font-size: 12px; letter-spacing: 0.1em;
+  color: rgb(167, 139, 250);
+}
+.footer-made {
+  font-size: 12px; letter-spacing: 0.08em;
+  color: rgb(240, 237, 248);
+}
+.coffee { color: rgb(124, 92, 250); }
 </style>

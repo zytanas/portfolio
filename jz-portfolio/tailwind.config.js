@@ -8,48 +8,51 @@ export default {
     extend: {
       fontFamily: {
         heading: ['"Exo 2"', 'Arial', 'sans-serif'],
-        body: ['Arial', 'Helvetica', 'sans-serif'],
-        'exo': ['"Exo 2"', 'Arial', 'sans-serif'],
+        body:    ['"Exo 2"', 'Arial', 'sans-serif'],
+        exo:     ['"Exo 2"', 'Arial', 'sans-serif'],
       },
       colors: {
-        orange: {
-          50: '#FFF3ED',
-          100: '#FFE6DB',
-          200: '#FFCDB8',
-          300: '#FFB594',
-          400: '#FF9C71',
-          500: '#FF834D',
-          600: '#D36B3E',
-          700: '#A7532E',
-          800: '#7C3B1F',
-          900: '#50230F',
-          950: '#3A1708',
+        // ── PRIMARY ACCENT: Violet/Purple ──
+        violet: {
+          50:  '#F3F0FF',
+          100: '#E9E3FF',
+          200: '#C4B5FD',
+          300: '#A78BFA',
+          400: '#8B6FF7',
+          500: '#7B5CFA',   // main accent
+          600: '#6044E0',
+          700: '#4830C6',
+          800: '#3320A0',
+          900: '#1E1265',
+          950: '#0F0935',
         },
-        red:{
-          100: '#FFE6E6',
-          200: '#FFB8B8',
-          300: '#FF8A8A',
-          400: '#FF5C5C',
-          500: '#FF3C3C',
-          600: '#FF0000',
-          700: '#D10000',
-          800: '#A30000',
-          900: '#750000',
-          950: '#470000',
+        // ── SECONDARY ACCENT: Teal ──
+        teal: {
+          50:  '#EDFAFA',
+          100: '#D5F5F6',
+          200: '#AFECEF',
+          300: '#7EDCE2',
+          400: '#5EEAD4',
+          500: '#2DD4BF',   // teal accent
+          600: '#0D9488',
+          700: '#0F766E',
+          800: '#115E59',
+          900: '#134E4A',
+          950: '#042F2E',
         },
+        // ── DARK SURFACES ──
         dark: {
-          bg: '#0a0a0f',
-          parcard: '#1a1a2e',
-          accent: '#FF6B35',
-          'purple-start': '#1A0E2E',
-          'purple-mid': '#2D1B4E',
-          'purple-end': '#1A0E2E',
-        }
+          bg:      '#0A0A0F',
+          bg2:     '#0F0F1A',
+          surface: '#1A1A2E',
+          border:  'rgba(123,92,250,0.14)',
+        },
       },
       backgroundImage: {
-        'gradient-dark': 'linear-gradient(180deg, #120404 0%, #CE0000 50%, #120404 100%)',
-        'gradient-card': 'linear-gradient(180deg, #201e2e 10%, #443135 100%)',
-      }
+        'gradient-hero':   'linear-gradient(180deg, #0A0A0F 0%, #0F0F1A 50%, #0A0A0F 100%)',
+        'gradient-card':   'linear-gradient(135deg, #141428 0%, #1A1A35 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #7B5CFA 0%, #A78BFA 100%)',
+      },
     },
   },
   plugins: [],

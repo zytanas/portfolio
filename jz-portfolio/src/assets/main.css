@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,11 +7,11 @@
 @layer base {
   body {
     @apply text-white font-body;
-    background: linear-gradient(180deg, #0D0718 0%, #1F1438 50%, #0D0718 100%);
+    background: linear-gradient(180deg, #0A0A0F 0%, #0F0F1A 50%, #0A0A0F 100%);
     background-attachment: fixed;
     min-height: 100vh;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
     font-weight: 700;
@@ -19,15 +19,24 @@
 }
 
 @layer utilities {
+  /* Violet gradient text — main accent */
   .gradient-text {
-    @apply text-transparent bg-gradient-to-r from-orange-400 to-pink-600 bg-clip-text;
+    @apply text-transparent bg-clip-text;
+    background-image: linear-gradient(135deg, #7B5CFA 0%, #A78BFA 50%, #C4B5FD 100%);
   }
-  
+
+  /* Violet → teal gradient text — for special highlights */
+  .gradient-text-alt {
+    @apply text-transparent bg-clip-text;
+    background-image: linear-gradient(135deg, #7B5CFA 0%, #2DD4BF 100%);
+  }
+
   .card-hover {
     @apply transition-all duration-300 hover:scale-105 hover:shadow-2xl;
   }
 
-  .bg-gradient-dark {
-    background: linear-gradient(180deg, #120404 0%, #1f0303 50%, #120404 100%);
+  /* Background utility */
+  .bg-surface {
+    background: rgba(26, 26, 46, 0.6);
   }
 }

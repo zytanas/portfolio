@@ -89,8 +89,8 @@ defineEmits(['close'])
 
 /* ── PANEL ── */
 .modal-panel {
-  background: #160c0c;
-  border: 1px solid rgba(255, 102, 104, 0.25);
+  background: #100c16;
+  border: 1px solid rgba(168, 102, 255, 0.25);
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 102, 104, 0.08);
 }
 

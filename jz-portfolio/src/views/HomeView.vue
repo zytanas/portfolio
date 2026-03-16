@@ -1,8 +1,9 @@
 <template>
   <div>
     <Hero />
-    <About />
     <Projects />
+    <Process />
+    <About />
     <Contact />
     <Footer />
   </div>
@@ -10,6 +11,7 @@
 
 <script setup>
 import Hero from '../sections/Hero.vue'
+import Process from '../sections/Process.vue'
 import Projects from '../sections/Projects.vue'
 import About from '../sections/About.vue'
 import Contact from '../sections/Contact.vue'
