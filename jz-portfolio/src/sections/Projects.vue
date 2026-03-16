@@ -157,16 +157,18 @@
     </div>
 
     <!-- ── MODAL ── -->
-    <Transition name="modal">
-      <div
-        v-if="isModalOpen"
-        @click="closeModal"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md md:p-8"
-      >
+    <Teleport to="body">
+      <Transition name="modal">
         <div
-          @click.stop
-          class="modal-panel relative w-full max-w-5xl max-h-[90vh] flex flex-col md:flex-row overflow-hidden rounded-2xl"
+          v-if="isModalOpen"
+          @click="closeModal"
+          class="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md md:p-8"
+          style="margin: 0;"
         >
+          <div
+            @click.stop
+            class="modal-panel relative w-full max-w-5xl max-h-[85vh] flex flex-col md:flex-row overflow-hidden rounded-2xl"
+          >
           <button @click="closeModal" class="absolute z-10 modal-close-btn top-4 right-4" title="Close">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -206,8 +208,9 @@
             </div>
           </div>
         </div>
-      </div>
-    </Transition>
+        </div>
+      </Transition>
+    </Teleport>
   </section>
 </template>
 
@@ -563,7 +566,7 @@ const allPersonalProjects = computed(() => allProjects.filter(p => p.tag === 'Pe
   border: 1px solid rgba(123,92,250,0.22);
   box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(123,92,250,0.08);
 }
-.modal-image-pane { background: #080812; border-right: 1px solid rgba(123,92,250,0.1); max-height: 90vh; }
+.modal-image-pane { background: #080812; border-right: 1px solid rgba(123,92,250,0.1); flex-shrink: 0; }
 .modal-info-pane  { background: #0D0D1A; min-width: 260px; }
 
 .modal-close-btn {
