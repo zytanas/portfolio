@@ -19,7 +19,7 @@
         <div>
           <p class="section-eyebrow">// about me</p>
           <h2 class="section-title font-heading">
-            Who I<br /><span class="title-accent">Actually Am.</span>
+            The person<br /><span class="title-accent">behind the work.</span>
           </h2>
         </div>
         <div class="hidden text-right md:block">
@@ -233,19 +233,19 @@ const skills = [
   {
     icon: Palette,
     title: 'UI/UX Design',
-    description: 'Creating intuitive interfaces with a focus on user experience and modern design principles.',
+    description: 'From wireframe to high-fidelity in Figma — I build component systems as I design, so the handoff to code is already half done.',
     color: '#A78BFA',
   },
   {
     icon: Code,
     title: 'Frontend Development',
-    description: 'Building responsive, performant web applications with modern frameworks and technologies.',
+    description: 'Vue, React, Nuxt, Tailwind — I write the code for what I design. Pixel-faithful, responsive, and production-ready.',
     color: '#2DD4BF',
   },
   {
     icon: Layers,
     title: 'Design Systems',
-    description: 'Developing scalable design systems that ensure consistency across digital products.',
+    description: 'I build reusable component libraries that keep interfaces consistent at scale — the same system works in Figma and in code.',
     color: '#60A5FA',
   },
 ]
@@ -410,7 +410,7 @@ const devTools = [
 
 /* Bio */
 .identity-bio {
-  font-size: 0.9rem; color: rgb(240, 237, 248);
+  font-size: 0.9rem; color: rgba(240,237,248,0.65);
   line-height: 1.75; padding-bottom: 1.25rem;
   border-bottom: 1px solid rgba(123,92,250,0.1);
 }
@@ -426,7 +426,7 @@ const devTools = [
   font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
   color: #2DD4BF; width: 80px; flex-shrink: 0;
 }
-.qf-value { font-size: 0.8rem; color: rgb(240, 237, 248); }
+.qf-value { font-size: 0.8rem; color: rgba(240,237,248,0.7); }
 
 
 
@@ -447,14 +447,14 @@ const devTools = [
   display: flex; align-items: center; gap: 0.4rem;
   padding: 0.7rem 1.1rem;
   font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgb(240, 237, 248);
+  color: rgba(240,237,248,0.45);
   background: transparent; border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
   margin-bottom: -1px;
 }
-.tab-btn:hover { color: rgba(240,237,248,0.65); }
+.tab-btn:hover { color: rgba(240,237,248,0.75); }
 .tab-btn--active { color: #A78BFA; border-bottom-color: #7B5CFA; }
 .tab-icon { font-size: 16px; opacity: 0.7; }
 

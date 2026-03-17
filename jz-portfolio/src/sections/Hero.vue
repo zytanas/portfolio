@@ -28,14 +28,13 @@
           <!-- Available tag -->
           <div class="hero-tag fade-up" style="animation-delay:0.1s">
             <span class="hero-tag-dot" />
-            Available for freelance &amp; full-time
+            Available for freelance & full-time
           </div>
 
           <!-- Headline -->
           <h1 class="hero-headline font-heading fade-up" style="animation-delay:0.25s">
-            Crafting Digital<br>
-            <span class="headline-accent">Products People</span><br>
-            Actually Love.
+            Design that converts.<br>
+            <span class="headline-accent">Code that ships.</span>
           </h1>
 
           <!-- Value prop -->
@@ -43,9 +42,9 @@
             class="max-w-md mt-6 text-base leading-relaxed font-body desc-text fade-up"
             style="animation-delay:0.45s"
           >
-            I'm <strong class="font-semibold text-accent-strong">Julia Almoite</strong> — a UI/UX Designer &amp; Frontend Developer
-            who <strong class="font-semibold text-accent-strong">builds</strong> what she <strong class="font-semibold text-accent-strong">designs</strong>.
-            Pixel-perfect layouts, clean code, seamless experiences.
+            I'm <strong class="font-semibold text-accent-strong">Julia Almoite</strong> — I design interfaces in Figma
+            and build them in Vue &amp; React. No hand-off friction, no lost details.
+            <strong class="font-semibold text-accent-strong">From wireframe to deployed product</strong>, I own the full stack.
           </p>
 
           <!-- CTA Buttons -->
@@ -57,23 +56,29 @@
               Start a Project
               <MoveRight class="w-4 h-4" />
             </button>
+            <button
+              @click="scrollToWork"
+              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold transition-all duration-300 cta-secondary rounded-xl font-body"
+            >
+              View Work
+            </button>
           </div>
 
           <!-- Stats row -->
           <div class="hero-stats fade-up" style="animation-delay:0.78s">
             <div class="hero-stat">
               <p class="hero-stat-num font-heading">8<span>+</span></p>
-              <p class="font-mono hero-stat-label">Projects Shipped</p>
+              <p class="font-mono hero-stat-label">Products Shipped</p>
             </div>
             <div class="hero-stat-divider" />
             <div class="hero-stat">
               <p class="hero-stat-num font-heading">2<span>yrs</span></p>
-              <p class="font-mono hero-stat-label">Experience</p>
+              <p class="font-mono hero-stat-label">Design + Dev</p>
             </div>
             <div class="hero-stat-divider" />
             <div class="hero-stat">
-              <p class="hero-stat-num font-heading">100<span>%</span></p>
-              <p class="font-mono hero-stat-label">Remote-Ready</p>
+              <p class="hero-stat-num font-heading">1<span>person</span></p>
+              <p class="font-mono hero-stat-label">Full pipeline</p>
             </div>
           </div>
 
@@ -97,8 +102,9 @@
             <!-- floating code lines -->
             <div class="font-mono code-float" aria-hidden="true">
               <span class="cf-kw">const</span> julia = {<br>
-              &nbsp;&nbsp;role: <span class="cf-str">'developer'</span>,<br>
-              &nbsp;&nbsp;stack: [<span class="cf-str">'Vue'</span>, <span class="cf-str">'React'</span>, <span class="cf-str">'Tailwind'</span>]<br>
+              &nbsp;&nbsp;role: <span class="cf-str">'frontend-dev'</span>,<br>
+              &nbsp;&nbsp;stack: [<span class="cf-str">'Vue'</span>, <span class="cf-str">'React'</span>, <span class="cf-str">'Nuxt'</span>],<br>
+              &nbsp;&nbsp;ships: <span class="cf-kw">true</span><br>
               }
             </div>
             <div class="split-panel__body">
@@ -318,6 +324,11 @@ function resize() {
 const scrollToContact = () => {
   const el = document.getElementById('contact')
   if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 100, behavior: 'smooth' })
+}
+
+const scrollToWork = () => {
+  const el = document.getElementById('projects')
+  if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' })
 }
 
 onMounted(() => {

@@ -35,28 +35,32 @@
           <!-- Quote mark -->
           <div class="story-quote-mark" aria-hidden="true">"</div>
 
-         
+          <!-- Featured: left accent bar -->
+          <div v-if="i === 0" class="story-featured-bar" aria-hidden="true" />
 
-          <!-- Quote text -->
-          <p class="story-text">{{ story.quote }}</p>
+          <!-- Inner wrapper keeps column layout inside the row-flex featured card -->
+          <div class="story-inner">
+            <!-- Quote text -->
+            <p class="story-text">{{ story.quote }}</p>
 
-          <!-- Divider -->
-          <div class="story-divider" />
+            <!-- Divider -->
+            <div class="story-divider" />
 
-          <!-- Person -->
-          <div class="story-person">
-            <div class="story-avatar">
-              <span class="story-initials font-heading">{{ story.initials }}</span>
-            </div>
-            <div>
-              <p class="story-name font-heading">{{ story.name }}</p>
-              <p class="font-mono story-role">{{ story.role }}</p>
-            </div>
-            <!-- Origin tag -->
-            <div class="ml-auto">
-              <span :class="['story-origin-tag', `story-origin-tag--${story.origin}`]">
-                {{ story.origin }}
-              </span>
+            <!-- Person -->
+            <div class="story-person">
+              <div class="story-avatar">
+                <span class="story-initials font-heading">{{ story.initials }}</span>
+              </div>
+              <div>
+                <p class="story-name font-heading">{{ story.name }}</p>
+                <p class="font-mono story-role">{{ story.role }}</p>
+              </div>
+              <!-- Origin tag -->
+              <div class="ml-auto">
+                <span :class="['story-origin-tag', `story-origin-tag--${story.origin}`]">
+                  {{ story.origin }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -93,11 +97,18 @@ const stories = [
     quote: "Her ability to code what she designs is incredibly rare. We didn't need to relay specs to a developer — she handled the entire design-to-code pipeline herself. Saved us weeks.",
   },
   {
+    name: 'Adrian Ramirez',
+    initials: 'AR',
+    role: 'Web Developer',
+    origin: 'NMS',
+    quote: "Working with Julia was a great experience. Her designs are clean, modern, and well thought-out, and her frontend skills back them up perfectly. She's eager to learn and quick to adapt — exactly the kind of developer you want on a project. Highly recommend!",
+  },
+  {
     name: 'Quan Doan',
     initials: 'QD',
     role: 'Backend Developer, Live Stream Effort',
     origin: 'Freelance',
-    quote: "As the backend developer on the project, I appreciated Julia's clear communication and attention to technical details. She asked thoughtful questions, and her frontend work integrated seamlessly with our backend. Her professionalism and collaborative approach made the whole process smooth.",
+    quote: "As the backend developer on the project, I appreciated Julia's clear communication and attention to technical details. She asked thoughtful questions, and her frontend work integrated seamlessly with our backend.",
   },
 ]
 
@@ -110,7 +121,7 @@ const marqueeItems = [
   'Tailwind CSS ·',
   'Responsive Interfaces ·',
   'Prototyping ·',
-  'User Research ·',
+  'Component Architecture ·',
   'TypeScript ·',
 ]
 </script>
@@ -139,7 +150,7 @@ const marqueeItems = [
   line-height: 0.95; letter-spacing: -0.02em; color: #F0EDF8;
 }
 .title-accent { color: #7B5CFA; text-shadow: 0 0 40px rgba(123,92,250,0.4); }
-.section-sub { font-size: 0.875rem; color: rgb(240, 237, 248); line-height: 1.7; }
+.section-sub { font-size: 0.875rem; color: rgba(240,237,248,0.5); line-height: 1.7; }
 
 
 /* ══════════════════════════════════════
@@ -176,7 +187,7 @@ const marqueeItems = [
 .story-card--featured {
   grid-column: 1 / -1;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 2rem;
   background: rgba(123,92,250,0.06);
   border-color: rgba(123,92,250,0.18);
@@ -185,6 +196,26 @@ const marqueeItems = [
 
 @media (max-width: 640px) {
   .story-card--featured { flex-direction: column; gap: 0; }
+}
+
+/* Inner wrapper — keeps text+divider+person in a column regardless of card orientation */
+.story-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Left accent bar on featured card */
+.story-featured-bar {
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #7B5CFA, #2DD4BF);
+  flex-shrink: 0;
+  align-self: stretch;
+}
+@media (max-width: 640px) {
+  .story-featured-bar { display: none; }
 }
 
 /* Ghost quote mark */
@@ -270,6 +301,11 @@ const marqueeItems = [
   background: rgba(59,130,246,0.1);
   color: #60a5fa;
   border: 1px solid rgba(59,130,246,0.22);
+}
+.story-origin-tag--NMS {
+  background: rgba(255,107,107,0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255,107,107,0.22);
 }
 
 /* ══════════════════════════════════════

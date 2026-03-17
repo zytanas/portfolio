@@ -18,11 +18,11 @@
         <div>
           <p class="section-eyebrow">// how i work</p>
           <h2 class="section-title font-heading">
-            My Design &amp;<br /><span class="title-accent">Dev Process</span>
+            One person.<br /><span class="title-accent">Full pipeline.</span>
           </h2>
         </div>
         <p class="mt-4 section-sub md:mt-0 md:max-w-xs">
-          A structured, collaborative approach that solves the right problem — the right way, every time.
+          I design and build in the same loop — no hand-off, no translation layer, no lost details between Figma and code.
         </p>
       </div>
 
@@ -123,42 +123,34 @@ const steps = [
   {
     id: 1,
     phase: '// Phase 01',
-    name: 'Discover',
-    icon: '🔍',
-    desc: 'Stakeholder interviews, competitive analysis, and user research. I map out the problem space before touching any tools.',
-    tools: ['Interviews', 'Desk Research', 'Miro'],
+    name: 'Understand',
+    icon: '🎯',
+    desc: 'I start with the brief, not the brief doc. Goals, constraints, and audience — clarified upfront so every decision that follows has a reason.',
+    tools: ['Brief Review', 'User Goals', 'Miro', 'Notion'],
   },
   {
     id: 2,
     phase: '// Phase 02',
-    name: 'Define',
-    icon: '🎯',
-    desc: 'Personas, user journeys, and clear success metrics. Scope and constraints agreed so we build the right thing.',
-    tools: ['User Stories', 'Personas', 'Notion'],
+    name: 'Design',
+    icon: '✏️',
+    desc: 'Wireframes to high-fidelity in Figma — building a component system as I go so the handoff to code is already half done.',
+    tools: ['Figma', 'Wireframes', 'Components', 'Prototyping'],
   },
   {
     id: 3,
     phase: '// Phase 03',
-    name: 'Design',
-    icon: '✏️',
-    desc: 'Wireframes to high-fidelity prototypes. Iterative design reviews keep the work aligned and moving.',
-    tools: ['Figma', 'Prototyping', 'Design Systems'],
+    name: 'Build',
+    icon: '⚡',
+    desc: 'I code what I designed — no translation loss. Responsive, component-driven, and pixel-faithful from day one.',
+    tools: ['Vue', 'React', 'Nuxt', 'Tailwind', 'TypeScript'],
   },
   {
     id: 4,
     phase: '// Phase 04',
-    name: 'Build',
-    icon: '⚡',
-    desc: 'Clean, component-driven frontend code. Responsive, accessible, and production-ready from day one.',
-    tools: ['Vue', 'React', 'Tailwind', 'TypeScript'],
-  },
-  {
-    id: 5,
-    phase: '// Phase 05',
-    name: 'Test & Deploy',
+    name: 'Ship & Refine',
     icon: '🚀',
-    desc: 'Rigorous testing, cross-device QA, and final polish. Then deployment with handoff docs, design assets, and post-launch support.',
-    tools: ['Usability Tests', 'QA', 'Netlify', 'GitHub'],
+    desc: 'Cross-device QA, final polish, then deploy. Post-launch I stay available for iteration — because shipping is step one, not the finish line.',
+    tools: ['QA', 'Vercel', 'Netlify', 'GitHub', 'Feedback Loop'],
   },
 ]
 </script>
@@ -191,7 +183,7 @@ const steps = [
 }
 .title-accent { color: #7B5CFA; text-shadow: 0 0 40px rgba(123,92,250,0.4); }
 .section-sub {
-  font-size: 0.875rem; color: rgb(255, 255, 255);
+  font-size: 0.875rem; color: rgba(240,237,248,0.5);
   line-height: 1.7;
 }
 
@@ -202,7 +194,7 @@ const steps = [
 /* Top track row — dots + connectors */
 .step-track {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   margin-bottom: 0;
   position: relative;
 }
@@ -257,7 +249,7 @@ const steps = [
 /* Cards row */
 .step-cards {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.75rem;
 }
 
@@ -287,7 +279,7 @@ const steps = [
   color: #F0EDF8; margin-bottom: 0.5rem; line-height: 1.1;
 }
 .step-desc {
-  font-size: clamp(0.8rem, 1.5vw, 0.875rem); color: rgb(240, 237, 248);
+  font-size: clamp(0.8rem, 1.5vw, 0.875rem); color: rgba(240,237,248,0.6);
   line-height: 1.6; margin-bottom: 0.75rem;
 }
 .step-tools {
