@@ -1,0 +1,14 @@
+# Browser support targets
+# This tells Autoprefixer and Vite which browsers to support
+
+# Modern browsers + reasonable fallback
+> 0.5%
+last 2 versions
+not dead
+not ie 11
+Firefox ESR
+
+# If you need wider support, use:
+# > 0.2%
+# last 3 versions
+# not dead

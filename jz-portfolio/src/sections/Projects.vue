@@ -376,7 +376,6 @@ const allProjects = [
     contributions: [
       'Designed component system in Figma',
       'Built Vue 3 frontend with Tailwind',
-      'Implemented analytics dashboard UI',
       'Collaborated directly with backend team on API integration',
     ],
     techs: ['UI/UX', 'SaaS'],
@@ -395,7 +394,6 @@ const allProjects = [
     contributions: [
       'Designed mobile-first UX flows',
       'Built responsive Nuxt frontend',
-      'Implemented QR-based payment screens',
       'Optimized for low-end Android devices',
     ],
     techs: ['Mobile'],
@@ -412,7 +410,7 @@ const allProjects = [
     outcome:
       'Revamped an outdated e-commerce site into an editorial-style storefront that elevated brand perception.',
     contributions: [
-      'Full frontend rebuild in Vue',
+      'Full frontend revamp in Vue',
       'Created editorial product layout system',
       'Worked with designer on component specs',
       'Implemented responsive product gallery',
@@ -451,7 +449,6 @@ const allProjects = [
     contributions: [
       'Brand identity & visual language',
       'Landing page design in Figma',
-      'Content discovery UX flows',
       'Responsive layout specs for dev handoff',
     ],
     techs: ['Landing Page', 'Branding'],
@@ -486,7 +483,6 @@ const allProjects = [
       'Crafted a modern, approachable website that effectively communicates the brand’s value proposition and culture.',
     contributions: [
       'Designed full website in Figma',
-      'Created custom iconography and illustrations',
       'Developed a cohesive visual language',
       'Provided specs for development handoff',
     ],
@@ -990,6 +986,9 @@ const allPersonalProjects = computed(() => allProjects.filter((p) => p.tag === '
   flex-shrink: 0;
   max-height: 240px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 @media (min-width: 768px) {
   .modal-image-pane {

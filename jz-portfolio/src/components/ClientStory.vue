@@ -104,6 +104,13 @@ const stories = [
     quote: "Working with Julia was a great experience. Her designs are clean, modern, and well thought-out, and her frontend skills back them up perfectly. She's eager to learn and quick to adapt — exactly the kind of developer you want on a project. Highly recommend!",
   },
   {
+    name: 'Chambelynne Malubay',
+    initials: 'CM',
+    role: 'IT Project Manager',
+    origin: 'NMS',
+    quote: "We had the opportunity to have Julia as an intern, and I must say, her performance during the time she spent with us was exceptional. She is incredibly dedicated and consistently delivered great results. Beyond her work, Julia was a joy to have on the team. Her cheerful, easygoing nature and open-minded approach made her a perfect fit. She is a reliable professional who brings a positive energy to any environment.",
+  },
+  {
     name: 'Quan Doan',
     initials: 'QD',
     role: 'Backend Developer, Live Stream Effort',

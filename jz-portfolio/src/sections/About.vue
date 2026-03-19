@@ -80,7 +80,7 @@
         </div>
 
         <!-- ══ RIGHT: Tab Panel ══ -->
-        <div class="tab-panel">
+        <div class="p-4 border rounded-2xl tab-panel border-violet-500">
 
           <!-- Tab bar -->
           <div class="tab-bar">
