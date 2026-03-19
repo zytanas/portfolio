@@ -1,16 +1,7 @@
 <template>
   <section id="testimonials" class="relative px-6 py-24 overflow-hidden perf-optimize">
     <!-- Floating Code Symbols -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="code-symbol symbol-1">&lt;/&gt;</div>
-      <div class="code-symbol symbol-2">{ }</div>
-      <div class="code-symbol symbol-3">[ ]</div>
-      <div class="code-symbol symbol-4">&lt;div&gt;</div>
-      <div class="code-symbol symbol-5">( )</div>
-      <div class="code-symbol symbol-6">===</div>
-      <div class="code-symbol symbol-7">=&gt;</div>
-      <div class="code-symbol symbol-8">&lt;/&gt;</div>
-    </div>
+    <FloatingCodeSymbols />
 
     <div class="stories-glow glow-center" />
 
@@ -29,44 +20,85 @@
         </p>
       </div>
 
-      <!-- ── TESTIMONIAL CARDS ── -->
-      <div class="stories-grid">
+      <!-- ── FEATURED CARD (first story, always static) ── -->
+      <div class="mb-4 story-card story-card--featured">
+        <div class="story-quote-mark" aria-hidden="true">"</div>
+        <div class="story-featured-bar" aria-hidden="true" />
+        <div class="story-inner">
+          <p class="story-text">{{ stories[0].quote }}</p>
+          <div class="story-divider" />
+          <div class="story-person">
+            <div class="story-avatar">
+              <span class="story-initials font-heading">{{ stories[0].initials }}</span>
+            </div>
+            <div>
+              <p class="story-name font-heading">{{ stories[0].name }}</p>
+              <p class="font-mono story-role">{{ stories[0].role }}</p>
+            </div>
+            <div class="ml-auto">
+              <span :class="['story-origin-tag', `story-origin-tag--${stories[0].origin}`]">
+                {{ stories[0].origin }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CAROUSEL SECTION (remaining stories) ── -->
+      <div class="mb-12 carousel-wrapper">
+        <!-- Nav arrows -->
+        <button class="carousel-arrow carousel-arrow--prev" @click="scroll(-1)" aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="carousel-arrow carousel-arrow--next" @click="scroll(1)" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+
+        <!-- Scrollable track -->
         <div
-          v-for="(story, i) in stories"
-          :key="story.name"
-          :class="['story-card', i === 0 && 'story-card--featured']"
+          class="carousel-track"
+          ref="track"
+          @mouseenter="pauseAuto"
+          @mouseleave="resumeAuto"
+          @touchstart="pauseAuto"
+          @touchend="resumeAuto"
         >
-          <!-- Quote mark -->
-          <div class="story-quote-mark" aria-hidden="true">"</div>
-
-          <!-- Featured: left accent bar -->
-          <div v-if="i === 0" class="story-featured-bar" aria-hidden="true" />
-
-          <!-- Inner wrapper keeps column layout inside the row-flex featured card -->
-          <div class="story-inner">
-            <!-- Quote text -->
-            <p class="story-text">{{ story.quote }}</p>
-
-            <!-- Divider -->
-            <div class="story-divider" />
-
-            <!-- Person -->
-            <div class="story-person">
-              <div class="story-avatar">
-                <span class="story-initials font-heading">{{ story.initials }}</span>
-              </div>
-              <div>
-                <p class="story-name font-heading">{{ story.name }}</p>
-                <p class="font-mono story-role">{{ story.role }}</p>
-              </div>
-              <!-- Origin tag -->
-              <div class="ml-auto">
-                <span :class="['story-origin-tag', `story-origin-tag--${story.origin}`]">
-                  {{ story.origin }}
-                </span>
+          <div
+            v-for="story in stories.slice(1)"
+            :key="story.name"
+            class="story-card carousel-card"
+          >
+            <div class="story-quote-mark" aria-hidden="true">"</div>
+            <div class="story-inner">
+              <p class="story-text">{{ story.quote }}</p>
+              <div class="story-divider" />
+              <div class="story-person">
+                <div class="story-avatar">
+                  <span class="story-initials font-heading">{{ story.initials }}</span>
+                </div>
+                <div>
+                  <p class="story-name font-heading">{{ story.name }}</p>
+                  <p class="font-mono story-role">{{ story.role }}</p>
+                </div>
+                <div class="ml-auto">
+                  <span :class="['story-origin-tag', `story-origin-tag--${story.origin}`]">
+                    {{ story.origin }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- Dot indicators -->
+        <div class="carousel-dots">
+          <button
+            v-for="(_, i) in stories.slice(1)"
+            :key="i"
+            :class="['carousel-dot', activeIndex === i && 'carousel-dot--active']"
+            @click="scrollToIndex(i)"
+            :aria-label="`Go to testimonial ${i + 1}`"
+          />
         </div>
       </div>
 
@@ -84,6 +116,29 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import FloatingCodeSymbols from '@/components/FloatingCodeSymbols.vue'
+
+const track = ref(null)
+const activeIndex = ref(0)
+let autoTimer = null
+const AUTO_DELAY = 2000 // ms between slides
+
+function startAuto() {
+  stopAuto()
+  autoTimer = setInterval(() => {
+    const total = stories.length - 1
+    const next = activeIndex.value >= total - 1 ? 0 : activeIndex.value + 1
+    scrollToIndex(next)
+  }, AUTO_DELAY)
+}
+
+function stopAuto() {
+  if (autoTimer) { clearInterval(autoTimer); autoTimer = null }
+}
+
+function pauseAuto() { stopAuto() }
+function resumeAuto() { startAuto() }
 
 const stories = [
   {
@@ -91,14 +146,14 @@ const stories = [
     initials: 'CT',
     role: 'WordPress Developer',
     origin: 'Coreproc',
-    quote: 'I had the chance to work with Julia, and she is a very good developer and a hardworking team member. She also has a strong eye for design, which adds great value to her work. She is easy to work with, listens well, and communicates effectively with the team. Julia is also a fast learner. One thing I appreciate about her is that she doesn\'t settle for less and always aims to deliver quality work.',
+    quote: "I had the chance to work with Julia, and she is a very good developer and a hardworking team member. She also has a strong eye for design, which adds great value to her work. She is easy to work with, listens well, and communicates effectively with the team. Julia is also a fast learner. One thing I appreciate about her is that she doesn't settle for less and always aims to deliver quality work.",
   },
   {
-    name: 'Justin Barnes',
-    initials: 'JB',
-    role: 'Software Engineer, Live Stream Effort',
-    origin: 'Freelance',
-    quote: "Her ability to code what she designs is incredibly rare. We didn't need to relay specs to a developer — she handled the entire design-to-code pipeline herself. Saved us weeks.",
+    name: 'Keith Mercado',
+    initials: 'KM',
+    role: 'UI/UX Engineer - Coreproc, Inc.',
+    origin: 'Coreproc',
+    quote: 'Julia is a pleasure to work with. She’s friendly, easy to collaborate with, and communicates clearly, which makes teamwork smooth and efficient. Her positive attitude really helps create a great working environment.'
   },
   {
     name: 'Adrian Ramirez',
@@ -110,9 +165,17 @@ const stories = [
   {
     name: 'Chambelynne Malubay',
     initials: 'CM',
-    role: 'IT Project Manager',
+    role: 'IT Project Manager - New Media Services',
     origin: 'NMS',
-    quote: "We had the opportunity to have Julia as an intern, and I must say, her performance during the time she spent with us was exceptional. She is incredibly dedicated and consistently delivered great results. Beyond her work, Julia was a joy to have on the team. Her cheerful, easygoing nature and open-minded approach made her a perfect fit. She is a reliable professional who brings a positive energy to any environment.",
+    quote: "We had the opportunity to have Julia as an intern, and I must say, her performance during the time she spent with us was exceptional. She is incredibly dedicated and consistently delivered great results. Beyond her work, Julia was a joy to have on the team. Her cheerful, easygoing nature and open-minded approach made her a perfect fit.",
+  },
+  
+  {
+    name: 'Justin Barnes',
+    initials: 'JB',
+    role: 'Software Engineer, Live Stream Effort',
+    origin: 'Freelance',
+    quote: "Her ability to code what she designs is incredibly rare. We didn't need to relay specs to a developer — she handled the entire design-to-code pipeline herself. Saved us weeks.",
   },
   {
     name: 'Quan Doan',
@@ -135,6 +198,42 @@ const marqueeItems = [
   'Component Architecture ·',
   'TypeScript ·',
 ]
+
+function getCardWidth() {
+  if (!track.value) return 0
+  const card = track.value.querySelector('.carousel-card')
+  if (!card) return 0
+  const gap = 16
+  return card.offsetWidth + gap
+}
+
+function scroll(dir) {
+  const total = stories.length - 1
+  const next = Math.max(0, Math.min(total - 1, activeIndex.value + dir))
+  scrollToIndex(next)
+}
+
+function scrollToIndex(i) {
+  activeIndex.value = i
+  if (!track.value) return
+  track.value.scrollTo({ left: getCardWidth() * i, behavior: 'smooth' })
+}
+
+function onScroll() {
+  if (!track.value) return
+  const w = getCardWidth()
+  if (w === 0) return
+  activeIndex.value = Math.round(track.value.scrollLeft / w)
+}
+
+onMounted(() => {
+  track.value?.addEventListener('scroll', onScroll, { passive: true })
+  startAuto()
+})
+onBeforeUnmount(() => {
+  track.value?.removeEventListener('scroll', onScroll)
+  stopAuto()
+})
 </script>
 
 <style scoped>
@@ -163,22 +262,9 @@ const marqueeItems = [
 .title-accent { color: #7B5CFA; text-shadow: 0 0 40px rgba(123,92,250,0.4); }
 .section-sub { font-size: 0.875rem; color: rgba(240,237,248,0.5); line-height: 1.7; }
 
-
 /* ══════════════════════════════════════
-   TESTIMONIAL GRID
-   2-col on desktop. Featured card spans full.
+   BASE CARD
 ══════════════════════════════════════ */
-.stories-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 3rem;
-}
-@media (max-width: 640px) {
-  .stories-grid { grid-template-columns: 1fr; }
-}
-
-/* Base card */
 .story-card {
   position: relative;
   padding: 1.75rem;
@@ -194,9 +280,8 @@ const marqueeItems = [
   transform: translateY(-3px);
 }
 
-/* Featured card — first one, spans full width */
+/* ── FEATURED ── */
 .story-card--featured {
-  grid-column: 1 / -1;
   flex-direction: row;
   align-items: stretch;
   gap: 2rem;
@@ -207,14 +292,6 @@ const marqueeItems = [
 
 @media (max-width: 640px) {
   .story-card--featured { flex-direction: column; gap: 0; }
-}
-
-/* Inner wrapper — keeps text+divider+person in a column regardless of card orientation */
-.story-inner {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
 }
 
 /* Left accent bar on featured card */
@@ -229,6 +306,92 @@ const marqueeItems = [
   .story-featured-bar { display: none; }
 }
 
+/* ══════════════════════════════════════
+   CAROUSEL
+══════════════════════════════════════ */
+.carousel-wrapper {
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+  /* fade edges */
+  mask-image: linear-gradient(90deg, transparent 0%, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 4%, black 96%, transparent 100%);
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+.carousel-card {
+  flex: 0 0 calc(50% - 0.5rem);
+  scroll-snap-align: start;
+  min-width: 280px;
+}
+
+@media (max-width: 640px) {
+  .carousel-card { flex: 0 0 85%; }
+}
+
+/* Arrow buttons */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(calc(-50% - 20px));
+  z-index: 10;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(20,20,40,0.85);
+  border: 1px solid rgba(123,92,250,0.25);
+  color: #A78BFA;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.carousel-arrow:hover {
+  background: rgba(123,92,250,0.18);
+  border-color: rgba(123,92,250,0.5);
+  color: #fff;
+}
+.carousel-arrow--prev { left: -18px; }
+.carousel-arrow--next { right: -18px; }
+
+@media (max-width: 640px) {
+  .carousel-arrow { display: none; }
+}
+
+/* Dot indicators */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 1.25rem;
+}
+.carousel-dot {
+  width: 6px; height: 6px;
+  border-radius: 999px;
+  background: rgba(123,92,250,0.2);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, width 0.2s;
+}
+.carousel-dot--active {
+  width: 20px;
+  background: #7B5CFA;
+}
+
+/* ── INNER LAYOUT ── */
+.story-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
 /* Ghost quote mark */
 .story-quote-mark {
   position: absolute;
@@ -240,10 +403,6 @@ const marqueeItems = [
   user-select: none;
 }
 .story-card--featured .story-quote-mark { font-size: 12rem; }
-
-/* Stars */
-.story-stars { display: flex; gap: 2px; margin-bottom: 1rem; }
-.star { font-size: 12px; color: #FCD34D; }
 
 /* Quote text */
 .story-text {
@@ -352,31 +511,5 @@ const marqueeItems = [
 @keyframes marquee {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
-}
-
-/* ── FLOATING CODE SYMBOLS ── */
-.code-symbol {
-  position: absolute;
-  font-family: 'Courier New', monospace;
-  font-weight: 600;
-  color: #ffffff;
-  opacity: 0.08;
-  pointer-events: none;
-}
-
-.symbol-1 { font-size: 3rem; top: 15%; left: 10%; animation: floatCode 8s ease-in-out infinite; }
-.symbol-2 { font-size: 2.5rem; top: 25%; right: 15%; animation: floatCode 7s ease-in-out infinite; animation-delay: -2s; }
-.symbol-3 { font-size: 2rem; top: 45%; left: 20%; animation: floatCode 9s ease-in-out infinite; animation-delay: -4s; }
-.symbol-4 { font-size: 2.8rem; bottom: 30%; right: 25%; animation: floatCode 6.5s ease-in-out infinite; animation-delay: -1s; }
-.symbol-5 { font-size: 2.2rem; top: 60%; left: 8%; animation: floatCode 7.5s ease-in-out infinite; animation-delay: -5s; }
-.symbol-6 { font-size: 2rem; bottom: 20%; left: 30%; animation: floatCode 8.5s ease-in-out infinite; animation-delay: -3s; }
-.symbol-7 { font-size: 2.5rem; top: 35%; right: 8%; animation: floatCode 7s ease-in-out infinite; animation-delay: -6s; }
-.symbol-8 { font-size: 2rem; bottom: 15%; right: 12%; animation: floatCode 9s ease-in-out infinite; animation-delay: -7s; }
-
-@keyframes floatCode {
-  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.08; }
-  25%       { transform: translateY(-20px) translateX(10px) rotate(5deg); opacity: 0.12; }
-  50%       { transform: translateY(-40px) translateX(-10px) rotate(-5deg); opacity: 0.06; }
-  75%       { transform: translateY(-20px) translateX(15px) rotate(3deg); opacity: 0.1; }
 }
 </style>

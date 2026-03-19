@@ -113,17 +113,25 @@ const scrollToSection = (id) => {
 
 const updateActiveSection = () => {
   const sections = ['hero', 'projects', 'process', 'about', 'contact']
-  const scrollPosition = window.scrollY + 150
-  for (const sectionId of sections) {
-    const element = document.getElementById(sectionId)
+  const scrollPosition = window.scrollY + 200 // Offset for navbar
+  
+  // Iterate in reverse to find the current section
+  for (let i = sections.length - 1; i >= 0; i--) {
+    const element = document.getElementById(sections[i])
     if (element) {
-      const { offsetTop, offsetHeight } = element
-      if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-        activeSection.value = sectionId
-        break
+      const rect = element.getBoundingClientRect()
+      const elementTop = rect.top + window.pageYOffset
+      
+      // If we've scrolled past this section's start, it's the active one
+      if (scrollPosition >= elementTop) {
+        activeSection.value = sections[i]
+        return
       }
     }
   }
+  
+  // Default to hero if nothing else matches
+  activeSection.value = 'hero'
 }
 
 onMounted(() => {
