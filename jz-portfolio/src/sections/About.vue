@@ -28,6 +28,9 @@
         <!-- ══ LEFT: Identity Panel ══ -->
         <IdentityPanel />
 
+        <!-- ══ VERTICAL DIVIDER (desktop only) ══ -->
+        <div class="column-divider" aria-hidden="true" />
+
         <!-- ══ RIGHT: Tab Panel ══ -->
         <AboutTabPanel />
       </div>
@@ -84,11 +87,35 @@ import FloatingCodeSymbols from '@/components/FloatingCodeSymbols.vue'
   grid-template-columns: 1fr;
   gap: 2.5rem;
 }
+
+/* Hide divider on mobile */
+.column-divider { display: none; }
+
 @media (min-width: 768px) {
   .about-layout {
-    grid-template-columns: 360px 1fr;
-    gap: 3rem;
+    grid-template-columns: 340px 56px 1fr;
+    gap: 0;
     align-items: start;
+  }
+
+  .column-divider {
+    display: flex;
+    justify-content: center;
+    align-self: stretch;
+  }
+
+  .column-divider::after {
+    content: '';
+    display: block;
+    width: 1px;
+    min-height: 200px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(123,92,250,0.3) 15%,
+      rgba(123,92,250,0.18) 60%,
+      transparent
+    );
   }
 }
 </style>

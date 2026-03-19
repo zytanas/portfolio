@@ -52,7 +52,12 @@ import avatar from '../assets/images/avatar.webp'
 <style scoped>
 .identity-panel {
   display: flex; flex-direction: column; gap: 1.5rem;
-  position: sticky; top: 100px;
+}
+@media (min-width: 768px) {
+  .identity-panel {
+    position: sticky;
+    top: 100px;
+  }
 }
 
 /* Avatar */

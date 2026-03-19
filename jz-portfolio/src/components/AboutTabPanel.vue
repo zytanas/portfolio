@@ -17,9 +17,10 @@
     <div v-if="activeTab === 'skills'" class="tab-content">
       <div class="skills-grid">
         <div
-          v-for="skill in skills"
+          v-for="(skill, i) in skills"
           :key="skill.title"
           class="skill-card group"
+          :style="{ '--stagger': i }"
         >
           <div class="skill-icon-wrap" :style="{ background: skill.color + '18', borderColor: skill.color + '35' }">
             <component :is="skill.icon" class="w-5 h-5" :style="{ color: skill.color }" />
@@ -217,51 +218,93 @@ const devTools = [
 </script>
 
 <style scoped>
+/* ── PANEL SURFACE (lifted) ── */
 .tab-panel {
-  display: flex; flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(123, 92, 250, 0.14);
+  border-radius: 18px;
+  padding: 1.5rem;
+  transition: border-color 0.3s;
+}
+.tab-panel:hover {
+  border-color: rgba(123, 92, 250, 0.22);
 }
 
-/* Tab bar */
+/* ── TAB BAR ── */
 .tab-bar {
-  display: flex; gap: 0;
-  border-bottom: 1px solid rgba(123,92,250,0.12);
-  margin-bottom: 2rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(123, 92, 250, 0.12);
+  margin-bottom: 1.75rem;
+  padding-bottom: 1rem;
 }
-.tab-btn {
-  display: flex; align-items: center; gap: 0.4rem;
-  padding: 0.7rem 1.1rem;
-  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(240,237,248,0.45);
-  background: transparent; border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
-  margin-bottom: -1px;
-}
-.tab-btn:hover { color: rgba(240,237,248,0.75); }
-.tab-btn--active { color: #A78BFA; border-bottom-color: #7B5CFA; }
-.tab-icon { font-size: 16px; opacity: 0.7; }
 
-.tab-content { animation: tabIn 0.2s ease; }
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.9rem;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240, 237, 248, 0.4);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover {
+  color: rgba(240, 237, 248, 0.75);
+  background: rgba(123, 92, 250, 0.06);
+  border-color: rgba(123, 92, 250, 0.15);
+}
+/* Filled pill for active tab */
+.tab-btn--active {
+  color: #F0EDF8;
+  background: rgba(123, 92, 250, 0.2);
+  border-color: rgba(123, 92, 250, 0.45);
+}
+.tab-btn--active .tab-icon { opacity: 1; }
+.tab-icon { font-size: 14px; opacity: 0.6; }
+
+/* Tab content fade-up */
+.tab-content { animation: tabIn 0.22s ease; }
 @keyframes tabIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── SKILLS TAB ── */
-.skills-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-@media (min-width: 480px) { .skills-grid { grid-template-columns: 1fr; } }
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
 
 .skill-card {
   padding: 1.4rem;
   border-radius: 14px;
-  background: rgba(20,20,40,0.6);
-  border: 1px solid rgba(123,92,250,0.1);
+  background: rgba(20, 20, 40, 0.5);
+  border: 1px solid rgba(123, 92, 250, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  /* Staggered entrance */
+  animation: cardUp 0.35s ease both;
+  animation-delay: calc(var(--stagger, 0) * 100ms + 50ms);
   transition: border-color 0.25s, transform 0.25s;
-  display: flex; flex-direction: column; gap: 0.6rem;
+}
+@keyframes cardUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .skill-card:hover {
-  border-color: rgba(123,92,250,0.28);
+  border-color: rgba(123, 92, 250, 0.3);
   transform: translateY(-2px);
 }
 
@@ -270,76 +313,45 @@ const devTools = [
   border-radius: 10px; border: 1px solid;
   display: flex; align-items: center; justify-content: center;
 }
-
-.skill-title { font-size: 1.2rem; font-weight: 800; color: #F0EDF8; line-height: 1; }
-.skill-desc { font-size: 0.9rem; color: rgba(240,237,248,0.5); line-height: 1.6; }
+.skill-title { font-size: 1.15rem; font-weight: 800; color: #F0EDF8; line-height: 1; }
+.skill-desc  { font-size: 0.88rem; color: rgba(240, 237, 248, 0.5); line-height: 1.6; }
 
 /* ── EXPERIENCE TAB ── */
 .timeline { display: flex; flex-direction: column; }
-
-.timeline-item {
-  display: flex; gap: 1.1rem;
-}
-
+.timeline-item { display: flex; gap: 1.1rem; }
 .timeline-left {
   display: flex; flex-direction: column; align-items: center;
   flex-shrink: 0; width: 28px;
 }
-
 .tl-dot {
   width: 28px; height: 28px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; z-index: 1;
 }
-.tl-dot--work {
-  background: rgba(123,92,250,0.15);
-  border: 1px solid rgba(123,92,250,0.35);
-  color: #A78BFA;
-}
-.tl-dot--edu {
-  background: rgba(45,212,191,0.12);
-  border: 1px solid rgba(45,212,191,0.3);
-  color: #2DD4BF;
-}
-
-.tl-line {
-  flex: 1; width: 1px;
-  background: rgba(123,92,250,0.1);
-  margin: 4px 0;
-}
-
-.timeline-body {
-  padding-bottom: 1.75rem;
-  flex: 1; min-width: 0;
-}
-
-.tl-title { font-size: 1.2rem; font-weight: 700; color: #F0EDF8; line-height: 1.2; }
-.tl-company { font-size: 0.9rem; color: rgba(167,139,250,0.7); margin-top: 0.2rem; }
-.tl-note { font-size: 0.8rem; color: rgba(240,237,248,0.4); line-height: 1.6; margin-top: 0.35rem; }
-.tl-period {
-  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+.tl-dot--work { background: rgba(123,92,250,0.15); border: 1px solid rgba(123,92,250,0.35); color: #A78BFA; }
+.tl-dot--edu  { background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.3);  color: #2DD4BF; }
+.tl-line { flex: 1; width: 1px; background: rgba(123,92,250,0.1); margin: 4px 0; }
+.timeline-body { padding-bottom: 1.75rem; flex: 1; min-width: 0; }
+.tl-title   { font-size: 1.1rem; font-weight: 700; color: #F0EDF8; line-height: 1.2; }
+.tl-company { font-size: 0.88rem; color: rgba(167,139,250,0.7); margin-top: 0.2rem; }
+.tl-note    { font-size: 0.8rem; color: rgba(240,237,248,0.4); line-height: 1.6; margin-top: 0.35rem; }
+.tl-period  {
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
   color: rgba(240,237,248,0.3); white-space: nowrap; flex-shrink: 0; padding-top: 2px;
 }
 .tl-period--current { color: #22c55e; }
 
 /* ── STACK TAB ── */
 .stack-group { margin-bottom: 0.5rem; }
-.stack-group-header {
-  display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;
-}
+.stack-group-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
 .stack-group-icon {
   width: 32px; height: 32px; border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
 }
 .stack-group-icon.violet { background: rgba(123,92,250,0.15); color: #A78BFA; border: 1px solid rgba(123,92,250,0.25); }
 .stack-group-icon.teal   { background: rgba(45,212,191,0.12); color: #2DD4BF; border: 1px solid rgba(45,212,191,0.25); }
-.stack-group-label {
-  font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: rgba(240,237,248,0.4);
-}
-
+.stack-group-label { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(240,237,248,0.4); }
 .stack-icons { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-
 .stack-icon-wrap {
   position: relative;
   width: 52px; height: 52px;
@@ -355,11 +367,7 @@ const devTools = [
   border-color: rgba(123,92,250,0.35);
   transform: translateY(-3px) scale(1.06);
 }
-
-.stack-icon-img {
-  width: 28px; height: 28px; object-fit: contain;
-}
-
+.stack-icon-img { width: 28px; height: 28px; object-fit: contain; }
 .stack-tooltip {
   position: absolute;
   bottom: calc(100% + 6px); left: 50%;
@@ -374,9 +382,19 @@ const devTools = [
   transition: opacity 0.15s;
 }
 .stack-icon-wrap:hover .stack-tooltip { opacity: 1; }
+.stack-divider { height: 1px; background: rgba(123,92,250,0.08); margin: 1.5rem 0; }
 
-.stack-divider {
-  height: 1px; background: rgba(123,92,250,0.08);
-  margin: 1.5rem 0;
+/* ── TABLET: make tab labels shorter to fit ── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tab-btn { padding: 0.4rem 0.7rem; font-size: 10px; }
+}
+
+/* ── MOBILE: full-width tab bar ── */
+@media (max-width: 480px) {
+  .tab-panel { padding: 1.1rem; border-radius: 14px; }
+  .tab-bar { gap: 0.3rem; }
+  .tab-btn { padding: 0.4rem 0.65rem; font-size: 10px; gap: 0.25rem; }
+  .tab-icon { display: none; }
+  .skill-title { font-size: 1rem; }
 }
 </style>
