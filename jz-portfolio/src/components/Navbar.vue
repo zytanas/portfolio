@@ -1,10 +1,10 @@
 <template>
   <nav class="fixed top-0 left-0 right-0 z-50 py-3">
     <div class="max-w-5xl px-4 mx-auto">
-      <div class="px-4 py-3 nav-pill md:px-12">
+      <div class="px-4 py-3 nav-pill lg:px-12">
 
         <!-- Desktop Navigation -->
-        <div class="items-center justify-center hidden gap-24 md:flex">
+        <div class="items-center justify-center hidden gap-24 lg:flex">
 
           <!-- Left Navigation -->
           <div class="flex items-center gap-8">
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Mobile Navigation -->
-        <div class="md:hidden">
+        <div class="lg:hidden">
           <div class="flex items-center justify-between">
             <a href="#" @click.prevent="scrollToSection('hero')" class="nav-logo-wrap">
               <img src="/src/assets/images/jz-circle.webp" alt="Logo" class="w-auto h-12" />
@@ -157,7 +157,7 @@ onUnmounted(() => {
 .nav-pill:hover {
   border-color: rgba(123, 92, 250, 0.22);
 }
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .nav-pill {
     border-radius: 9999px; /* rounded-full for desktop */
   }
