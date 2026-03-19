@@ -6,6 +6,10 @@
       <div class="code-symbol symbol-2">{ }</div>
       <div class="code-symbol symbol-3">[ ]</div>
       <div class="code-symbol symbol-4">&lt;div&gt;</div>
+      <div class="code-symbol symbol-5">( )</div>
+      <div class="code-symbol symbol-6">===</div>
+      <div class="code-symbol symbol-7">=&gt;</div>
+      <div class="code-symbol symbol-8">&lt;/&gt;</div>
     </div>
     
     <!-- Ambient glows -->

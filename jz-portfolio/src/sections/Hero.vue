@@ -1,11 +1,8 @@
 <template>
-  <section id="hero" class="relative flex items-center justify-center min-h-screen overflow-hidden" @mousemove="onMouseMove" @mouseleave="onMouseLeave">
+  <section id="hero" class="relative flex items-center justify-center min-h-screen overflow-hidden">
 
-    <!-- ── INTERACTIVE CANVAS ── -->
-    <canvas
-      ref="bgCanvas"
-      class="absolute inset-0 z-0 w-full h-full pointer-events-none"
-    />
+    <!-- ── MOVING 3D BACKGROUND ── -->
+    <MovingBackground3D />
 
     <!-- ── NOISE GRAIN OVERLAY ── -->
     <div class="absolute inset-0 pointer-events-none grain-overlay z-1" />
@@ -134,192 +131,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
 import { MoveRight, Code2, Palette, Linkedin, Github } from 'lucide-vue-next'
-
-// ── CANVAS ──
-const bgCanvas = ref(null)
-
-let ctx, W, H, rafId
-let targetMouse  = { x: -9999, y: -9999 }
-let smoothMouse  = { x: -9999, y: -9999 }
-let isMouseInside = false
-let isVisible = true // Track visibility
-
-// Updated repel/attract colors to violet palette
-const ACCENT_R = 123, ACCENT_G = 92, ACCENT_B = 250  // #7B5CFA violet
-const REPEL_RADIUS   = 100
-const REPEL_STRENGTH = 3.0
-const ATTRACT_RADIUS = 260
-const ATTRACT_STR    = 0.10
-const CONN_DIST      = 125
-
-// Detect mobile devices
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-
-class Particle {
-  constructor() { this.init() }
-  init() {
-    this.x  = Math.random() * W
-    this.y  = Math.random() * H
-    this.vx = (Math.random() - 0.5) * 0.28
-    this.vy = (Math.random() - 0.5) * 0.28
-    this.r  = Math.random() * 1.5 + 0.35
-    this.base = Math.random() * 0.38 + 0.07
-    this.opacity = this.base
-    // warm = violet-ish, cool = teal-ish
-    this.warm = Math.random() > 0.5
-  }
-}
-
-let particles = []
-
-function initParticles() {
-  // Reduce particle count on mobile for better performance
-  const divisor = isMobile ? 15000 : 8500
-  const count = Math.floor((W * H) / divisor)
-  particles = Array.from({ length: count }, () => new Particle())
-}
-
-function draw() {
-  ctx.clearRect(0, 0, W, H)
-
-  ctx.fillStyle = '#0A0A0F'
-  ctx.fillRect(0, 0, W, H)
-
-  // Mouse aura — violet
-  if (isMouseInside && smoothMouse.x > 0) {
-    const gm = ctx.createRadialGradient(smoothMouse.x, smoothMouse.y, 0, smoothMouse.x, smoothMouse.y, ATTRACT_RADIUS * 1.5)
-    gm.addColorStop(0,   `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.13)`)
-    gm.addColorStop(0.5, `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.05)`)
-    gm.addColorStop(1,   'transparent')
-    ctx.fillStyle = gm
-    ctx.fillRect(0, 0, W, H)
-  }
-
-  // Static ambient glows
-  ;[
-    [W * 0.08, H * 0.12, W * 0.44, `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.07)`],
-    [W * 0.92, H * 0.88, W * 0.38, 'rgba(45,212,191,0.04)'],   // teal corner
-  ].forEach(([cx, cy, r, color]) => {
-    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r)
-    g.addColorStop(0, color)
-    g.addColorStop(1, 'transparent')
-    ctx.fillStyle = g
-    ctx.fillRect(0, 0, W, H)
-  })
-
-  particles.forEach(p => {
-    p.x += p.vx
-    p.y += p.vy
-    if (p.x < 0 || p.x > W) p.vx *= -1
-    if (p.y < 0 || p.y > H) p.vy *= -1
-
-    if (isMouseInside && smoothMouse.x > 0) {
-      const dx = p.x - smoothMouse.x
-      const dy = p.y - smoothMouse.y
-      const d  = Math.sqrt(dx * dx + dy * dy)
-      if (d < REPEL_RADIUS && d > 0) {
-        const f = (1 - d / REPEL_RADIUS) * REPEL_STRENGTH
-        p.vx += (dx / d) * f
-        p.vy += (dy / d) * f
-        p.opacity = Math.min(1, p.base + (1 - d / REPEL_RADIUS) * 0.7)
-      } else if (d < ATTRACT_RADIUS) {
-        const f = (1 - d / ATTRACT_RADIUS) * ATTRACT_STR
-        p.vx -= (dx / d) * f
-        p.vy -= (dy / d) * f
-        p.opacity += ((p.base + 0.15) - p.opacity) * 0.06
-      } else {
-        p.opacity += (p.base - p.opacity) * 0.04
-      }
-    } else {
-      p.opacity += (p.base - p.opacity) * 0.03
-    }
-
-    p.vx *= 0.97
-    p.vy *= 0.97
-
-    // Violet particles + teal accent particles
-    ctx.beginPath()
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-    ctx.fillStyle = p.warm
-      ? `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},${p.opacity})`
-      : `rgba(45,212,191,${p.opacity * 0.55})`
-    ctx.fill()
-  })
-
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x
-      const dy = particles[i].y - particles[j].y
-      const d2 = dx * dx + dy * dy
-      if (d2 < CONN_DIST * CONN_DIST) {
-        const d = Math.sqrt(d2)
-        ctx.beginPath()
-        ctx.moveTo(particles[i].x, particles[i].y)
-        ctx.lineTo(particles[j].x, particles[j].y)
-        ctx.strokeStyle = `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},${0.05 * (1 - d / CONN_DIST)})`
-        ctx.lineWidth = 0.55
-        ctx.stroke()
-      }
-    }
-  }
-
-  // Mouse cursor rings
-  if (isMouseInside && smoothMouse.x > 0) {
-    ctx.beginPath()
-    ctx.arc(smoothMouse.x, smoothMouse.y, REPEL_RADIUS, 0, Math.PI * 2)
-    ctx.strokeStyle = `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.10)`
-    ctx.lineWidth = 1
-    ctx.stroke()
-
-    ctx.beginPath()
-    ctx.arc(smoothMouse.x, smoothMouse.y, REPEL_RADIUS * 0.38, 0, Math.PI * 2)
-    ctx.strokeStyle = `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.22)`
-    ctx.lineWidth = 1
-    ctx.stroke()
-
-    ctx.beginPath()
-    ctx.arc(smoothMouse.x, smoothMouse.y, 3, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(${ACCENT_R},${ACCENT_G},${ACCENT_B},0.8)`
-    ctx.fill()
-  }
-}
-
-function loop() {
-  // Only animate when visible
-  if (!isVisible) {
-    rafId = requestAnimationFrame(loop)
-    return
-  }
-  
-  smoothMouse.x += (targetMouse.x - smoothMouse.x) * 0.18
-  smoothMouse.y += (targetMouse.y - smoothMouse.y) * 0.18
-  draw()
-  rafId = requestAnimationFrame(loop)
-}
-
-function onMouseMove(e) {
-  const rect = bgCanvas.value.getBoundingClientRect()
-  targetMouse.x = e.clientX - rect.left
-  targetMouse.y = e.clientY - rect.top
-  if (!isMouseInside) {
-    smoothMouse.x = targetMouse.x
-    smoothMouse.y = targetMouse.y
-  }
-  isMouseInside = true
-}
-
-function onMouseLeave() {
-  isMouseInside = false
-}
-
-function resize() {
-  if (!bgCanvas.value) return
-  W = bgCanvas.value.width  = bgCanvas.value.offsetWidth
-  H = bgCanvas.value.height = bgCanvas.value.offsetHeight
-  initParticles()
-}
+import MovingBackground3D from '@/components/MovingBackground3D.vue'
 
 const scrollToContact = () => {
   const el = document.getElementById('contact')
@@ -330,40 +143,6 @@ const scrollToWork = () => {
   const el = document.getElementById('projects')
   if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' })
 }
-
-onMounted(() => {
-  ctx = bgCanvas.value.getContext('2d')
-  resize()
-  loop()
-  window.addEventListener('resize', resize, { passive: true })
-  
-  // Intersection Observer to pause animation when not visible
-  const heroSection = bgCanvas.value.closest('section')
-  if (heroSection) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          isVisible = entry.isIntersecting
-        })
-      },
-      { threshold: 0.1 }
-    )
-    observer.observe(heroSection)
-    
-    // Store observer to disconnect later
-    bgCanvas.value._observer = observer
-  }
-})
-
-onUnmounted(() => {
-  if (rafId) cancelAnimationFrame(rafId)
-  window.removeEventListener('resize', resize)
-  
-  // Disconnect intersection observer
-  if (bgCanvas.value?._observer) {
-    bgCanvas.value._observer.disconnect()
-  }
-})
 </script>
 
 <style scoped>
