@@ -2,9 +2,9 @@
   <div class="identity-panel">
     <!-- Avatar block -->
     <div class="avatar-block">
-      <div class="avatar-ring">
+      <div class="avatar-ring" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
         <div class="avatar-inner">
-          <img :src="avatar" alt="Julia Almoite" class="avatar-img" />
+          <img :src="isHovered ? avatarDark : avatar" alt="Julia Almoite" class="avatar-img" />
         </div>
       </div>
     </div>
@@ -46,7 +46,11 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import avatar from '../assets/images/avatar.webp'
+import avatarDark from '../assets/images/avatar-dark.webp'
+
+const isHovered = ref(false)
 </script>
 
 <style scoped>

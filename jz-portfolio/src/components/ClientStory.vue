@@ -122,7 +122,7 @@ import FloatingCodeSymbols from '@/components/FloatingCodeSymbols.vue'
 const track = ref(null)
 const activeIndex = ref(0)
 let autoTimer = null
-const AUTO_DELAY = 2000 // ms between slides
+const AUTO_DELAY = 4000 // ms between slides
 
 function startAuto() {
   stopAuto()

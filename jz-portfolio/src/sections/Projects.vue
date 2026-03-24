@@ -230,7 +230,7 @@ const moreProjects = [
       'Landing page design in Figma',
       'Responsive layout specs for dev handoff',
     ],
-    techs: ['Landing Page', 'Branding'],
+    techs: ['Branding'],
     projectType: 'design',
   },
   
