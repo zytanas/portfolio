@@ -20,19 +20,58 @@
           </p>
         </div>
         <div class="hidden text-right md:block">
-          <div class="project-count-bg font-heading">0{{ allProjects.length }}</div>
+          <div class="project-count-bg font-heading">0{{ featuredProjects.length + moreProjects.length }}</div>
           <p class="mt-1 font-mono text-xs tracking-widest uppercase count-label">total projects</p>
         </div>
       </div>
 
-      <!-- CLIENT WORK SECTION -->
-      <div class="mb-24">
-        <ClientWorkSection :projects="allClientProjects" @open-modal="openModal" />
+      <!-- ── FEATURED CARDS GRID ── -->
+      <div class="projects-grid">
+        <div
+          v-for="(project, i) in featuredProjects"
+          :key="project.title"
+          class="project-card"
+          @click="openModal(project)"
+        >
+          <!-- Image -->
+          <div class="card-img-wrap">
+            <img :src="project.image" :alt="project.title" class="card-img" />
+            <div class="card-img-overlay" />
+            <!-- Index badge -->
+            <span class="card-index font-heading" aria-hidden="true">
+              {{ String(i + 1).padStart(2, '0') }}
+            </span>
+          </div>
+
+          <!-- Body -->
+          <div class="card-body">
+            <div class="card-tags">
+              <span :class="['tag', getTagClass(project.tag)]">{{ project.tag }}</span>
+              <span v-for="tech in project.techs" :key="tech" class="tag tag-tech">{{ tech }}</span>
+            </div>
+            <h3 class="card-title font-heading">{{ project.title }}</h3>
+            <p class="card-desc font-body">{{ project.desc }}</p>
+
+            <!-- Footer -->
+            <div class="card-footer">
+              <div class="card-type-pill">
+                <Code2 v-if="project.projectType !== 'design'" :size="11" />
+                <Figma v-else :size="11" />
+                <span>{{ project.projectType === 'design' ? 'Design' : project.developedWith }}</span>
+              </div>
+              <div class="card-arrow">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 13L13 3M13 3H6M13 3v7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- PERSONAL PROJECTS SECTION -->
-      <div>
-        <PersonalProjectsSection :projects="allPersonalProjects" @open-modal="openModal" />
+      <!-- ── MORE WORK ── -->
+      <div class="mt-20">
+        <MoreWork :projects="moreProjects" @open-modal="openModal" />
       </div>
     </div>
 
@@ -42,13 +81,16 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import ClientWorkSection from '@/components/ClientWorkSection.vue'
-import PersonalProjectsSection from '@/components/PersonalProjectsSection.vue'
+import { ref } from 'vue'
+import { Figma, Code2 } from 'lucide-vue-next'
 import ProjectModal from '@/components/ProjectModal.vue'
+import MoreWork from '@/components/MoreWork.vue'
 import FloatingCodeSymbols from '@/components/FloatingCodeSymbols.vue'
+import vibeThumbnail from '@/assets/images/vibeteams-thumbnail.webp'
 import cozyImage from '@/assets/images/cozy.webp'
 import vibeTeams from '@/assets/images/vibeteams.webp'
+import adrianThumbnail from '@/assets/images/adrian-thumbnail.webp'
+import prestigeThumbnail from '@/assets/images/prestige-thumbnail.webp'
 import synerpark from '@/assets/images/synerpark.webp'
 import msb from '@/assets/images/msb.webp'
 import prestige from '@/assets/images/prestige.webp'
@@ -68,10 +110,18 @@ const closeModal = () => {
   selectedProject.value = null
 }
 
-const allProjects = [
+const getTagClass = (tag) => {
+  if (tag === 'Coreproc') return 'tag-client'
+  if (tag === 'Freelance') return 'tag-freelance'
+  return 'tag-personal'
+}
+
+// ── 3 featured case studies (card grid) ──
+const featuredProjects = [
   {
     title: 'VibeTeams',
-    image: vibeTeams,
+    image: vibeThumbnail,
+    modalImage: vibeTeams,
     tag: 'Coreproc',
     desc: 'Team collaboration SaaS with analytics, reporting, and a dashboard-driven workflow.',
     role: 'UI/UX Designer & Frontend Developer',
@@ -87,6 +137,49 @@ const allProjects = [
     projectType: 'development',
     developedWith: 'Vue',
   },
+  {
+    title: "Adrian's Portfolio",
+    image: adrianThumbnail,
+    modalImage: portfolio,
+    tag: 'Personal',
+    desc: 'Personal portfolio featuring curated design projects in a clean, interactive layout.',
+    role: 'Designer & Developer',
+    outcome:
+      'A fully custom portfolio built without a template — designed and shipped solo to showcase design sensibility.',
+    contributions: [
+      'Designed in Figma from scratch',
+      'Built with TSX & Tailwind',
+      'Implemented scroll-based animations',
+      'Deployed to Vercel',
+    ],
+    techs: ['Web', 'Portfolio'],
+    url: 'https://lemonadezzz.vercel.app/',
+    projectType: 'development',
+    developedWith: 'TSX',
+  },
+  {
+    title: 'Prestige Paper Products',
+    image: prestigeThumbnail,
+    modalImage: prestige,
+    tag: 'Coreproc',
+    desc: 'Brand identity and e-commerce site for a paper goods brand with editorial-style product showcases.',
+    role: 'Frontend Developer',
+    outcome:
+      'Revamped an outdated e-commerce site into an editorial-style storefront that elevated brand perception.',
+    contributions: [
+      'Full frontend revamp in Vue',
+      'Created editorial product layout system',
+      'Worked with designer on component specs',
+      'Implemented responsive product gallery',
+    ],
+    techs: ['Revamp', 'E-commerce'],
+    projectType: 'development',
+    developedWith: 'Vue',
+  },
+]
+
+// ── Remaining 5 projects (list rows in MoreWorkSection) ──
+const moreProjects = [
   {
     title: 'SynerPark',
     image: synerpark,
@@ -104,24 +197,6 @@ const allProjects = [
     url: 'https://synerpark.com/',
     projectType: 'development',
     developedWith: 'Nuxt',
-  },
-  {
-    title: 'Prestige Paper Products',
-    image: prestige,
-    tag: 'Coreproc',
-    desc: 'Brand identity and e-commerce site for a paper goods brand with editorial-style product showcases.',
-    role: 'Frontend Developer',
-    outcome:
-      'Revamped an outdated e-commerce site into an editorial-style storefront that elevated brand perception.',
-    contributions: [
-      'Full frontend revamp in Vue',
-      'Created editorial product layout system',
-      'Worked with designer on component specs',
-      'Implemented responsive product gallery',
-    ],
-    techs: ['Revamp', 'E-commerce'],
-    projectType: 'development',
-    developedWith: 'Vue',
   },
   {
     title: 'My Shopping Box',
@@ -158,25 +233,7 @@ const allProjects = [
     techs: ['Landing Page', 'Branding'],
     projectType: 'design',
   },
-  {
-    title: "Adrian's Portfolio",
-    image: portfolio,
-    tag: 'Personal',
-    desc: 'Personal portfolio featuring curated design projects in a clean, interactive layout.',
-    role: 'Designer & Developer',
-    outcome:
-      'A fully custom portfolio built without a template — designed and shipped solo to showcase design sensibility.',
-    contributions: [
-      'Designed in Figma from scratch',
-      'Built with TSX & Tailwind',
-      'Implemented scroll-based animations',
-      'Deployed to Vercel',
-    ],
-    techs: ['Web', 'Personal'],
-    url: 'https://lemonadezzz.vercel.app/',
-    projectType: 'development',
-    developedWith: 'TSX',
-  },
+  
   {
     title: 'Coreproc, Inc. Website',
     image: coreproc,
@@ -184,7 +241,7 @@ const allProjects = [
     desc: 'Corporate website for a B2B SaaS company, showcasing products, values, and culture.',
     role: 'Designer',
     outcome:
-      'Crafted a modern, approachable website that effectively communicates the brand’s value proposition and culture.',
+      "Crafted a modern, approachable website that effectively communicates the brand's value proposition and culture.",
     contributions: [
       'Designed full website in Figma',
       'Developed a cohesive visual language',
@@ -211,11 +268,6 @@ const allProjects = [
     projectType: 'design',
   },
 ]
-
-const allClientProjects = computed(() =>
-  allProjects.filter((p) => p.tag === 'Coreproc' || p.tag === 'Freelance'),
-)
-const allPersonalProjects = computed(() => allProjects.filter((p) => p.tag === 'Personal'))
 </script>
 
 <style scoped>
@@ -281,5 +333,188 @@ const allPersonalProjects = computed(() => allProjects.filter((p) => p.tag === '
 .count-label {
   color: rgba(240, 237, 248, 0.3);
 }
-</style>
 
+/* ── GRID ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── CARD ── */
+.project-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(123, 92, 250, 0.12);
+  background: rgba(255, 255, 255, 0.025);
+  cursor: pointer;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.project-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(123, 92, 250, 0.38);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(123, 92, 250, 0.1);
+}
+
+/* ── IMAGE ── */
+.card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  background: rgba(8, 8, 20, 0.6);
+}
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0.88) saturate(0.8);
+  transition: transform 0.5s ease, filter 0.4s ease;
+}
+.project-card:hover .card-img {
+  transform: scale(1.06);
+  filter: brightness(1) saturate(1);
+}
+.card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 35%, rgba(8, 8, 20, 0.82));
+}
+.card-index {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: rgba(240, 237, 248, 0.75);
+  background: rgba(8, 8, 20, 0.6);
+  backdrop-filter: blur(6px);
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 2;
+  user-select: none;
+}
+
+/* ── CARD BODY ── */
+.card-body {
+  padding: 18px 20px 20px;
+}
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.card-title {
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-weight: 700;
+  color: #f0edf8;
+  line-height: 1.2;
+  margin-bottom: 7px;
+  transition: color 0.2s;
+}
+.project-card:hover .card-title {
+  color: #c4b5fd;
+}
+.card-desc {
+  font-size: 0.82rem;
+  color: rgba(240, 237, 248, 0.42);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── CARD FOOTER ── */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(123, 92, 250, 0.1);
+}
+.card-type-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(123, 92, 250, 0.07);
+  border: 1px solid rgba(123, 92, 250, 0.18);
+  color: #a78bfa;
+  transition: background 0.2s, border-color 0.2s;
+}
+.project-card:hover .card-type-pill {
+  background: rgba(123, 92, 250, 0.14);
+  border-color: rgba(123, 92, 250, 0.38);
+}
+.card-arrow {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(123, 92, 250, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(167, 139, 250, 0.45);
+  transition: all 0.2s;
+}
+.project-card:hover .card-arrow {
+  background: rgba(123, 92, 250, 0.12);
+  border-color: rgba(123, 92, 250, 0.45);
+  color: #a78bfa;
+}
+
+/* ── TAGS ── */
+.tag {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.tag-client {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.22);
+}
+.tag-freelance {
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.22);
+}
+.tag-personal {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.22);
+}
+.tag-tech {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(240, 237, 248, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+</style>

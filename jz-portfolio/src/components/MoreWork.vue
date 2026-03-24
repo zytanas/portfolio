@@ -1,19 +1,21 @@
 <template>
-  <div>
+  <div class="more-work-section">
+    <!-- Section label -->
     <div class="flex items-center gap-3 mb-10">
-      <div class="group-dot dot-client"></div>
-      <span class="group-label-text">Client Work · Coreproc, Inc. &amp; Freelance</span>
+      <div class="group-dot"></div>
+      <span class="group-label">// more work</span>
       <div class="flex-1 h-px group-line"></div>
     </div>
 
-    <div class="client-list">
+    <!-- List rows -->
+    <div class="more-list">
       <div
         v-for="(project, i) in displayedProjects"
         :key="project.title"
+        class="more-row group"
         @click="$emit('open-modal', project)"
-        class="cursor-pointer client-row group"
       >
-        <!-- Ghost index number -->
+        <!-- Ghost index -->
         <span class="row-index font-heading" aria-hidden="true">
           {{ String(i + 1).padStart(2, '0') }}
         </span>
@@ -28,32 +30,21 @@
         <div class="row-info">
           <div class="flex items-center gap-2 mb-1.5">
             <span :class="['tag', getTagClass(project.tag)]">{{ project.tag }}</span>
-            <span v-for="tech in project.techs" :key="tech" class="tag tag-tech">{{
-              tech
-            }}</span>
+            <span v-for="tech in project.techs" :key="tech" class="tag tag-tech">{{ tech }}</span>
           </div>
           <h3 class="row-title font-heading">{{ project.title }}</h3>
           <p class="row-desc">{{ project.desc }}</p>
         </div>
 
-        <!-- Right: type + arrow -->
+        <!-- Right: type pill + arrow -->
         <div class="row-right">
           <div class="row-type-pill">
             <Code2 v-if="project.projectType !== 'design'" :size="11" />
             <Figma v-else :size="11" />
-            <span>{{
-              project.projectType === 'design' ? 'Design' : project.developedWith
-            }}</span>
+            <span>{{ project.projectType === 'design' ? 'Design' : project.developedWith }}</span>
           </div>
           <div class="row-arrow">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 13L13 3M13 3H6M13 3v7" />
             </svg>
           </div>
@@ -61,21 +52,20 @@
       </div>
     </div>
 
-    <div v-if="projects.length > 3" class="flex justify-center mt-8">
-      <button @click="showAll = !showAll" class="see-more-btn">
-        {{ showAll ? 'See Less' : `+${projects.length - 3} More` }}
+    <!-- Show More/Less Button -->
+    <div v-if="shouldShowButton" class="flex justify-center mt-8">
+      <button @click="toggleShowAll" class="show-more-btn">
+        <span>{{ showAll ? 'Show Less' : 'Show More' }}</span>
         <svg
-          :class="['w-3 h-3 transition-transform duration-300', showAll && 'rotate-180']"
+          width="12"
+          height="12"
+          viewBox="0 0 16 16"
           fill="none"
           stroke="currentColor"
-          viewBox="0 0 24 24"
+          stroke-width="2"
+          :class="['arrow-icon', { 'rotate-180': showAll }]"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
+          <path d="M4 6l4 4 4-4" />
         </svg>
       </button>
     </div>
@@ -96,10 +86,20 @@ const props = defineProps({
 defineEmits(['open-modal'])
 
 const showAll = ref(false)
+const INITIAL_DISPLAY_COUNT = 5
 
-const displayedProjects = computed(() =>
-  showAll.value ? props.projects : props.projects.slice(0, 3)
-)
+const displayedProjects = computed(() => {
+  if (props.projects.length <= INITIAL_DISPLAY_COUNT || showAll.value) {
+    return props.projects
+  }
+  return props.projects.slice(0, INITIAL_DISPLAY_COUNT)
+})
+
+const shouldShowButton = computed(() => props.projects.length > INITIAL_DISPLAY_COUNT)
+
+const toggleShowAll = () => {
+  showAll.value = !showAll.value
+}
 
 const getTagClass = (tag) => {
   if (tag === 'Coreproc') return 'tag-client'
@@ -109,18 +109,16 @@ const getTagClass = (tag) => {
 </script>
 
 <style scoped>
-/* ── GROUP LABELS ── */
+/* ── LABEL ── */
 .group-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   flex-shrink: 0;
-}
-.dot-client {
   background: #7b5cfa;
-  box-shadow: 0 0 6px rgba(123, 92, 250, 0.6);
+  box-shadow: 0 0 6px rgba(123, 92, 250, 0.55);
 }
-.group-label-text {
+.group-label {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 10.5px;
   letter-spacing: 0.16em;
@@ -132,17 +130,14 @@ const getTagClass = (tag) => {
   background: rgba(123, 92, 250, 0.12);
 }
 
-/* ══════════════════════════════════════
-   CLIENT WORK — EDITORIAL LIST ROWS
-══════════════════════════════════════ */
-.client-list {
+/* ── LIST ── */
+.more-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
   border-top: 1px solid rgba(123, 92, 250, 0.1);
 }
 
-.client-row {
+.more-row {
   position: relative;
   display: grid;
   grid-template-columns: 56px 120px 1fr auto;
@@ -150,12 +145,12 @@ const getTagClass = (tag) => {
   gap: 1.5rem;
   padding: 1.4rem 0;
   border-bottom: 1px solid rgba(123, 92, 250, 0.1);
-  transition: background 0.25s;
+  cursor: pointer;
   overflow: hidden;
 }
 
-/* Full-row hover bg sweep */
-.client-row::before {
+/* Hover sweep */
+.more-row::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -164,11 +159,11 @@ const getTagClass = (tag) => {
   transform-origin: left;
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.client-row:hover::before {
+.more-row:hover::before {
   transform: scaleX(1);
 }
 
-/* Ghost index number */
+/* Ghost index */
 .row-index {
   font-size: 2.2rem;
   font-weight: 800;
@@ -179,7 +174,7 @@ const getTagClass = (tag) => {
   user-select: none;
   flex-shrink: 0;
 }
-.client-row:hover .row-index {
+.more-row:hover .row-index {
   color: rgba(123, 92, 250, 0.35);
 }
 
@@ -199,7 +194,7 @@ const getTagClass = (tag) => {
   object-fit: cover;
   transition: transform 0.45s ease;
 }
-.client-row:hover .row-thumb-img {
+.more-row:hover .row-thumb-img {
   transform: scale(1.08);
 }
 .row-thumb-overlay {
@@ -208,11 +203,11 @@ const getTagClass = (tag) => {
   background: rgba(8, 8, 20, 0.2);
   transition: opacity 0.25s;
 }
-.client-row:hover .row-thumb-overlay {
+.more-row:hover .row-thumb-overlay {
   opacity: 0;
 }
 
-/* Info block */
+/* Info */
 .row-info {
   flex: 1;
   min-width: 0;
@@ -229,48 +224,44 @@ const getTagClass = (tag) => {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.client-row:hover .row-title {
+.more-row:hover .row-title {
   color: #c4b5fd;
 }
 .row-desc {
   font-size: clamp(0.85rem, 1.5vw, 0.9rem);
-  color: rgb(240, 237, 248);
+  color: rgba(240, 237, 248, 0.4);
   line-height: 1.5;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Right side: type pill + arrow */
+/* Right */
 .row-right {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
 }
-
 .row-type-pill {
   display: flex;
   align-items: center;
   gap: 0.3rem;
   padding: 0.22rem 0.65rem;
   border-radius: 999px;
-  background: rgba(123, 92, 250, 0.08);
+  background: rgba(123, 92, 250, 0.07);
   border: 1px solid rgba(123, 92, 250, 0.18);
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #a78bfa;
-  transition:
-    background 0.2s,
-    border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 }
-.client-row:hover .row-type-pill {
-  background: rgba(123, 92, 250, 0.15);
-  border-color: rgba(123, 92, 250, 0.35);
+.more-row:hover .row-type-pill {
+  background: rgba(123, 92, 250, 0.14);
+  border-color: rgba(123, 92, 250, 0.38);
 }
-
 .row-arrow {
   width: 28px;
   height: 28px;
@@ -282,22 +273,18 @@ const getTagClass = (tag) => {
   color: rgba(167, 139, 250, 0.4);
   opacity: 0;
   transform: translateX(-6px);
-  transition:
-    opacity 0.25s,
-    transform 0.25s,
-    color 0.2s,
-    border-color 0.2s;
+  transition: opacity 0.25s, transform 0.25s, color 0.2s, border-color 0.2s;
 }
-.client-row:hover .row-arrow {
+.more-row:hover .row-arrow {
   opacity: 1;
   transform: translateX(0);
   color: #a78bfa;
   border-color: rgba(123, 92, 250, 0.4);
 }
 
-/* Mobile: stack rows */
+/* Mobile */
 @media (max-width: 640px) {
-  .client-row {
+  .more-row {
     grid-template-columns: 32px 72px 1fr auto;
     gap: 0.65rem;
     padding: 1rem 0;
@@ -332,47 +319,56 @@ const getTagClass = (tag) => {
   border-radius: 999px;
 }
 .tag-client {
-  background: rgba(34, 197, 94, 0.12);
+  background: rgba(34, 197, 94, 0.1);
   color: #22c55e;
-  border: 1px solid rgba(34, 197, 94, 0.25);
+  border: 1px solid rgba(34, 197, 94, 0.22);
 }
 .tag-freelance {
-  background: rgba(59, 130, 246, 0.12);
+  background: rgba(59, 130, 246, 0.1);
   color: #60a5fa;
-  border: 1px solid rgba(59, 130, 246, 0.25);
+  border: 1px solid rgba(59, 130, 246, 0.22);
 }
 .tag-personal {
-  background: rgba(245, 158, 11, 0.12);
+  background: rgba(245, 158, 11, 0.1);
   color: #fcd34d;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(245, 158, 11, 0.22);
 }
 .tag-tech {
   background: rgba(255, 255, 255, 0.04);
-  color: rgba(240, 237, 248, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(240, 237, 248, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.09);
 }
 
-/* ── SEE MORE ── */
-.see-more-btn {
-  display: flex;
+/* ── SHOW MORE BUTTON ── */
+.show-more-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
+  padding: 0.65rem 1.5rem;
+  border-radius: 999px;
+  background: rgba(123, 92, 250, 0.08);
+  border: 1px solid rgba(123, 92, 250, 0.25);
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #a78bfa;
-  background: rgba(123, 92, 250, 0.07);
-  border: 1px solid rgba(123, 92, 250, 0.25);
-  border-radius: 999px;
-  padding: 6px 16px;
   cursor: pointer;
-  transition:
-    background 0.2s,
-    border-color 0.2s;
+  transition: all 0.25s ease;
 }
-.see-more-btn:hover {
+.show-more-btn:hover {
   background: rgba(123, 92, 250, 0.15);
-  border-color: rgba(123, 92, 250, 0.5);
+  border-color: rgba(123, 92, 250, 0.4);
+  color: #c4b5fd;
+  transform: translateY(-1px);
+}
+.show-more-btn:active {
+  transform: translateY(0);
+}
+.arrow-icon {
+  transition: transform 0.3s ease;
+}
+.arrow-icon.rotate-180 {
+  transform: rotate(180deg);
 }
 </style>

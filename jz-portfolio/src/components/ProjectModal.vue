@@ -9,7 +9,7 @@
       >
         <div
           @click.stop
-          class="relative flex flex-col w-full max-w-5xl overflow-hidden modal-panel md:flex-row rounded-t-2xl md:rounded-2xl modal-height"
+          class="relative flex flex-col w-full max-w-5xl overflow-y-auto scrollbar-hidden md:overflow-hidden modal-panel md:flex-row rounded-t-2xl md:rounded-2xl modal-height"
         >
           <button
             @click="$emit('close')"
@@ -27,12 +27,12 @@
           </button>
 
           <!-- IMAGE PANE -->
-          <div class="modal-image-pane scrollbar-hidden overflow-y-auto md:w-[55%] flex-shrink-0">
-            <img :src="project.image" :alt="project.title" class="block w-full h-auto" />
+          <div class="modal-image-pane scrollbar-hidden md:w-[55%] flex-shrink-0">
+            <img :src="project.modalImage || project.image" :alt="project.title" class="block w-full h-auto" />
           </div>
 
           <!-- INFO PANE -->
-          <div class="flex flex-col flex-1 gap-0 overflow-y-auto modal-info-pane scrollbar-hidden">
+          <div class="flex flex-col flex-1 gap-0 modal-info-pane scrollbar-hidden">
             <!-- Header -->
             <div class="p-6 pb-5 modal-info-header md:p-7">
               <div class="flex items-center gap-2 mb-3">
@@ -206,13 +206,16 @@ watch(
     0 32px 80px rgba(0, 0, 0, 0.7),
     0 0 0 1px rgba(123, 92, 250, 0.08);
 }
+@media (min-width: 768px) {
+  .modal-panel {
+    overflow: hidden;
+  }
+}
 .modal-image-pane {
   background: #080812;
   border-right: none;
   border-bottom: 1px solid rgba(123, 92, 250, 0.1);
   flex-shrink: 0;
-  max-height: 240px;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,6 +231,11 @@ watch(
 .modal-info-pane {
   background: #0d0d1a;
   min-width: 0;
+}
+@media (min-width: 768px) {
+  .modal-info-pane {
+    overflow-y: auto;
+  }
 }
 
 .modal-close-btn {

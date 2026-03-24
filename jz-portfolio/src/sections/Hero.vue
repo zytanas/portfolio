@@ -173,20 +173,19 @@ const scrollToWork = () => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.35rem 1rem;
-  border: 1px solid rgba(123, 92, 250, 0.25);
+  background: rgba(34, 197, 94, 0.11);
+  border: 1px solid rgba(34, 197, 94, 0.986);
   border-radius: 999px;
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 0.75rem;
-  color: #C4B5FD;
   letter-spacing: 0.04em;
   margin-bottom: 1.75rem;
-  background: rgba(123, 92, 250, 0.07);
 }
 .hero-tag-dot {
   display: block;
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: #2DD4BF;
+  background: #22c55e; box-shadow: 0 0 5px #22c55e;
   box-shadow: 0 0 6px #2DD4BF;
   animation: pulse-dot 2s ease-in-out infinite;
   flex-shrink: 0;
