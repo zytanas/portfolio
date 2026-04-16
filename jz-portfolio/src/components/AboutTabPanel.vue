@@ -222,7 +222,7 @@ const devTools = [
 .tab-panel {
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.03);
+  background: #7c5cfa27;
   border: 1px solid rgba(123, 92, 250, 0.14);
   border-radius: 18px;
   padding: 1.5rem;
@@ -250,7 +250,7 @@ const devTools = [
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(240, 237, 248, 0.4);
+  color: rgb(237, 248, 239);
   background: transparent;
   border: 1px solid transparent;
   border-radius: 8px;
@@ -259,13 +259,13 @@ const devTools = [
   white-space: nowrap;
 }
 .tab-btn:hover {
-  color: rgba(240, 237, 248, 0.75);
+  color: #2DD4BF;
   background: rgba(123, 92, 250, 0.06);
   border-color: rgba(123, 92, 250, 0.15);
 }
 /* Filled pill for active tab */
 .tab-btn--active {
-  color: #F0EDF8;
+  color: #2DD4BF;
   background: rgba(123, 92, 250, 0.2);
   border-color: rgba(123, 92, 250, 0.45);
 }
@@ -289,7 +289,7 @@ const devTools = [
 .skill-card {
   padding: 1.4rem;
   border-radius: 14px;
-  background: rgba(20, 20, 40, 0.5);
+  background: rgba(20, 20, 40, 0.904);
   border: 1px solid rgba(123, 92, 250, 0.1);
   display: flex;
   flex-direction: column;

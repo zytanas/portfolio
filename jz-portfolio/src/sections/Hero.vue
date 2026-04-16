@@ -30,8 +30,7 @@
 
           <!-- Headline -->
           <h1 class="hero-headline font-heading fade-up" style="animation-delay:0.25s">
-            Design that converts.<br>
-            <span class="headline-accent">Code that ships.</span>
+            Designer. Developer. <br/>No asterisk.
           </h1>
 
           <!-- Value prop -->
@@ -39,9 +38,7 @@
             class="max-w-md mt-6 text-base leading-relaxed font-body desc-text fade-up"
             style="animation-delay:0.45s"
           >
-            I'm <strong class="font-semibold text-accent-strong">Julia Almoite</strong> — I design interfaces in Figma
-            and build them in Vue &amp; React. No hand-off friction, no lost details.
-            <strong class="font-semibold text-accent-strong">From wireframe to deployed product</strong>, I own the full stack.
+            I'm <strong class="font-semibold text-accent-strong">Julia Almoite</strong> — need a design? Done. Need it built? Also me. Most teams split that into two roles. I've always thought that was one conversation too many.
           </p>
 
           <!-- CTA Buttons -->
@@ -71,11 +68,6 @@
             <div class="hero-stat">
               <p class="hero-stat-num font-heading">2<span>yrs</span></p>
               <p class="font-mono hero-stat-label">Design + Dev</p>
-            </div>
-            <div class="hero-stat-divider" />
-            <div class="hero-stat">
-              <p class="hero-stat-num font-heading">1<span>person</span></p>
-              <p class="font-mono hero-stat-label">Full pipeline</p>
             </div>
           </div>
 
@@ -200,12 +192,7 @@ const scrollToWork = () => {
   color: #F0EDF8;
   margin-bottom: 0;
 }
-.headline-accent {
-  color: #7B5CFA;
-  text-shadow:
-    0 0 40px rgba(123, 92, 250, 0.45),
-    0 0 80px rgba(123, 92, 250, 0.18);
-}
+
 
 /* ── STATS ROW ── */
 .hero-stats {

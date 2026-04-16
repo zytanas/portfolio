@@ -31,7 +31,7 @@
       </div>
       <div class="qf-row">
         <span class="font-mono qf-label">Current Role</span>
-        <span class="qf-value">Jr. UI/UX Engineer @Coreproc, Inc.</span>
+        <span class="qf-value">Jr. UI/UX Engineer <span class="text-[#2DD4BF]">@Coreproc, Inc.</span></span>
       </div>
       <div class="qf-row">
         <span class="font-mono qf-label">Open to</span>
