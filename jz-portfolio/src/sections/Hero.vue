@@ -62,7 +62,7 @@
           <div class="hero-stats fade-up" style="animation-delay:0.78s">
             <div class="hero-stat">
               <p class="hero-stat-num font-heading">8<span>+</span></p>
-              <p class="font-mono hero-stat-label">Products Shipped</p>
+              <p class="font-mono hero-stat-label">Projects</p>
             </div>
             <div class="hero-stat-divider" />
             <div class="hero-stat">
