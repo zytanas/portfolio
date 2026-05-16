@@ -171,7 +171,7 @@ const experienceEducation = [
   {
     id: 2,
     type: 'work',
-    title: 'Web Designer',
+    title: 'Front-End Developer',
     company: 'New Jersey, USA - Freelance',
     note: 'Branding, landing pages, and UI design for independent client.',
     period: '2023 – 2024',
