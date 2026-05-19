@@ -102,15 +102,6 @@
         </div>
       </div>
 
-      <!-- ── MARQUEE STRIP ── -->
-      <div class="marquee-wrap">
-        <div class="marquee-track">
-          <span v-for="(item, i) in [...marqueeItems, ...marqueeItems]" :key="i" class="font-mono marquee-item">
-            {{ item }}
-          </span>
-        </div>
-      </div>
-
     </div>
   </section>
 </template>
@@ -186,18 +177,6 @@ const stories = [
   },
 ]
 
-const marqueeItems = [
-  'UI/UX Design ·',
-  'Vue · React · Nuxt ·',
-  'Figma ·',
-  'Design Systems ·',
-  'Frontend Dev ·',
-  'Tailwind CSS ·',
-  'Responsive Interfaces ·',
-  'Prototyping ·',
-  'Component Architecture ·',
-  'TypeScript ·',
-]
 
 function getCardWidth() {
   if (!track.value) return 0
@@ -476,40 +455,5 @@ onBeforeUnmount(() => {
   background: rgba(255,107,107,0.1);
   color: #ff6b6b;
   border: 1px solid rgba(255,107,107,0.22);
-}
-
-/* ══════════════════════════════════════
-   MARQUEE STRIP
-══════════════════════════════════════ */
-.marquee-wrap {
-  overflow: hidden;
-  border-top: 1px solid rgba(123,92,250,0.1);
-  border-bottom: 1px solid rgba(123,92,250,0.1);
-  padding: 0.85rem 0;
-  mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-}
-.marquee-track {
-  display: flex;
-  gap: 0;
-  width: max-content;
-  animation: marquee 28s linear infinite;
-}
-.marquee-track:hover { animation-play-state: paused; }
-
-.marquee-item {
-  font-size: clamp(10px, 1.5vw, 11px);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(167,139,250,0.45);
-  padding: 0 1.5rem;
-  white-space: nowrap;
-  transition: color 0.2s;
-}
-.marquee-item:hover { color: #A78BFA; }
-
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }
 </style>
