@@ -22,12 +22,6 @@
         <!-- LEFT COLUMN -->
         <div class="flex flex-col items-center text-center md:items-start md:text-left">
 
-          <!-- Available tag -->
-          <div class="hero-tag fade-up" style="animation-delay:0.1s">
-            <span class="hero-tag-dot" />
-            Available for freelance & full-time
-          </div>
-
           <!-- Headline -->
           <h1 class="hero-headline font-heading fade-up" style="animation-delay:0.25s">
             Designer. Developer. <br/>No asterisk.
@@ -73,12 +67,12 @@
 
           <!-- Socials -->
           <div class="flex items-center justify-center gap-3 mt-6 md:justify-start fade-up" style="animation-delay:0.92s">
-            <span class="font-mono text-xs tracking-widest uppercase social-label">Find me on</span>
+            <span class="font-mono text-sm tracking-widest uppercase social-label">Find me on</span>
             <a href="https://www.linkedin.com/in/almoitejuliazyrene/" target="_blank" class="hero-social-btn group" title="LinkedIn">
-              <Linkedin class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors" />
+              <Linkedin class="w-4 h-4 text-white transition-colors group-hover:text-white" />
             </a>
             <a href="https://github.com/zytanas" target="_blank" class="hero-social-btn group" title="GitHub">
-              <Github class="w-3.5 h-3.5 text-white group-hover:text-white transition-colors" />
+              <Github class="w-4 h-4 text-white transition-colors group-hover:text-white" />
             </a>
           </div>
         </div>
@@ -159,29 +153,7 @@ const scrollToWork = () => {
   );
 }
 
-/* ── AVAILABLE TAG ── */
-.hero-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 1rem;
-  background: rgba(34, 197, 94, 0.11);
-  border: 1px solid rgba(34, 197, 94, 0.986);
-  border-radius: 999px;
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  margin-bottom: 1.75rem;
-}
-.hero-tag-dot {
-  display: block;
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: #22c55e; box-shadow: 0 0 5px #22c55e;
-  box-shadow: 0 0 6px #2DD4BF;
-  animation: pulse-dot 2s ease-in-out infinite;
-  flex-shrink: 0;
-}
+
 
 /* ── HEADLINE ── */
 .hero-headline {
@@ -281,7 +253,7 @@ const scrollToWork = () => {
 /* ── SOCIALS ── */
 .social-label { color: rgb(240, 237, 248); }
 .hero-social-btn {
-  width: 32px; height: 32px;
+  width: 36px; height: 36px;
   border-radius: 8px;
   background: rgba(123, 92, 250, 0.08);
   border: 1px solid rgba(123, 92, 250, 0.2);

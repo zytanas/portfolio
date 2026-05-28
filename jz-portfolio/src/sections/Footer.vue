@@ -40,9 +40,6 @@
         <p class="font-mono footer-copy">
           &copy; {{ currentYear }} Julia Almoite. All rights reserved.
         </p>
-        <p class="font-mono footer-made">
-          Designed &amp; built with <span class="coffee">☕</span> in Baguio City
-        </p>
       </div>
 
     </div>
@@ -128,9 +125,4 @@ const scrollToTop = () => {
   font-size: 12px; letter-spacing: 0.1em;
   color: rgb(167, 139, 250);
 }
-.footer-made {
-  font-size: 12px; letter-spacing: 0.08em;
-  color: rgb(240, 237, 248);
-}
-.coffee { color: rgb(124, 92, 250); }
 </style>

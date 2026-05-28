@@ -89,8 +89,8 @@ import FloatingCodeSymbols from '@/components/FloatingCodeSymbols.vue'
 import vibeThumbnail from '@/assets/images/vibeteams-thumbnail.webp'
 import cozyImage from '@/assets/images/cozy.webp'
 import vibeTeams from '@/assets/images/vibeteams.webp'
-import adrianThumbnail from '@/assets/images/adrian-thumbnail.webp'
 import prestigeThumbnail from '@/assets/images/prestige-thumbnail.webp'
+import msbThumbnail from '@/assets/images/msb-thumbnail.webp'
 import synerpark from '@/assets/images/synerpark.webp'
 import msb from '@/assets/images/msb.webp'
 import prestige from '@/assets/images/prestige.webp'
@@ -138,24 +138,24 @@ const featuredProjects = [
     developedWith: 'Vue',
   },
   {
-    title: "Adrian's Portfolio",
-    image: adrianThumbnail,
-    modalImage: portfolio,
-    tag: 'Personal',
-    desc: 'Personal portfolio featuring curated design projects in a clean, interactive layout.',
-    role: 'Designer & Developer',
+    title: "My Shopping Box",
+    image: msbThumbnail,
+    modalImage: msb,
+    tag: 'Coreproc',
+    desc: 'E-commerce product showcase with editorial-style layout and brand-forward identity.',
+    role: 'Frontend Developer',
     outcome:
-      'A fully custom portfolio built without a template — designed and shipped solo to showcase design sensibility.',
+      'Built a scalable product showcase that supports a growing SKU catalog with consistent brand presentation.',
     contributions: [
-      'Designed in Figma from scratch',
-      'Built with TSX & Tailwind',
-      'Implemented scroll-based animations',
-      'Deployed to Vercel',
+      'Developed Blade-based frontend templates',
+      'Built reusable product card components',
+      'Ensured cross-browser compatibility',
+      'Optimized image loading performance',
     ],
-    techs: ['Web', 'Portfolio'],
-    url: 'https://lemonadezzz.vercel.app/',
+    techs: ['E-commerce'],
+    url: 'https://my-shoppingbox.com/ph',
     projectType: 'development',
-    developedWith: 'TSX',
+    developedWith: 'Blade',
   },
   {
     title: 'Prestige Paper Products',
@@ -199,23 +199,23 @@ const moreProjects = [
     developedWith: 'Nuxt',
   },
   {
-    title: 'My Shopping Box',
-    image: msb,
-    tag: 'Coreproc',
-    desc: 'E-commerce product showcase with editorial-style layout and brand-forward identity.',
-    role: 'Frontend Developer',
+    title: "Adrian's Portfolio",
+    image: portfolio,
+    tag: 'Personal',
+    desc: 'Personal portfolio featuring curated design projects in a clean, interactive layout.',
+    role: 'Designer & Developer',
     outcome:
-      'Built a scalable product showcase that supports a growing SKU catalog with consistent brand presentation.',
+      'A fully custom portfolio built without a template — designed and shipped solo to showcase design sensibility.',
     contributions: [
-      'Developed Blade-based frontend templates',
-      'Built reusable product card components',
-      'Ensured cross-browser compatibility',
-      'Optimized image loading performance',
+      'Designed in Figma from scratch',
+      'Built with TSX & Tailwind',
+      'Implemented scroll-based animations',
+      'Deployed to Vercel',
     ],
-    techs: ['E-commerce'],
-    url: 'https://my-shoppingbox.com/ph',
+    techs: ['Web', 'Portfolio'],
+    url: 'https://lemonadezzz.vercel.app/',
     projectType: 'development',
-    developedWith: 'Blade',
+    developedWith: 'TSX',
   },
   {
     title: 'Thirsty Oasis',
