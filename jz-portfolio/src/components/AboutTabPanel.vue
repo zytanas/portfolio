@@ -22,7 +22,10 @@
           class="skill-card group"
           :style="{ '--stagger': i }"
         >
-          <div class="skill-icon-wrap" :style="{ background: skill.color + '18', borderColor: skill.color + '35' }">
+          <div
+            class="skill-icon-wrap"
+            :style="{ background: skill.color + '18', borderColor: skill.color + '35' }"
+          >
             <component :is="skill.icon" class="w-5 h-5" :style="{ color: skill.color }" />
           </div>
           <h3 class="skill-title font-heading">{{ skill.title }}</h3>
@@ -34,11 +37,7 @@
     <!-- ── TAB: EXPERIENCE & EDUCATION ── -->
     <div v-if="activeTab === 'experience'" class="tab-content">
       <div class="timeline">
-        <div
-          v-for="(item, i) in experienceEducation"
-          :key="item.id"
-          class="timeline-item"
-        >
+        <div v-for="(item, i) in experienceEducation" :key="item.id" class="timeline-item">
           <!-- Connector -->
           <div class="timeline-left">
             <div :class="['tl-dot', item.type === 'edu' ? 'tl-dot--edu' : 'tl-dot--work']">
@@ -107,53 +106,84 @@
           </div>
         </div>
       </div>
+      <!-- Divider -->
+      <div class="stack-divider" />
+
+      <!-- AI Tools -->
+      <div class="stack-group">
+        <div class="stack-group-header">
+          <div class="stack-group-icon teal">
+            <Code class="w-3.5 h-3.5" />
+          </div>
+          <span class="font-mono stack-group-label">AI Tools</span>
+        </div>
+        <div class="stack-icons">
+          <div
+            v-for="tech in aiTools"
+            :key="tech.name"
+            class="stack-icon-wrap group"
+            :title="tech.name"
+          >
+            <img :src="tech.icon" :alt="tech.name" class="stack-icon-img" />
+            <span class="font-mono stack-tooltip">{{ tech.name }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { Palette, Code, Layers, Briefcase, GraduationCap } from 'lucide-vue-next'
+import { Palette, Code, Layers, Briefcase, GraduationCap, BrainCircuit } from 'lucide-vue-next'
 
-import figma       from '../assets/images/tech-stack/fgm.svg'
-import elementor   from '../assets/images/tech-stack/elementor.svg'
-import webflow     from '../assets/images/tech-stack/webflo.svg'
-import photoshop   from '../assets/images/tech-stack/photoshop.svg'
-import canva       from '../assets/images/tech-stack/canva.svg'
-import vueIcon     from '../assets/images/tech-stack/vue.svg'
-import reactIcon   from '../assets/images/tech-stack/react.svg'
-import nuxtIcon    from '../assets/images/tech-stack/nuxt.svg'
-import rekaIcon    from '../assets/images/tech-stack/reka.svg'
+import figma from '../assets/images/tech-stack/fgm.svg'
+import elementor from '../assets/images/tech-stack/elementor.svg'
+import webflow from '../assets/images/tech-stack/webflo.svg'
+import photoshop from '../assets/images/tech-stack/photoshop.svg'
+import canva from '../assets/images/tech-stack/canva.svg'
+import vueIcon from '../assets/images/tech-stack/vue.svg'
+import reactIcon from '../assets/images/tech-stack/react.svg'
+import nuxtIcon from '../assets/images/tech-stack/nuxt.svg'
+import rekaIcon from '../assets/images/tech-stack/reka.svg'
 import tailwindIcon from '../assets/images/tech-stack/tailwid.svg'
-import htmlIcon    from '../assets/images/tech-stack/html.svg'
-import cssIcon     from '../assets/images/tech-stack/css.svg'
-import jsIcon      from '../assets/images/tech-stack/js.svg'
+import htmlIcon from '../assets/images/tech-stack/html.svg'
+import cssIcon from '../assets/images/tech-stack/css.svg'
+import jsIcon from '../assets/images/tech-stack/js.svg'
+import chatgptIcon from '../assets/images/tech-stack/chatgpt.svg'
+import claudeIcon from '../assets/images/tech-stack/claude.svg'
+import copilotIcon from '../assets/images/tech-stack/copilot.svg'
+import geminiIcon from '../assets/images/tech-stack/gemini.svg'
+import ghcopilotIcon from '../assets/images/tech-stack/ghcopilot.svg'
 
 const activeTab = ref('skills')
 
 const tabs = [
-  { id: 'skills',     label: 'Core Skills',  icon: '✦' },
-  { id: 'experience', label: 'Experience',   icon: '◈' },
-  { id: 'stack',      label: 'Tech Stack',   icon: '⬡' },
+  { id: 'skills', label: 'Core Skills', icon: '✦' },
+  { id: 'experience', label: 'Experience', icon: '◈' },
+  { id: 'stack', label: 'Arsenal', icon: '⬡' },
 ]
 
 const skills = [
   {
     icon: Palette,
     title: 'UI/UX Design',
-    description: 'From wireframe to high-fidelity in Figma — I build component systems as I design, so the handoff to code is already half done.',
+    description:
+      'From wireframe to high-fidelity in Figma — I build component systems as I design, so the handoff to code is already half done.',
     color: '#A78BFA',
   },
   {
     icon: Code,
     title: 'Frontend Development',
-    description: 'Vue, React, Nuxt, Tailwind — I write the code for what I design. Pixel-faithful, responsive, and production-ready.',
+    description:
+      'Vue, React, Nuxt, Tailwind — I write the code for what I design. Pixel-faithful, responsive, and production-ready.',
     color: '#2DD4BF',
   },
   {
     icon: Layers,
     title: 'Design Systems',
-    description: 'I build reusable component libraries that keep interfaces consistent at scale — the same system works in Figma and in code.',
+    description:
+      'I build reusable component libraries that keep interfaces consistent at scale — the same system works in Figma and in code.',
     color: '#60A5FA',
   },
 ]
@@ -198,22 +228,30 @@ const experienceEducation = [
 ]
 
 const designTools = [
-  { name: 'Figma',      icon: figma },
-  { name: 'Elementor',  icon: elementor },
-  { name: 'Webflow',    icon: webflow },
-  { name: 'Photoshop',  icon: photoshop },
-  { name: 'Canva',      icon: canva },
+  { name: 'Figma', icon: figma },
+  { name: 'Elementor', icon: elementor },
+  { name: 'Webflow', icon: webflow },
+  { name: 'Photoshop', icon: photoshop },
+  { name: 'Canva', icon: canva },
 ]
 
 const devTools = [
-  { name: 'Vue.js',       icon: vueIcon },
-  { name: 'React',        icon: reactIcon },
-  { name: 'Nuxt',         icon: nuxtIcon },
-  { name: 'Reka',         icon: rekaIcon },
+  { name: 'Vue.js', icon: vueIcon },
+  { name: 'React', icon: reactIcon },
+  { name: 'Nuxt', icon: nuxtIcon },
+  { name: 'Reka', icon: rekaIcon },
   { name: 'Tailwind CSS', icon: tailwindIcon },
-  { name: 'HTML',         icon: htmlIcon },
-  { name: 'CSS',          icon: cssIcon },
-  { name: 'JavaScript',   icon: jsIcon },
+  { name: 'HTML', icon: htmlIcon },
+  { name: 'CSS', icon: cssIcon },
+  { name: 'JavaScript', icon: jsIcon },
+]
+
+const aiTools = [
+  { name: 'ChatGpt', icon: chatgptIcon },
+  { name: 'Claude', icon: claudeIcon },
+  { name: 'Copilot', icon: copilotIcon },
+  { name: 'Gemini', icon: geminiIcon },
+  { name: 'Github Copilot', icon: ghcopilotIcon },
 ]
 </script>
 
@@ -255,28 +293,44 @@ const devTools = [
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
-  transition: color 0.2s, background 0.2s, border-color 0.2s;
+  transition:
+    color 0.2s,
+    background 0.2s,
+    border-color 0.2s;
   white-space: nowrap;
 }
 .tab-btn:hover {
-  color: #2DD4BF;
+  color: #2dd4bf;
   background: rgba(123, 92, 250, 0.06);
   border-color: rgba(123, 92, 250, 0.15);
 }
 /* Filled pill for active tab */
 .tab-btn--active {
-  color: #2DD4BF;
+  color: #2dd4bf;
   background: rgba(123, 92, 250, 0.2);
   border-color: rgba(123, 92, 250, 0.45);
 }
-.tab-btn--active .tab-icon { opacity: 1; }
-.tab-icon { font-size: 14px; opacity: 0.6; }
+.tab-btn--active .tab-icon {
+  opacity: 1;
+}
+.tab-icon {
+  font-size: 14px;
+  opacity: 0.6;
+}
 
 /* Tab content fade-up */
-.tab-content { animation: tabIn 0.22s ease; }
+.tab-content {
+  animation: tabIn 0.22s ease;
+}
 @keyframes tabIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── SKILLS TAB ── */
@@ -297,11 +351,19 @@ const devTools = [
   /* Staggered entrance */
   animation: cardUp 0.35s ease both;
   animation-delay: calc(var(--stagger, 0) * 100ms + 50ms);
-  transition: border-color 0.25s, transform 0.25s;
+  transition:
+    border-color 0.25s,
+    transform 0.25s;
 }
 @keyframes cardUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .skill-card:hover {
   border-color: rgba(123, 92, 250, 0.3);
@@ -309,92 +371,221 @@ const devTools = [
 }
 
 .skill-icon-wrap {
-  width: 42px; height: 42px;
-  border-radius: 10px; border: 1px solid;
-  display: flex; align-items: center; justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.skill-title { font-size: 1.15rem; font-weight: 800; color: #F0EDF8; line-height: 1; }
-.skill-desc  { font-size: 0.88rem; color: rgba(240, 237, 248, 0.5); line-height: 1.6; }
+.skill-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #f0edf8;
+  line-height: 1;
+}
+.skill-desc {
+  font-size: 0.88rem;
+  color: rgba(240, 237, 248, 0.5);
+  line-height: 1.6;
+}
 
 /* ── EXPERIENCE TAB ── */
-.timeline { display: flex; flex-direction: column; }
-.timeline-item { display: flex; gap: 1.1rem; }
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+.timeline-item {
+  display: flex;
+  gap: 1.1rem;
+}
 .timeline-left {
-  display: flex; flex-direction: column; align-items: center;
-  flex-shrink: 0; width: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 28px;
 }
 .tl-dot {
-  width: 28px; height: 28px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; z-index: 1;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
 }
-.tl-dot--work { background: rgba(123,92,250,0.15); border: 1px solid rgba(123,92,250,0.35); color: #A78BFA; }
-.tl-dot--edu  { background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.3);  color: #2DD4BF; }
-.tl-line { flex: 1; width: 1px; background: rgba(123,92,250,0.1); margin: 4px 0; }
-.timeline-body { padding-bottom: 1.75rem; flex: 1; min-width: 0; }
-.tl-title   { font-size: 1.1rem; font-weight: 700; color: #F0EDF8; line-height: 1.2; }
-.tl-company { font-size: 0.88rem; color: rgba(167,139,250,0.7); margin-top: 0.2rem; }
-.tl-note    { font-size: 0.8rem; color: rgba(240,237,248,0.4); line-height: 1.6; margin-top: 0.35rem; }
-.tl-period  {
-  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: rgba(240,237,248,0.3); white-space: nowrap; flex-shrink: 0; padding-top: 2px;
+.tl-dot--work {
+  background: rgba(123, 92, 250, 0.15);
+  border: 1px solid rgba(123, 92, 250, 0.35);
+  color: #a78bfa;
 }
-.tl-period--current { color: #22c55e; }
+.tl-dot--edu {
+  background: rgba(45, 212, 191, 0.12);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  color: #2dd4bf;
+}
+.tl-line {
+  flex: 1;
+  width: 1px;
+  background: rgba(123, 92, 250, 0.1);
+  margin: 4px 0;
+}
+.timeline-body {
+  padding-bottom: 1.75rem;
+  flex: 1;
+  min-width: 0;
+}
+.tl-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f0edf8;
+  line-height: 1.2;
+}
+.tl-company {
+  font-size: 0.88rem;
+  color: rgba(167, 139, 250, 0.7);
+  margin-top: 0.2rem;
+}
+.tl-note {
+  font-size: 0.8rem;
+  color: rgba(240, 237, 248, 0.4);
+  line-height: 1.6;
+  margin-top: 0.35rem;
+}
+.tl-period {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(240, 237, 248, 0.3);
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.tl-period--current {
+  color: #22c55e;
+}
 
 /* ── STACK TAB ── */
-.stack-group { margin-bottom: 0.5rem; }
-.stack-group-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
-.stack-group-icon {
-  width: 32px; height: 32px; border-radius: 7px;
-  display: flex; align-items: center; justify-content: center;
+.stack-group {
+  margin-bottom: 0.5rem;
 }
-.stack-group-icon.violet { background: rgba(123,92,250,0.15); color: #A78BFA; border: 1px solid rgba(123,92,250,0.25); }
-.stack-group-icon.teal   { background: rgba(45,212,191,0.12); color: #2DD4BF; border: 1px solid rgba(45,212,191,0.25); }
-.stack-group-label { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(240,237,248,0.4); }
-.stack-icons { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.stack-group-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.stack-group-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stack-group-icon.violet {
+  background: rgba(123, 92, 250, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(123, 92, 250, 0.25);
+}
+.stack-group-icon.teal {
+  background: rgba(45, 212, 191, 0.12);
+  color: #2dd4bf;
+  border: 1px solid rgba(45, 212, 191, 0.25);
+}
+.stack-group-label {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 237, 248, 0.4);
+}
+.stack-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
 .stack-icon-wrap {
   position: relative;
-  width: 52px; height: 52px;
+  width: 52px;
+  height: 52px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(123,92,250,0.1);
-  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(123, 92, 250, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
 }
 .stack-icon-wrap:hover {
-  background: rgba(123,92,250,0.1);
-  border-color: rgba(123,92,250,0.35);
+  background: rgba(123, 92, 250, 0.1);
+  border-color: rgba(123, 92, 250, 0.35);
   transform: translateY(-3px) scale(1.06);
 }
-.stack-icon-img { width: 28px; height: 28px; object-fit: contain; }
+.stack-icon-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
 .stack-tooltip {
   position: absolute;
-  bottom: calc(100% + 6px); left: 50%;
+  bottom: calc(100% + 6px);
+  left: 50%;
   transform: translateX(-50%);
-  background: rgba(10,10,20,0.96);
-  border: 1px solid rgba(123,92,250,0.25);
-  color: #C4B5FD;
-  font-size: 9px; letter-spacing: 0.06em;
-  padding: 3px 9px; border-radius: 6px;
+  background: rgba(10, 10, 20, 0.96);
+  border: 1px solid rgba(123, 92, 250, 0.25);
+  color: #c4b5fd;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 3px 9px;
+  border-radius: 6px;
   white-space: nowrap;
-  opacity: 0; pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
   transition: opacity 0.15s;
 }
-.stack-icon-wrap:hover .stack-tooltip { opacity: 1; }
-.stack-divider { height: 1px; background: rgba(123,92,250,0.08); margin: 1.5rem 0; }
+.stack-icon-wrap:hover .stack-tooltip {
+  opacity: 1;
+}
+.stack-divider {
+  height: 1px;
+  background: rgba(123, 92, 250, 0.08);
+  margin: 1.5rem 0;
+}
 
 /* ── TABLET: make tab labels shorter to fit ── */
 @media (min-width: 768px) and (max-width: 1024px) {
-  .tab-btn { padding: 0.4rem 0.7rem; font-size: 10px; }
+  .tab-btn {
+    padding: 0.4rem 0.7rem;
+    font-size: 10px;
+  }
 }
 
 /* ── MOBILE: full-width tab bar ── */
 @media (max-width: 480px) {
-  .tab-panel { padding: 1.1rem; border-radius: 14px; }
-  .tab-bar { gap: 0.3rem; }
-  .tab-btn { padding: 0.4rem 0.65rem; font-size: 10px; gap: 0.25rem; }
-  .tab-icon { display: none; }
-  .skill-title { font-size: 1rem; }
+  .tab-panel {
+    padding: 1.1rem;
+    border-radius: 14px;
+  }
+  .tab-bar {
+    gap: 0.3rem;
+  }
+  .tab-btn {
+    padding: 0.4rem 0.65rem;
+    font-size: 10px;
+    gap: 0.25rem;
+  }
+  .tab-icon {
+    display: none;
+  }
+  .skill-title {
+    font-size: 1rem;
+  }
 }
 </style>
