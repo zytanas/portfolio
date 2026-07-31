@@ -18,6 +18,11 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
+      path: '/selected-work',
+      name: 'selected-work',
+      component: () => import('../views/SelectedWorkView.vue'),
+    },
+    {
       path: '/recommendation',
       name: 'recommendations',
       component: () => import('../views/RecommendationsView.vue'),

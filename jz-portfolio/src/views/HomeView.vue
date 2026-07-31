@@ -14,9 +14,9 @@
             conversation too many.
           </p>
           <div class="mt-6 flex flex-wrap gap-[10px]">
-            <a class="btn solid" href="#skills">what I do →</a>
-            <a class="btn ghost" href="https://github.com/zytanas" target="_blank" rel="noopener noreferrer">github ↗</a>
-            <a class="btn ghost" href="https://www.linkedin.com/in/almoitejuliazyrene/ " target="_blank" rel="noopener noreferrer">linkedin ↗</a>
+            <a class="btn solid" href="#skills">What I do →</a>
+            <a class="btn ghost" href="https://github.com/zytanas" target="_blank" rel="noopener noreferrer">Github ↗</a>
+            <a class="btn ghost" href="https://www.linkedin.com/in/almoitejuliazyrene/ " target="_blank" rel="noopener noreferrer">Linkedin ↗</a>
           </div>
         </div>
       </div>

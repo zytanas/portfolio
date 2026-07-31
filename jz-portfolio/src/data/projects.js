@@ -17,6 +17,25 @@ export const projects = [
     links: [{ label: '↗', href: 'https://vibeteams.ai/' }],
   },
   {
+    // The one row with a live preview: `type: 'figma'` switches the header link
+    // to "open in figma" and tells the row to render `embedSrc` in a portrait
+    // phone frame inside its panel. The embed is only mounted once the row is
+    // opened — see ProjectRow.
+    type: 'figma',
+    title: 'Clowder',
+    description:
+      'Mobile app — interactive prototype. Tap through the real flows.',
+    tech: ['Mobile', 'Figma'],
+    embedSrc:
+      'https://embed.figma.com/proto/c57h2VKgCZVVJzEPejFn1c/clowder?node-id=4-3138&embed-host=coreproc&scaling=scale-down&content-scaling=fixed&hide-ui=1',
+    links: [
+      {
+        label: '↗',
+        href: 'https://www.figma.com/proto/c57h2VKgCZVVJzEPejFn1c/clowder?node-id=4-3138',
+      },
+    ],
+  },
+  {
     title: 'My Shopping Box',
     description:
       'E-commerce product showcase with an editorial layout and brand-forward identity. Blade templates, reusable product cards, and an image pipeline that keeps a growing SKU catalog fast.',

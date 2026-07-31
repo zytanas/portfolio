@@ -3,7 +3,7 @@
        control over its detail. No transforms, no stacking, nothing to clip. -->
   <ul id="work-index" class="pindex">
     <ProjectRow
-      v-for="(project, i) in projects"
+      v-for="(project, i) in items"
       :key="project.title"
       :id="`work-${i}`"
       :project="project"
@@ -18,6 +18,11 @@
 import { ref } from 'vue'
 import ProjectRow from './ProjectRow.vue'
 import { projects } from '../data/projects'
+
+// The home section passes a slice; anything else gets the full list.
+defineProps({
+  items: { type: Array, default: () => projects },
+})
 
 /* Single source of truth for the accordion: the index of the one open row, or
    null for none. Because every row derives `open` from this, assigning it both

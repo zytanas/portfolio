@@ -17,7 +17,7 @@
         >
           <span aria-hidden="true">{{ mode === 'dark' ? '◐' : '◑' }}</span>
         </button>
-        <a class="btn talk" href="#contact">let's talk</a>
+        <a class="btn talk" href="#contact">Let's talk</a>
 
         <!-- ≤720px only: the links collapse into this -->
         <button
@@ -52,7 +52,7 @@
         </a>
       </nav>
       <a class="btn solid talk-lg" href="#contact" :style="{ '--i': links.length }" @click="open = false">
-        let's talk →
+        Let's talk →
       </a>
     </div>
   </Teleport>
@@ -66,12 +66,12 @@ import logo from '../assets/images/jzoa-logo.webp'
 const { mode, toggleMode } = useTheme()
 
 const links = [
-  { href: '#skills', label: 'skills' },
-  { href: '#work', label: 'work' },
-  { href: '#experience', label: 'experience' },
-  { href: '#stack', label: 'stack' },
-  { href: '#recommendations', label: 'praise' },
-  { href: '#contact', label: 'contact' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#work', label: 'Work' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#stack', label: 'Stack' },
+  { href: '#recommendations', label: 'Praise' },
+  { href: '#contact', label: 'Contact' },
 ]
 
 const stuck = ref(false)

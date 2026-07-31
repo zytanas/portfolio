@@ -22,13 +22,15 @@
         :href="primaryLink.href"
         target="_blank"
         rel="noopener noreferrer"
-        :aria-label="`View project: ${project.title}`"
+        :aria-label="linkAria"
         @click.stop
       >
-        <!-- "view" on mobile, "view project" once the boxed treatment
-             returns at 768px -->
+        <!-- Short on mobile ("view" / "figma"), full once the boxed treatment
+             returns at 768px ("view project" / "open in figma") -->
         <span class="prow-link-label"
-          >view<span class="prow-link-label-rest"> project</span></span
+          ><span class="prow-link-label-rest">{{ linkLabel.lead }}</span
+          >{{ linkLabel.base
+          }}<span class="prow-link-label-rest">{{ linkLabel.trail }}</span></span
         >
         <span class="prow-link-arrow" aria-hidden="true">↗</span>
       </a>
@@ -68,6 +70,32 @@
           <div class="prow-tags">
             <span v-for="tech in project.tech" :key="tech" class="tag">{{ tech }}</span>
           </div>
+
+          <!-- Phone prototype: portrait frame, centred, canvas edge to edge.
+               `mounted` only flips once the row has been opened, so a collapsed
+               row never pays for the embed; loading="lazy" is the belt to that
+               brace. The loader sits behind the iframe and is uncovered until
+               the frame paints. -->
+          <div v-if="project.type === 'figma' && project.embedSrc" class="prow-proto">
+            <div class="prow-proto-frame">
+              <div v-if="!embedLoaded" class="prow-proto-loader" aria-hidden="true">
+                <span class="prow-proto-spinner"></span>
+                <span class="prow-proto-loading mono">loading prototype</span>
+              </div>
+              <iframe
+                v-if="embedMounted"
+                class="prow-proto-iframe"
+                :class="{ 'is-loaded': embedLoaded }"
+                :src="project.embedSrc"
+                :title="`${project.title} interactive prototype`"
+                width="100%"
+                height="100%"
+                loading="lazy"
+                allowfullscreen
+                @load="embedLoaded = true"
+              ></iframe>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -75,7 +103,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
   project: { type: Object, required: true },
@@ -86,6 +114,30 @@ const props = defineProps({
 
 // Rows for unlaunched / unlinked work simply have no link in the header.
 const primaryLink = computed(() => props.project.links[0] ?? null)
+
+// Type-aware header label. `lead`/`trail` are the parts that only appear at
+// 768px+, where the link has a box to fill; `base` always shows.
+const linkLabel = computed(() =>
+  props.project.type === 'figma'
+    ? { lead: 'open in ', base: 'figma', trail: '' }
+    : { lead: '', base: 'view', trail: ' project' },
+)
+const linkAria = computed(
+  () =>
+    `${props.project.type === 'figma' ? 'Open in Figma' : 'View project'}: ${props.project.title}`,
+)
+
+// Lazy mount: the embed is created the first time the row opens and then kept,
+// so re-opening is instant but a row that is never touched costs nothing.
+const embedMounted = ref(false)
+const embedLoaded = ref(false)
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen) embedMounted.value = true
+  },
+  { immediate: true },
+)
 
 defineEmits(['toggle'])
 </script>
@@ -262,6 +314,69 @@ defineEmits(['toggle'])
   margin-top: 12px;
 }
 
+/* ---- phone prototype ----
+   A phone flow shown in a landscape box reads as a website, so the frame is
+   portrait and centred at every width; only the clamp changes what that means
+   in pixels. The frame is prussian ink so the surface under a loading (or
+   letterboxed) canvas looks deliberate in all six themes. */
+.prow-proto {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+.prow-proto-frame {
+  position: relative;
+  width: min(240px, 70%);
+  min-width: 200px;
+  aspect-ratio: 9 / 19;
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a; /* prussian ink */
+}
+/* no padding: the canvas runs to the frame edge */
+.prow-proto-iframe {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+}
+.prow-proto-iframe.is-loaded {
+  opacity: 1;
+}
+/* sits under the iframe and shows through until it paints */
+.prow-proto-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.prow-proto-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(163, 230, 53, 0.25);
+  border-top-color: var(--link-accent);
+  border-radius: 50%;
+  animation: prow-proto-spin 0.9s linear infinite;
+}
+.prow-proto-loading {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+}
+@keyframes prow-proto-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ---- 768px+: more horizontal room, chips surface on the closed row, and the
        link earns its label ---- */
 @media (min-width: 768px) {
@@ -338,8 +453,15 @@ defineEmits(['toggle'])
   .prow-panel,
   .prow-panel-inner,
   .prow-chevron,
-  .prow-link {
+  .prow-link,
+  .prow-proto-iframe {
     transition: none;
+  }
+  /* the loader still reads as busy, it just stops spinning */
+  .prow-proto-spinner {
+    animation: none;
+    border-top-color: var(--link-accent);
+    opacity: 0.7;
   }
   /* the press still dims, it just does not shrink */
   .prow-link:active {
