@@ -17,7 +17,18 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
+    {
+      path: '/recommendation',
+      name: 'recommendations',
+      component: () => import('../views/RecommendationsView.vue'),
+    },
   ],
+  // Landing on a new route mid-scroll is disorienting; hash links (the header's
+  // #skills, #contact …) still win when one is present.
+  scrollBehavior(to, from, saved) {
+    if (to.hash) return { el: to.hash, behavior: 'smooth' }
+    return saved || { top: 0 }
+  },
 })
 
 export default router

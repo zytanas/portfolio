@@ -1,57 +1,354 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply text-white font-body;
-    background: linear-gradient(180deg, #0A0A0F 0%, #0F0F1A 50%, #0A0A0F 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
-  }
+/* ============================================================
+   MONOCHROME DESIGN TOKENS
+   No colour anywhere — the whole page is built from one neutral
+   ramp. Three "inks" (neutral / warm / cool) tilt that ramp very
+   slightly; each ink has a dark and a light setting.
+   Selected by data-mode / data-ink on <html>, which is why the
+   palette stays in custom properties: Tailwind's `dark:` variant
+   cannot express a 2 x 3 matrix.
+   ============================================================ */
+:root {
+  --radius: 12px;
+  --dur: 0.42s;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --maxw: 1080px;
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
-    font-weight: 700;
+  /* Section rhythm. A section's own breathing room, plus the extra run-up any
+     section that follows another gets — so the gap across a hairline is
+     --sec-pad + --sec-gap, and it scales down on narrow screens on its own
+     rather than through a breakpoint. */
+  --sec-pad: clamp(44px, 6vw, 72px);
+  --sec-gap: clamp(56px, 8vw, 92px);
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* One typeface does display and labels — a code mono, like the reference.
+     Inter carries body copy. Two families total. */
+  --font-display: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+}
+
+/* Tell the browser this page handles its own light and dark rendering.
+   Without it, Chrome's "auto dark theme for web contents" decides the light
+   palette is an un-darkened page and force-inverts the whole thing — which
+   turns the portrait into a photographic negative. `only light` is the
+   explicit opt-out; `dark` keeps native form controls and scrollbars dark. */
+html[data-mode='dark'] {
+  color-scheme: dark;
+}
+html[data-mode='light'] {
+  color-scheme: only light;
+}
+
+/* ---------- neutral ---------- */
+html[data-mode='dark'] {
+  --bg: #0a0a0a; --surface: #121212; --surface-2: #1a1a1a;
+  --border: #282828; --border-soft: #1e1e1e;
+  --text: #f4f4f4; --text-dim: #a0a0a0; --text-faint: #6a6a6a;
+  --plate: #f2f2f2;
+  --card: #161616; --card-hi: #1f1f1f;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 14px 34px -14px rgba(0, 0, 0, 0.65);
+}
+html[data-mode='light'] {
+  --bg: #fbfbfa; --surface: #ffffff; --surface-2: #f3f3f1;
+  --border: #e3e3df; --border-soft: #ededea;
+  --text: #101010; --text-dim: #585858; --text-faint: #8c8c8c;
+  --plate: #f5f5f4;
+  --card: #ffffff; --card-hi: #f5f5f3;
+  --shadow: 0 1px 2px rgba(16, 16, 16, 0.05), 0 14px 34px -16px rgba(16, 16, 16, 0.14);
+}
+
+/* ---------- warm ink (graphite on cream) ---------- */
+html[data-mode='dark'][data-ink='warm'] {
+  --bg: #0b0a08; --surface: #141210; --surface-2: #1c1a16;
+  --border: #2b2822; --border-soft: #211e1a;
+  --text: #f6f2ec; --text-dim: #a39c92; --text-faint: #6d675e;
+  --plate: #f4f0e9;
+  --card: #17150f; --card-hi: #211e17;
+}
+html[data-mode='light'][data-ink='warm'] {
+  --bg: #faf7f2; --surface: #fffdfa; --surface-2: #f2ede4;
+  --border: #e5dfd4; --border-soft: #efe9df;
+  --text: #14110c; --text-dim: #5d564b; --text-faint: #8d8578;
+  --plate: #f4f0e9;
+  --card: #fffdfa; --card-hi: #f5f0e7;
+}
+
+/* ---------- cool ink (silver on slate) ---------- */
+html[data-mode='dark'][data-ink='cool'] {
+  --bg: #08090b; --surface: #101214; --surface-2: #171a1d;
+  --border: #24272b; --border-soft: #1b1e21;
+  --text: #eef1f4; --text-dim: #98a0a8; --text-faint: #646c74;
+  --plate: #eef1f3;
+  --card: #13161a; --card-hi: #1c2024;
+}
+html[data-mode='light'][data-ink='cool'] {
+  --bg: #f8fafb; --surface: #ffffff; --surface-2: #eef2f4;
+  --border: #dde3e7; --border-soft: #e8edf0;
+  --text: #0d1114; --text-dim: #525a61; --text-faint: #848d94;
+  --plate: #eef1f3;
+  --card: #ffffff; --card-hi: #f1f5f7;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+  ::selection {
+    background: var(--text);
+    color: var(--bg);
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  img {
+    max-width: 100%;
+    display: block;
+  }
+  button {
+    font: inherit;
+    color: inherit;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 1.2;
+  }
+  p {
+    margin: 0;
+  }
+  :focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
-@layer utilities {
-  /* Violet gradient text — main accent */
-  .gradient-text {
-    @apply text-transparent bg-clip-text;
-    background-image: linear-gradient(135deg, #7B5CFA 0%, #A78BFA 50%, #C4B5FD 100%);
+/* ============================================================
+   SHARED PIECES
+   Everything here is CSS that Tailwind cannot express: pseudo
+   elements, nth-child staggers, masks, keyframes. Plain colour,
+   spacing and layout stays in the markup as utilities.
+   ============================================================ */
+@layer components {
+  /* padding-inline, never the shorthand. `.wrap` is also the class on every
+     <section>, and a shorthand here would set padding-block: 0 at specificity
+     (0,1,0) — outranking the `section` rules below and collapsing the gap
+     between every section on the page. */
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-inline: 24px;
+  }
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
   }
 
-  /* Violet → teal gradient text — for special highlights */
-  .gradient-text-alt {
-    @apply text-transparent bg-clip-text;
-    background-image: linear-gradient(135deg, #7B5CFA 0%, #2DD4BF 100%);
+  /* lede paragraph — hero and contact both use it */
+  .lede {
+    font-size: clamp(0.97rem, 2vw, 1.07rem);
+    color: var(--text-dim);
+    max-width: 52ch;
+    margin-bottom: 14px;
+  }
+  /* full-strength text on a hairline underline */
+  .lede .name {
+    color: var(--text);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .lede a {
+    border-bottom: 1px solid var(--border);
+    transition: 0.2s var(--ease);
+  }
+  .lede a:hover {
+    color: var(--text);
+    border-color: var(--text);
   }
 
-  .card-hover {
-    @apply transition-all duration-300 hover:scale-105 hover:shadow-2xl;
+  /* buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: calc(var(--radius) * 0.75);
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s var(--ease);
+  }
+  .btn:hover {
+    border-color: var(--text-dim);
+    color: var(--text);
+  }
+  .btn.solid {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+  }
+  .btn.solid:hover { opacity: 0.86; }
+  .btn.ghost { background: transparent; }
+  .btn.icon {
+    padding: 0;
+    width: 34px;
+    height: 34px;
+    justify-content: center;
   }
 
-  /* Background utility */
-  .bg-surface {
-    background: rgba(26, 26, 46, 0.6);
+  /* the note / link / button that sits at the right end of a section heading */
+  .more {
+    font-size: 0.8rem;
+    color: var(--text-dim);
   }
-  
-  /* Performance optimizations */
-  .perf-optimize {
-    contain: layout style paint;
-    content-visibility: auto;
+  a.more:hover {
+    color: var(--text);
   }
-  
-  /* Reduce motion for users who prefer it */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+
+  .card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+  }
+  a.card:hover {
+    border-color: var(--text-dim);
+    background: var(--surface);
+  }
+  .tag {
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    color: var(--text-faint);
+    border: 1px solid var(--border-soft);
+    padding: 2px 7px;
+    border-radius: 5px;
+  }
+
+  /* Every section after the first gets a fading hairline above it, so the
+     boundary between (say) Work and Experience is unmistakable. It is
+     deliberately different from the solid rule under a section heading. */
+  section {
+    padding-block: var(--sec-pad);
+  }
+  section + section {
+    position: relative;
+    padding-block-start: var(--sec-gap);
+  }
+  section + section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent 72%);
+  }
+}
+
+/* ============================================================
+   REVEALS AND THE CHIP STAGGER
+   Outside every @layer on purpose: the `in` class is added at
+   runtime by v-reveal, so it must not be subject to content
+   scanning, and `.reveal.in .chip` has to reach chips rendered
+   by a scoped child component.
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* the hero column arrives in sequence on load rather than on scroll */
+.reveal-hero > * {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.reveal-hero.in > * {
+  opacity: 1;
+  transform: none;
+}
+.reveal-hero.in > *:nth-child(2) { transition-delay: 0.08s; }
+.reveal-hero.in > *:nth-child(3) { transition-delay: 0.16s; }
+
+.chip {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  padding: 7px 13px;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 0.55);
+  color: var(--text-dim);
+  background: transparent;
+  cursor: default;
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease),
+    color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+/* chips stagger in as the section reveals */
+.reveal .chip { opacity: 0; transform: translateY(7px); }
+.reveal.in .chip { opacity: 1; transform: none; }
+.reveal.in .chip:nth-child(1) { transition-delay: 0.02s; }
+.reveal.in .chip:nth-child(2) { transition-delay: 0.05s; }
+.reveal.in .chip:nth-child(3) { transition-delay: 0.08s; }
+.reveal.in .chip:nth-child(4) { transition-delay: 0.11s; }
+.reveal.in .chip:nth-child(5) { transition-delay: 0.14s; }
+.reveal.in .chip:nth-child(6) { transition-delay: 0.17s; }
+.reveal.in .chip:nth-child(7) { transition-delay: 0.2s; }
+.reveal.in .chip:nth-child(8) { transition-delay: 0.23s; }
+/* hover last so it wins over the reveal transform */
+.chip:hover {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+  transform: translateY(-2px);
+  transition-delay: 0s;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   Resets the reveals, the chip stagger and the hero lines. The
+   work index needs nothing here: its rows open and close by
+   changing a grid track, so with transitions off they just snap.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+  .reveal,
+  .reveal .chip,
+  .reveal-hero > * {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

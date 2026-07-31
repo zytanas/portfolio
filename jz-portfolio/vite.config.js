@@ -21,7 +21,6 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          'lucide': ['lucide-vue-next'],
           'vue-vendor': ['vue', 'vue-router'],
         }
       }
@@ -39,6 +38,6 @@ export default defineConfig(({ mode }) => ({
   },
   // Optimize dependencies
   optimizeDeps: {
-    include: ['vue', 'vue-router', 'lucide-vue-next']
+    include: ['vue', 'vue-router']
   }
 }))

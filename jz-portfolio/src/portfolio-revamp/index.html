@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark" data-ink="neutral">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Julia Almoite — UI/UX Engineer & Frontend Developer</title>
+<meta name="description" content="Julia Almoite — UI/UX engineer and frontend developer. Need a design? Done. Need it built? Also me. Design systems, Vue, React, Nuxt, Tailwind." />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   MONOCHROME DESIGN TOKENS
+   No colour anywhere — the whole page is built from one neutral
+   ramp. Three "inks" (neutral / warm / cool) tilt that ramp very
+   slightly; each ink has a dark and a light setting.
+   ============================================================ */
+:root{
+  --radius:12px;
+  --dur:.42s;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --sp:1;
+  --maxw:1080px;
+
+  --font-sans:"Inter",system-ui,-apple-system,sans-serif;
+  /* One typeface does display and labels — a code mono, like the reference.
+     Inter carries body copy. Two families total. */
+  --font-display:"JetBrains Mono",ui-monospace,"SF Mono",monospace;
+  --font-mono:"JetBrains Mono",ui-monospace,"SF Mono",monospace;
+}
+
+/* ---------- neutral ---------- */
+html[data-mode="dark"]{
+  --bg:#0a0a0a; --surface:#121212; --surface-2:#1a1a1a;
+  --border:#282828; --border-soft:#1e1e1e;
+  --text:#f4f4f4; --text-dim:#a0a0a0; --text-faint:#6a6a6a;
+  --plate:#f2f2f2;
+  --card:#161616; --card-hi:#1f1f1f;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 14px 34px -14px rgba(0,0,0,.65);
+}
+html[data-mode="light"]{
+  --bg:#fbfbfa; --surface:#ffffff; --surface-2:#f3f3f1;
+  --border:#e3e3df; --border-soft:#ededea;
+  --text:#101010; --text-dim:#585858; --text-faint:#8c8c8c;
+  --plate:#f5f5f4;
+  --card:#ffffff; --card-hi:#f5f5f3;
+  --shadow:0 1px 2px rgba(16,16,16,.05), 0 14px 34px -16px rgba(16,16,16,.14);
+}
+
+/* ---------- warm ink (graphite on cream) ---------- */
+html[data-mode="dark"][data-ink="warm"]{
+  --bg:#0b0a08; --surface:#141210; --surface-2:#1c1a16;
+  --border:#2b2822; --border-soft:#211e1a;
+  --text:#f6f2ec; --text-dim:#a39c92; --text-faint:#6d675e;
+  --plate:#f4f0e9;
+  --card:#17150f; --card-hi:#211e17;
+}
+html[data-mode="light"][data-ink="warm"]{
+  --bg:#faf7f2; --surface:#fffdfa; --surface-2:#f2ede4;
+  --border:#e5dfd4; --border-soft:#efe9df;
+  --text:#14110c; --text-dim:#5d564b; --text-faint:#8d8578;
+  --plate:#f4f0e9;
+  --card:#fffdfa; --card-hi:#f5f0e7;
+}
+
+/* ---------- cool ink (silver on slate) ---------- */
+html[data-mode="dark"][data-ink="cool"]{
+  --bg:#08090b; --surface:#101214; --surface-2:#171a1d;
+  --border:#24272b; --border-soft:#1b1e21;
+  --text:#eef1f4; --text-dim:#98a0a8; --text-faint:#646c74;
+  --plate:#eef1f3;
+  --card:#13161a; --card-hi:#1c2024;
+}
+html[data-mode="light"][data-ink="cool"]{
+  --bg:#f8fafb; --surface:#ffffff; --surface-2:#eef2f4;
+  --border:#dde3e7; --border-soft:#e8edf0;
+  --text:#0d1114; --text-dim:#525a61; --text-faint:#848d94;
+  --plate:#eef1f3;
+  --card:#ffffff; --card-hi:#f1f5f7;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{ transition:none!important; animation:none!important; }
+  .reveal, .reveal .chip, .reveal-hero > *{ opacity:1!important; transform:none!important; }
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:var(--font-sans); font-size:15.5px; line-height:1.65;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  transition:background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+::selection{ background:var(--text); color:var(--bg); }
+a{ color:inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
+button{ font:inherit; color:inherit; }
+h1,h2,h3,h4{
+  font-family:var(--font-display); font-weight:500;
+  letter-spacing:-.02em; margin:0; line-height:1.2;
+}
+p{ margin:0; }
+:focus-visible{ outline:2px solid var(--text); outline-offset:3px; border-radius:6px; }
+
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 24px; }
+.mono{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint); }
+
+.reveal{ opacity:0; transform:translateY(16px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+header{
+  position:fixed; inset:0 0 auto 0; z-index:60;
+  backdrop-filter:blur(16px);
+  background:color-mix(in srgb, var(--bg) 80%, transparent);
+  border-bottom:1px solid transparent;
+  transition:border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+header.stuck{ border-bottom-color:var(--border-soft); }
+.bar{ display:flex; align-items:center; gap:20px; height:58px; }
+/* Logo — the artwork is pure greyscale on transparency, so one asset
+   serves both themes: inverting it turns the white wordmark black and
+   the light drop shadow into a dark one. */
+.brand{ display:flex; align-items:center; }
+.brand img{
+  height:26px; width:auto; display:block;
+  transition:filter var(--dur) var(--ease), opacity .2s var(--ease);
+}
+html[data-mode="light"] .brand img{ filter:invert(1); }
+.brand:hover img{ opacity:.7; }
+nav.links{ display:flex; gap:2px; margin-left:auto; }
+nav.links a{
+  font-size:.83rem; color:var(--text-dim); padding:6px 11px;
+  border-radius:8px; transition:.2s var(--ease);
+}
+nav.links a:hover{ color:var(--text); background:var(--surface-2); }
+.bar-actions{ display:flex; gap:8px; align-items:center; }
+
+.btn{
+  display:inline-flex; align-items:center; gap:7px;
+  padding:7px 14px; border:1px solid var(--border); background:var(--surface);
+  border-radius:calc(var(--radius) * .75);
+  font-size:.82rem; font-weight:500; cursor:pointer;
+  transition:.2s var(--ease);
+}
+.btn:hover{ border-color:var(--text-dim); color:var(--text); }
+.btn.solid{ background:var(--text); border-color:var(--text); color:var(--bg); }
+.btn.solid:hover{ opacity:.86; }
+.btn.ghost{ background:transparent; }
+.btn.icon{ padding:0; width:34px; height:34px; justify-content:center; }
+
+/* ============================================================
+   DOT-GRID BACKDROP
+   ============================================================ */
+.dotgrid{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:radial-gradient(var(--border) 1px, transparent 1px);
+  background-size:24px 24px; opacity:.6;
+  -webkit-mask-image:radial-gradient(ellipse 78% 58% at 50% 34%, transparent 18%, #000 92%);
+  mask-image:radial-gradient(ellipse 78% 58% at 50% 34%, transparent 18%, #000 92%);
+}
+main{ position:relative; z-index:1; }
+
+/* ============================================================
+   HERO — split: portrait left, type right
+   ============================================================ */
+.hero{ padding:126px 0 60px; }
+.hero-split{ display:grid; grid-template-columns:minmax(0,290px) minmax(0,1fr); gap:56px; align-items:center; }
+@media(max-width:820px){
+  .hero-split{ grid-template-columns:1fr; gap:32px; }
+  .portrait{ max-width:210px; }
+}
+
+/* --- portrait: b&w by default, colour on hover.
+   The files are transparent cut-outs, so they sit on a light "plate"
+   to stay readable on the dark theme. --------------------------- */
+.portrait{ position:relative; margin:0; }
+.portrait-frame{
+  position:relative; aspect-ratio:620 / 567; overflow:hidden;
+  background:var(--plate);
+  border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  transition:background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.portrait-frame img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:50% 12%;
+  transition:opacity var(--dur) var(--ease);
+}
+.portrait-frame .p-color{ opacity:0; }
+.portrait-frame:hover .p-color,
+.portrait-frame:focus-visible .p-color,
+.portrait-frame.is-on .p-color{ opacity:1; }
+
+/* --- hero copy --- */
+.hero h1{
+  font-family:var(--font-display); font-weight:500;
+  font-size:clamp(2rem,5.2vw,3.2rem); line-height:1.1; letter-spacing:-.04em;
+  margin-bottom:20px;
+}
+/* the whole hero column arrives in sequence on load */
+.reveal-hero > *{ opacity:0; transform:translateY(10px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+.reveal-hero.in > *{ opacity:1; transform:none; }
+.reveal-hero.in > *:nth-child(2){ transition-delay:.08s }
+.reveal-hero.in > *:nth-child(3){ transition-delay:.16s }
+
+.lede{ font-size:clamp(.97rem,2vw,1.07rem); color:var(--text-dim); max-width:52ch; margin-bottom:14px; }
+.lede .name{ color:var(--text); font-weight:500; border-bottom:1px solid var(--border); }
+.lede a{ border-bottom:1px solid var(--border); transition:.2s var(--ease); }
+.lede a:hover{ color:var(--text); border-color:var(--text); }
+.hero-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+
+/* --- stats: hairline dividers, mono values, mono labels.
+   Only the two that actually go somewhere are links, and only those
+   carry the little arrow. --------------------------------------- */
+.stats{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(132px,1fr));
+  margin-top:54px; border-top:1px solid var(--border-soft);
+}
+.stat{
+  padding:20px 20px 20px 20px; border-left:1px solid var(--border-soft);
+  transition:background .2s var(--ease);
+}
+.stat:first-child{ border-left:0; padding-left:0; }
+.stat b{
+  font-family:var(--font-mono); font-size:1.28rem; font-weight:500;
+  display:block; letter-spacing:-.02em; color:var(--text);
+}
+.stat b sup{ color:var(--text-faint); font-size:.55em; margin-left:3px; font-weight:400; }
+.stat span{
+  font-family:var(--font-mono); font-size:.64rem; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--text-faint);
+}
+a.stat:hover b{ text-decoration:underline; text-underline-offset:4px; }
+a.stat:hover span{ color:var(--text-dim); }
+a.stat:hover b sup{ color:var(--text); }
+@media(max-width:520px){
+  .stats{ grid-template-columns:1fr 1fr; }
+  .stat:nth-child(3){ border-left:0; padding-left:0; }
+  .stat:nth-child(n+3){ border-top:1px solid var(--border-soft); }
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+section{ padding:60px 0; }
+/* Every section after the first gets a fading hairline above it, so the
+   boundary between (say) Work and Experience is unmistakable. It is
+   deliberately different from the solid rule under a section heading. */
+section + section{ position:relative; padding-top:76px; }
+section + section::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, var(--border), transparent 72%);
+}
+.sec-head{
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  padding-bottom:16px; margin-bottom:28px; border-bottom:1px solid var(--border-soft);
+}
+.sec-head h2{ font-size:1.26rem; }
+.sec-head .more{ margin-left:auto; font-size:.8rem; color:var(--text-dim); }
+.sec-head .more:hover{ color:var(--text); }
+
+.card{ border:1px solid var(--border); border-radius:var(--radius); padding:20px; transition:border-color .25s var(--ease), background .25s var(--ease); }
+a.card:hover{ border-color:var(--text-dim); background:var(--surface); }
+.tag{ font-size:.7rem; font-family:var(--font-mono); color:var(--text-faint); border:1px solid var(--border-soft); padding:2px 7px; border-radius:5px; }
+
+/* ============================================================
+   PROJECT DECK
+   Collapsed it is a fanned hand of cards — the front one readable,
+   two peeking behind. Expanded it becomes a plain vertical list.
+   The peek cards are absolutely positioned with top/bottom pinned,
+   so they inherit the front card's height instead of needing a
+   magic number. Reduced motion skips the fan entirely.
+   ============================================================ */
+.deck{ position:relative; display:grid; gap:14px; }
+
+/* Filled card surface, a step lighter than the page in dark mode and a
+   step brighter than it in light mode. Must stay opaque — the fanned
+   cards overlap each other. */
+.pcard{
+  border:1px solid var(--border); border-radius:var(--radius);
+  padding:22px; background:var(--card);
+  transition:border-color .25s var(--ease), background .25s var(--ease),
+             transform .45s var(--ease), opacity .35s var(--ease);
+}
+.pcard:hover{ border-color:var(--text-dim); background:var(--card-hi); }
+
+/* ---- fanned (collapsed) ----
+   Clearance for the rotated peek cards comes from margin, never padding:
+   the peek cards are pinned top:0/bottom:0, so container padding would
+   stretch them taller than the front card instead of matching it. */
+.deck.is-fanned{ margin-bottom:54px; }
+.deck.is-fanned .pcard:first-child{ position:relative; z-index:3; }
+.deck.is-fanned .pcard:nth-child(n+2){
+  position:absolute; top:0; bottom:0; left:0; right:0;
+  overflow:hidden; cursor:pointer;
+}
+.deck.is-fanned .pcard:nth-child(2){ z-index:2; transform:rotate(-4.5deg) translate(-54px,16px) scale(.955); }
+.deck.is-fanned .pcard:nth-child(3){ z-index:1; transform:rotate(4.5deg) translate(54px,26px) scale(.925); }
+.deck.is-fanned .pcard:nth-child(n+4){ display:none; }
+.deck.is-fanned .pcard:nth-child(2):hover{ transform:rotate(-3deg) translate(-58px,10px) scale(.97); }
+.deck.is-fanned .pcard:nth-child(3):hover{ transform:rotate(3deg) translate(58px,18px) scale(.94); }
+
+/* ---- expanded: stagger the cards in so the change reads as intentional ---- */
+.deck.just-open .pcard{ animation:cardIn .45s var(--ease) both; }
+.deck.just-open .pcard:nth-child(2){ animation-delay:.06s }
+.deck.just-open .pcard:nth-child(3){ animation-delay:.12s }
+.deck.just-open .pcard:nth-child(4){ animation-delay:.18s }
+@keyframes cardIn{ from{ opacity:0; transform:translateY(10px) } to{ opacity:1; transform:none } }
+
+/* ---- card internals ---- */
+.pcard h3{ font-size:1.05rem; margin-bottom:8px; }
+.pcard .desc{ font-size:.88rem; color:var(--text-dim); max-width:62ch; }
+.pcard .tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+.pcard-links{ display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.pcard-links .btn{ padding:6px 12px; font-size:.76rem; font-family:var(--font-mono); }
+
+.deck-toggle{
+  margin-left:auto; display:inline-flex; align-items:center; gap:7px;
+  background:transparent; border:1px solid var(--border); cursor:pointer;
+  border-radius:calc(var(--radius) * .7); padding:5px 11px;
+  font-family:var(--font-mono); font-size:.72rem; color:var(--text-dim);
+  transition:.2s var(--ease);
+}
+.deck-toggle:hover{ color:var(--text); border-color:var(--text-dim); }
+
+@media(max-width:640px){
+  .deck.is-fanned .pcard:nth-child(2){ transform:rotate(-3deg) translate(-22px,12px) scale(.96); }
+  .deck.is-fanned .pcard:nth-child(3){ transform:rotate(3deg) translate(22px,20px) scale(.93); }
+}
+@media (prefers-reduced-motion:reduce){
+  /* no fan at all — everything is a plain list */
+  .deck.is-fanned{ margin-bottom:0; }
+  .deck.is-fanned .pcard:nth-child(n+2){ position:relative; inset:auto; overflow:visible; transform:none; }
+  .deck.is-fanned .pcard:nth-child(n+4){ display:block; }
+}
+
+/* ---------- core skills ---------- */
+.stack-list{ display:grid; gap:14px; }
+.skill{ display:grid; grid-template-columns:40px 1fr; gap:18px; }
+.skill .mark{
+  width:40px; height:40px; flex:none;
+  border:1px solid var(--border); border-radius:calc(var(--radius) * .5);
+  display:grid; place-items:center;
+  font-family:var(--font-mono); font-size:.62rem; letter-spacing:.06em;
+  color:var(--text-dim); transition:.25s var(--ease);
+}
+.card:hover .mark{ background:var(--text); border-color:var(--text); color:var(--bg); }
+.skill h3{ font-size:1.01rem; margin-bottom:7px; }
+.skill p{ font-size:.89rem; color:var(--text-dim); max-width:64ch; }
+
+/* ---------- experience: hairline timeline ---------- */
+.xp{
+  position:relative; display:grid; grid-template-columns:30px 1fr auto;
+  gap:18px; align-items:start; padding:18px 0;
+  border-bottom:1px solid var(--border-soft);
+}
+.xp:last-child{ border-bottom:0; }
+.xp:not(:last-child)::after{                 /* the spine */
+  content:""; position:absolute; left:14px; top:36px; bottom:0;
+  width:1px; background:var(--border-soft);
+}
+.xp .node{
+  width:30px; height:30px; margin-top:2px; border-radius:50%;
+  border:1px solid var(--border); display:grid; place-items:center;
+  transition:.25s var(--ease);
+}
+.xp .node i{ width:5px; height:5px; border-radius:50%; background:var(--text-faint); transition:.25s var(--ease); }
+.xp:hover .node{ border-color:var(--text-dim); }
+.xp:hover .node i{ background:var(--text); }
+.xp.edu .node i{ border-radius:0; }          /* square marker = education */
+.xp h3{ font-size:.98rem; }
+.xp .org{ font-size:.86rem; color:var(--text-dim); margin-top:5px; }
+.xp .org .tag-edu{
+  font-family:var(--font-mono); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase;
+  border:1px solid var(--border); border-radius:4px; padding:1px 5px; margin-left:7px; color:var(--text-faint);
+}
+.xp .desc{ font-size:.84rem; color:var(--text-faint); margin-top:7px; }
+.xp .yr{
+  font-family:var(--font-mono); font-size:.67rem; letter-spacing:.09em;
+  color:var(--text-faint); text-align:right; white-space:nowrap; padding-top:5px;
+}
+.xp.now .yr{ color:var(--text); }
+
+/* ---------- stack: grouped chip rows ---------- */
+.stack-group + .stack-group{ margin-top:30px; }
+.group-head{ display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.group-head .sq{ width:7px; height:7px; background:var(--text-faint); flex:none; transition:background var(--dur) var(--ease); }
+.stack-group:hover .group-head .sq{ background:var(--text); }
+.group-head h3{
+  font-family:var(--font-mono); font-weight:500; font-size:.7rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--text-dim);
+}
+.group-head .rule{ flex:1; height:1px; background:var(--border-soft); }
+.group-head .count{ font-family:var(--font-mono); font-size:.64rem; color:var(--text-faint); flex:none; }
+
+.chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.chip{
+  font-family:var(--font-mono); font-size:.76rem;
+  padding:7px 13px; border:1px solid var(--border);
+  border-radius:calc(var(--radius) * .55);
+  color:var(--text-dim); background:transparent; cursor:default;
+  transition:opacity .5s var(--ease), transform .5s var(--ease),
+             color .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+}
+/* chips stagger in as the section reveals */
+.reveal .chip{ opacity:0; transform:translateY(7px); }
+.reveal.in .chip{ opacity:1; transform:none; }
+.reveal.in .chip:nth-child(1){ transition-delay:.02s } .reveal.in .chip:nth-child(2){ transition-delay:.05s }
+.reveal.in .chip:nth-child(3){ transition-delay:.08s } .reveal.in .chip:nth-child(4){ transition-delay:.11s }
+.reveal.in .chip:nth-child(5){ transition-delay:.14s } .reveal.in .chip:nth-child(6){ transition-delay:.17s }
+.reveal.in .chip:nth-child(7){ transition-delay:.20s } .reveal.in .chip:nth-child(8){ transition-delay:.23s }
+/* hover last so it wins over the reveal transform */
+.chip:hover{
+  background:var(--text); border-color:var(--text); color:var(--bg);
+  transform:translateY(-2px); transition-delay:0s;
+}
+
+/* ---------- recommendations ---------- */
+.recs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; align-items:start; }
+.rec{
+  display:flex; flex-direction:column; gap:14px;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:22px;
+  transition:background .25s var(--ease), border-color .25s var(--ease);
+}
+.rec:hover{ background:var(--card-hi); border-color:var(--text-dim); }
+.rec .qm{
+  font-family:var(--font-display); font-size:1.5rem; line-height:1;
+  color:var(--text-faint); transition:color .25s var(--ease);
+}
+.rec:hover .qm{ color:var(--text-dim); }
+.rec blockquote{
+  margin:0; font-size:.92rem; line-height:1.6; color:var(--text);
+  /* clamp to four lines so the cards stay the same height */
+  display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden;
+}
+.rec-by{
+  display:grid; grid-template-columns:32px 1fr; gap:11px; align-items:center;
+  margin-top:auto; padding-top:14px; border-top:1px solid var(--border-soft);
+}
+.rec-by .av{
+  width:32px; height:32px; border-radius:50%; border:1px solid var(--border);
+  display:grid; place-items:center; font-family:var(--font-mono);
+  font-size:.58rem; letter-spacing:.04em; color:var(--text-faint);
+  transition:.25s var(--ease);
+}
+.rec:hover .av{ background:var(--text); border-color:var(--text); color:var(--bg); }
+.rec-by .who{ min-width:0; }
+.rec-by .nm{ font-size:.86rem; font-weight:500; color:var(--text); }
+.rec-by .rl{
+  font-family:var(--font-mono); font-size:.6rem; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--text-faint);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+/* contact */
+.cta{ text-align:center; padding:68px 24px; border:1px dashed var(--border); border-radius:var(--radius); }
+.cta h2{ font-size:clamp(1.5rem,4vw,2.2rem); line-height:1.2; margin:16px 0 18px; }
+.cta .lede{ margin:0 auto 24px; }
+.row-center{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+
+/* ============================================================
+   FOOTER + INK PICKER
+   The one piece of live theming left: three grayscale inks.
+   ============================================================ */
+footer{ padding:36px 0 60px; border-top:1px solid var(--border-soft); color:var(--text-faint); font-size:.8rem; display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; align-items:center; }
+.ink-row{ display:flex; align-items:center; gap:9px; }
+.ink{
+  width:22px; height:22px; padding:0; border-radius:50%; cursor:pointer;
+  border:1px solid var(--border); position:relative;
+  transition:.2s var(--ease);
+}
+.ink:hover{ transform:scale(1.12); border-color:var(--text-dim); }
+.ink[aria-pressed="true"]{ border-color:var(--text); box-shadow:0 0 0 2px var(--bg), 0 0 0 3px var(--text); }
+.ink[data-ink="neutral"]{ background:linear-gradient(135deg,#f4f4f4 50%,#101010 50%); }
+.ink[data-ink="warm"]{ background:linear-gradient(135deg,#f6f2ec 50%,#14110c 50%); }
+.ink[data-ink="cool"]{ background:linear-gradient(135deg,#eef1f4 50%,#0d1114 50%); }
+
+@media(max-width:720px){
+  nav.links{ display:none; }
+  .xp{ grid-template-columns:56px 1fr; }
+  .xp .where{ grid-column:2; text-align:left; }
+}
+</style>
+</head>
+<body>
+<div class="dotgrid" aria-hidden="true"></div>
+
+<header id="hdr">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="JZOA — Julia Almoite, back to top">
+      <img src="jzoa-logo.webp" alt="JZOA" width="390" height="160" />
+    </a>
+    <nav class="links">
+      <a href="#skills">skills</a>
+      <a href="#work">work</a>
+      <a href="#experience">experience</a>
+      <a href="#stack">stack</a>
+      <a href="#recommendations">praise</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <div class="bar-actions">
+      <button class="btn icon ghost" id="modeBtn" title="Toggle dark / light (T)" aria-label="Toggle dark and light mode"><span id="modeIcon">◐</span></button>
+      <a class="btn" href="#contact">let's talk</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <div class="wrap hero">
+    <div class="hero-split">
+
+      <!-- b&w by default, colour on hover / focus / tap -->
+      <figure class="portrait">
+        <div class="portrait-frame" id="portraitFrame" tabindex="0"
+             role="img" aria-label="Julia Almoite — portrait, hover to see it in colour">
+          <img class="p-bnw" src="hero-avatar-bnw.webp" alt="" width="620" height="567" decoding="async" fetchpriority="high" />
+          <img class="p-color" src="hero-avatar-color.webp" alt="" width="620" height="567" decoding="async" aria-hidden="true" />
+        </div>
+      </figure>
+
+      <div class="reveal-hero">
+        <h1>Julia Almoite</h1>
+        <p class="lede">I'm a <span class="name">UI/UX engineer</span> — need a design? Done. Need it built? Also me. Most teams split that into two roles; I've always thought that was one conversation too many.</p>
+        <div class="hero-actions">
+          <a class="btn solid" href="#skills">what I do →</a>
+          <a class="btn ghost" href="#">github ↗</a>
+          <a class="btn ghost" href="#">linkedin ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metrics drawn only from the CV: first role 2023, four timeline
+         entries, 18 tools in the stack, design + development. -->
+    <div class="stats">
+      <a class="stat" href="#experience"><b>2023<sup>↗</sup></b><span>shipping since</span></a>
+      <a class="stat" href="#stack"><b>18<sup>↗</sup></b><span>tools in stack</span></a>
+      <div class="stat"><b>2</b><span>disciplines, 1 person</span></div>
+      <div class="stat"><b>PH</b><span>remote · gmt+8</span></div>
+    </div>
+  </div>
+
+  <!-- ================= 01 CORE SKILLS ================= -->
+  <section id="skills" class="wrap reveal">
+    <div class="sec-head">
+      <span class="mono">01</span>
+      <h2>Core skills</h2>
+      <span class="more">design and build, not one or the other</span>
+    </div>
+    <div class="stack-list">
+      <div class="card">
+        <div class="skill">
+          <span class="mark" aria-hidden="true">UX</span>
+          <div>
+            <h3>UI/UX Design</h3>
+            <p>From wireframe to high-fidelity in Figma — I build component systems as I design, so the handoff to code is already half done.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="skill">
+          <span class="mark" aria-hidden="true">&lt;/&gt;</span>
+          <div>
+            <h3>Frontend Development</h3>
+            <p>Vue, React, Nuxt, Tailwind — I write the code for what I design. Pixel-faithful, responsive, and production-ready.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="skill">
+          <span class="mark" aria-hidden="true">DS</span>
+          <div>
+            <h3>Design Systems</h3>
+            <p>I build reusable component libraries that keep interfaces consistent at scale — the same system works in Figma and in code.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 WORK =================
+       TODO — placeholder projects. Swap the names, copy and tags below
+       for real work; the thumbnails are pure CSS so nothing to replace. -->
+  <section id="work" class="wrap reveal">
+    <div class="sec-head">
+      <span class="mono">02</span>
+      <h2>Selected work</h2>
+      <button class="deck-toggle" id="deckToggle" aria-expanded="false" aria-controls="deck">
+        <span id="deckLabel">expand deck</span> <span aria-hidden="true">⤢</span>
+      </button>
+    </div>
+
+    <div class="deck is-fanned" id="deck">
+
+      <article class="pcard">
+        <h3>Lumen UI</h3>
+        <p class="desc">A 40-component React library with token-driven theming, full keyboard support, and zero runtime CSS-in-JS. Powers three internal products.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Radix</span><span class="tag">Storybook</span></div>
+        <div class="pcard-links">
+          <a class="btn" href="#">Storybook ↗</a>
+          <a class="btn ghost" href="#">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>Driftboard</h3>
+        <p class="desc">Realtime collaborative whiteboard. Optimistic updates, virtualized canvas, and 60fps pan/zoom on a five-year-old laptop.</p>
+        <div class="tags"><span class="tag">Next.js</span><span class="tag">Canvas</span><span class="tag">WebSocket</span><span class="tag">Zustand</span></div>
+        <div class="pcard-links">
+          <a class="btn" href="#">Live demo ↗</a>
+          <a class="btn ghost" href="#">Case study ↗</a>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>use-reveal</h3>
+        <p class="desc">A hook for scroll-triggered animation that respects <code style="font-family:var(--font-mono);font-size:.82em">prefers-reduced-motion</code> by default, in 1.2kB.</p>
+        <div class="tags"><span class="tag">TypeScript</span><span class="tag">IntersectionObserver</span><span class="tag">a11y</span></div>
+        <div class="pcard-links">
+          <a class="btn" href="#">npm ↗</a>
+          <a class="btn ghost" href="#">GitHub ↗</a>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>Marketplace replatform</h3>
+        <p class="desc">Rebuilt a 4s-LCP storefront into a 0.9s one. Route-level code splitting, a real image pipeline, and a hard budget enforced in CI.</p>
+        <div class="tags"><span class="tag">Astro</span><span class="tag">Core Web Vitals</span><span class="tag">Playwright</span></div>
+        <div class="pcard-links">
+          <a class="btn" href="#">Case study ↗</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= 03 EXPERIENCE ================= -->
+  <section id="experience" class="wrap reveal">
+    <div class="sec-head">
+      <span class="mono">03</span>
+      <h2>Experience</h2>
+      <a class="more" href="#">download CV →</a>
+    </div>
+
+    <div class="xp now">
+      <span class="node" aria-hidden="true"><i></i></span>
+      <div>
+        <h3>Junior UI/UX Engineer</h3>
+        <p class="org">Coreproc, Inc. — Remote</p>
+        <p class="desc">Building SaaS products, design systems, and client-facing interfaces.</p>
+      </div>
+      <span class="yr">2024 — present</span>
+    </div>
+
+    <div class="xp">
+      <span class="node" aria-hidden="true"><i></i></span>
+      <div>
+        <h3>Front-End Developer</h3>
+        <p class="org">New Jersey, USA — Freelance</p>
+        <p class="desc">Branding, landing pages, and UI design for independent clients.</p>
+      </div>
+      <span class="yr">2023 — 2024</span>
+    </div>
+
+    <div class="xp">
+      <span class="node" aria-hidden="true"><i></i></span>
+      <div>
+        <h3>Web Developer Intern</h3>
+        <p class="org">NMS PH — Onsite internship</p>
+        <p class="desc">Frontend development and hands-on industry experience.</p>
+      </div>
+      <span class="yr">2023</span>
+    </div>
+
+    <div class="xp edu">
+      <span class="node" aria-hidden="true"><i></i></span>
+      <div>
+        <h3>BS Information Technology</h3>
+        <p class="org">STI College Baguio <span class="tag-edu">education</span></p>
+        <p class="desc">Graduated with a focus on web development and system design.</p>
+      </div>
+      <span class="yr">2019 — 2023</span>
+    </div>
+  </section>
+
+  <!-- ================= 03 STACK ================= -->
+  <section id="stack" class="wrap reveal">
+    <div class="sec-head">
+      <span class="mono">04</span>
+      <h2>Stack</h2>
+      <span class="more">18 tools · what I actually reach for</span>
+    </div>
+
+    <div class="stack-group">
+      <div class="group-head">
+        <span class="sq" aria-hidden="true"></span>
+        <h3>Design</h3>
+        <span class="rule" aria-hidden="true"></span>
+        <span class="count">05</span>
+      </div>
+      <div class="chips">
+        <span class="chip">Figma</span><span class="chip">Elementor</span><span class="chip">Webflow</span><span class="chip">Photoshop</span><span class="chip">Canva</span>
+      </div>
+    </div>
+
+    <div class="stack-group">
+      <div class="group-head">
+        <span class="sq" aria-hidden="true"></span>
+        <h3>Development</h3>
+        <span class="rule" aria-hidden="true"></span>
+        <span class="count">08</span>
+      </div>
+      <div class="chips">
+        <span class="chip">Vue</span><span class="chip">React</span><span class="chip">Nuxt</span><span class="chip">Reka UI</span><span class="chip">Tailwind</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span>
+      </div>
+    </div>
+
+    <div class="stack-group">
+      <div class="group-head">
+        <span class="sq" aria-hidden="true"></span>
+        <h3>AI Tools</h3>
+        <span class="rule" aria-hidden="true"></span>
+        <span class="count">05</span>
+      </div>
+      <div class="chips">
+        <span class="chip">ChatGPT</span><span class="chip">Claude</span><span class="chip">Microsoft Copilot</span><span class="chip">Gemini</span><span class="chip">GitHub Copilot</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 RECOMMENDATIONS =================
+       TODO — real quotes needed. Replace the text, initials, name and
+       role in each .rec. Quotes clamp to 4 lines, so anything longer is
+       truncated with an ellipsis automatically. Add or remove cards
+       freely; the grid reflows. -->
+  <section id="recommendations" class="wrap reveal">
+    <div class="sec-head">
+      <span class="mono">05</span>
+      <h2>Recommendations</h2>
+      <a class="more" href="#">all recommendations →</a>
+    </div>
+    <div class="recs">
+
+      <figure class="rec">
+        <span class="qm" aria-hidden="true">&rdquo;</span>
+        <blockquote>Paste the first recommendation here — a line or two from a manager, lead, or client about working with you.</blockquote>
+        <figcaption class="rec-by">
+          <span class="av" aria-hidden="true">NS</span>
+          <span class="who">
+            <span class="nm">Name Surname</span>
+            <span class="rl">role · company</span>
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="rec">
+        <span class="qm" aria-hidden="true">&rdquo;</span>
+        <blockquote>Paste the second recommendation here. Longer quotes are fine — the card clamps them to four lines and trails off.</blockquote>
+        <figcaption class="rec-by">
+          <span class="av" aria-hidden="true">NS</span>
+          <span class="who">
+            <span class="nm">Name Surname</span>
+            <span class="rl">role · company</span>
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="rec">
+        <span class="qm" aria-hidden="true">&rdquo;</span>
+        <blockquote>Paste the third recommendation here. Three reads well on desktop; they stack on narrow screens.</blockquote>
+        <figcaption class="rec-by">
+          <span class="av" aria-hidden="true">NS</span>
+          <span class="who">
+            <span class="nm">Name Surname</span>
+            <span class="rl">role · company</span>
+          </span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= 06 CONTACT ================= -->
+  <section id="contact" class="wrap reveal">
+    <div class="cta">
+      <span class="mono">06 — contact</span>
+      <h2>Let's build something<br />worth clicking.</h2>
+      <p class="lede">Open to frontend and UI/UX roles, design-system work, and freelance projects.</p>
+      <div class="row-center">
+        <a class="btn solid" href="mailto:hello@example.com">hello@example.com</a>
+        <a class="btn" href="#">GitHub ↗</a>
+        <a class="btn" href="#">Read CV ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><footer>
+    <span>© 2026 Julia Almoite — no colour, on purpose.</span>
+    <div class="ink-row">
+      <span class="mono">ink</span>
+      <button class="ink" data-ink="neutral" title="Neutral" aria-label="Neutral ink"></button>
+      <button class="ink" data-ink="warm" title="Warm" aria-label="Warm ink"></button>
+      <button class="ink" data-ink="cool" title="Cool" aria-label="Cool ink"></button>
+    </div>
+    <span class="mono">press <b>T</b> to flip</span>
+  </footer></div>
+</main>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const KEY  = 'julia.theme.v2';
+  const $  = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  let state = { mode:'dark', ink:'neutral' };
+
+  const PAPER = { neutral:{dark:'#0a0a0a',light:'#fbfbfa'},
+                  warm:   {dark:'#0b0a08',light:'#faf7f2'},
+                  cool:   {dark:'#08090b',light:'#f8fafb'} };
+
+  function apply(persist = true){
+    root.dataset.mode = state.mode;
+    root.dataset.ink  = state.ink;
+    $('#modeIcon').textContent = state.mode === 'dark' ? '◐' : '◑';
+    $('meta[name=theme-color]').setAttribute('content', PAPER[state.ink][state.mode]);
+    $$('.ink').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ink === state.ink)));
+    if (persist) try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  const flip = () => { state.mode = state.mode === 'dark' ? 'light' : 'dark'; apply(); };
+  $('#modeBtn').addEventListener('click', flip);
+  $$('.ink').forEach(b => b.addEventListener('click', () => { state.ink = b.dataset.ink; apply(); }));
+
+  addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
+    if (e.key.toLowerCase() === 't') flip();
+  });
+
+  /* portrait: tap or Enter/Space toggles colour where hover never fires */
+  const frame = $('#portraitFrame');
+  frame.addEventListener('click', () => frame.classList.toggle('is-on'));
+  frame.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); frame.classList.toggle('is-on'); }
+  });
+
+  /* restore: saved choice, else follow the OS */
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (saved) state = { ...state, ...saved };
+    else if (matchMedia('(prefers-color-scheme: light)').matches) state.mode = 'light';
+  } catch(e){}
+  apply(false);
+
+  /* ---- project deck: fanned <-> list ---- */
+  const deck = $('#deck'), deckBtn = $('#deckToggle'), deckLabel = $('#deckLabel');
+  function setDeck(open){
+    deck.classList.toggle('is-fanned', !open);
+    deckBtn.setAttribute('aria-expanded', String(open));
+    deckLabel.textContent = open ? 'stack deck' : 'expand deck';
+    deckBtn.lastElementChild.textContent = open ? '⤡' : '⤢';
+    if (open){                                   // stagger the cards in once
+      deck.classList.add('just-open');
+      setTimeout(() => deck.classList.remove('just-open'), 700);
+    }
+  }
+  deckBtn.addEventListener('click', () => setDeck(deck.classList.contains('is-fanned')));
+  /* clicking a card behind the front one brings the whole deck forward */
+  deck.addEventListener('click', e => {
+    if (!deck.classList.contains('is-fanned')) return;
+    const card = e.target.closest('.pcard');
+    if (card && card !== deck.firstElementChild) { e.preventDefault(); setDeck(true); }
+  });
+
+  /* hero headline animates on load rather than on scroll — it starts in view */
+  requestAnimationFrame(() => $('.reveal-hero')?.classList.add('in'));
+
+  /* scroll reveal, with a fail-open fallback so content is never hidden */
+  try {
+    if (!('IntersectionObserver' in window)) throw 0;
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    }), { rootMargin:'0px 0px -8% 0px', threshold:.06 });
+    $$('.reveal').forEach(el => io.observe(el));
+  } catch(e){ $$('.reveal').forEach(el => el.classList.add('in')); }
+
+  const hdr = $('#hdr');
+  const onScroll = () => hdr.classList.toggle('stuck', scrollY > 12);
+  addEventListener('scroll', onScroll, { passive:true }); onScroll();
+})();
+</script>
+</body>
+</html>

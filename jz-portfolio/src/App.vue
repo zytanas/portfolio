@@ -1,16 +1,10 @@
 <template>
-  <div class="relative min-h-screen ">
-
-    <!-- Content -->
-    <div class="relative z-10">
-      <Navbar />
-      <router-view />
-    </div>
-  </div>
+  <DotGrid />
+  <SiteHeader />
+  <router-view />
 </template>
 
 <script setup>
-import Navbar from './components/Navbar.vue'
+import DotGrid from './components/DotGrid.vue'
+import SiteHeader from './components/SiteHeader.vue'
 </script>
-
-<style scoped></style>
