@@ -5,8 +5,8 @@ export const projects = [
    {
     title: 'CoreProc, Inc. Website',
     description:
-      'Corporate site for a B2B SaaS company. Designed the full website in Figma with a cohesive visual language and dev-ready specs.',
-    tech: ['Web', 'Corporate', 'Figma'],
+      'Corporate site for a B2B SaaS company. Designed the full website in a cohesive visual language and dev-ready specs.',
+    tech: ['Web', 'Corporate'],
     links: [{ label: '↗', href: 'https://coreproc.com/' }],
   },
   {

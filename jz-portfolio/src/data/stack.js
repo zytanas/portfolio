@@ -7,11 +7,11 @@ export const stack = [
   },
   {
     label: 'Development',
-    items: ['Vue', 'React', 'Nuxt', 'Reka UI', 'Tailwind', 'HTML', 'CSS', 'JavaScript'],
+    items: ['Vue', 'Swift UI','React', 'Xcode' ,'Nuxt', 'Reka UI', 'Tailwind', 'HTML', 'CSS', 'JavaScript'],
   },
   {
     label: 'AI Tools',
-    items: ['ChatGPT', 'Claude', 'Microsoft Copilot', 'Gemini', 'GitHub Copilot'],
+    items: ['Claude Code', 'ChatGPT', 'Microsoft Copilot', 'Gemini', 'GitHub Copilot'],
   },
 ]
 
