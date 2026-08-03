@@ -17,12 +17,13 @@
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --maxw: 1080px;
 
-  /* Section rhythm. A section's own breathing room, plus the extra run-up any
-     section that follows another gets — so the gap across a hairline is
-     --sec-pad + --sec-gap, and it scales down on narrow screens on its own
-     rather than through a breakpoint. */
-  --sec-pad: clamp(44px, 6vw, 72px);
-  --sec-gap: clamp(56px, 8vw, 92px);
+  /* Section rhythm. One token, applied symmetrically, so the hairline between
+     two sections sits the same distance from the block above it as from the
+     block below — the split --sec-pad / --sec-gap pair it replaced put the
+     rule 92px from what followed and 72px from what preceded, which read as
+     drift rather than rhythm. Still scales on its own rather than through a
+     breakpoint. */
+  --sec-space: clamp(30px, 4vw, 56px);
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   /* One typeface does display and labels — a code mono, like the reference.
@@ -47,7 +48,7 @@ html[data-mode='light'] {
 html[data-mode='dark'] {
   --bg: #0a0a0a; --surface: #121212; --surface-2: #1a1a1a;
   --border: #282828; --border-soft: #1e1e1e;
-  --text: #f4f4f4; --text-dim: #a0a0a0; --text-faint: #6a6a6a;
+  --text: #f4f4f4; --text-dim: #a0a0a0; --text-faint: #868686;
   --plate: #f2f2f2;
   --card: #161616; --card-hi: #1f1f1f;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 14px 34px -14px rgba(0, 0, 0, 0.65);
@@ -55,7 +56,7 @@ html[data-mode='dark'] {
 html[data-mode='light'] {
   --bg: #fbfbfa; --surface: #ffffff; --surface-2: #f3f3f1;
   --border: #e3e3df; --border-soft: #ededea;
-  --text: #101010; --text-dim: #585858; --text-faint: #8c8c8c;
+  --text: #101010; --text-dim: #585858; --text-faint: #6f6f6f;
   --plate: #f5f5f4;
   --card: #ffffff; --card-hi: #f5f5f3;
   --shadow: 0 1px 2px rgba(16, 16, 16, 0.05), 0 14px 34px -16px rgba(16, 16, 16, 0.14);
@@ -65,14 +66,14 @@ html[data-mode='light'] {
 html[data-mode='dark'][data-ink='warm'] {
   --bg: #0b0a08; --surface: #141210; --surface-2: #1c1a16;
   --border: #2b2822; --border-soft: #211e1a;
-  --text: #f6f2ec; --text-dim: #a39c92; --text-faint: #6d675e;
+  --text: #f6f2ec; --text-dim: #a39c92; --text-faint: #8b857c;
   --plate: #f4f0e9;
   --card: #17150f; --card-hi: #211e17;
 }
 html[data-mode='light'][data-ink='warm'] {
   --bg: #faf7f2; --surface: #fffdfa; --surface-2: #f2ede4;
   --border: #e5dfd4; --border-soft: #efe9df;
-  --text: #14110c; --text-dim: #5d564b; --text-faint: #8d8578;
+  --text: #14110c; --text-dim: #5d564b; --text-faint: #736b5e;
   --plate: #f4f0e9;
   --card: #fffdfa; --card-hi: #f5f0e7;
 }
@@ -81,14 +82,14 @@ html[data-mode='light'][data-ink='warm'] {
 html[data-mode='dark'][data-ink='cool'] {
   --bg: #08090b; --surface: #101214; --surface-2: #171a1d;
   --border: #24272b; --border-soft: #1b1e21;
-  --text: #eef1f4; --text-dim: #98a0a8; --text-faint: #646c74;
+  --text: #eef1f4; --text-dim: #98a0a8; --text-faint: #808890;
   --plate: #eef1f3;
   --card: #13161a; --card-hi: #1c2024;
 }
 html[data-mode='light'][data-ink='cool'] {
   --bg: #f8fafb; --surface: #ffffff; --surface-2: #eef2f4;
   --border: #dde3e7; --border-soft: #e8edf0;
-  --text: #0d1114; --text-dim: #525a61; --text-faint: #848d94;
+  --text: #0d1114; --text-dim: #525a61; --text-faint: #666f76;
   --plate: #eef1f3;
   --card: #ffffff; --card-hi: #f1f5f7;
 }
@@ -255,11 +256,10 @@ html[data-mode='light'][data-ink='cool'] {
      boundary between (say) Work and Experience is unmistakable. It is
      deliberately different from the solid rule under a section heading. */
   section {
-    padding-block: var(--sec-pad);
+    padding-block: var(--sec-space);
   }
   section + section {
     position: relative;
-    padding-block-start: var(--sec-gap);
   }
   section + section::before {
     content: '';

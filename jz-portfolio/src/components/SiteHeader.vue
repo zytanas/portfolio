@@ -70,7 +70,10 @@ const links = [
   { href: '#work', label: 'Work' },
   { href: '#experience', label: 'Experience' },
   { href: '#stack', label: 'Stack' },
-  { href: '#recommendations', label: 'Praise' },
+  // "Recommendations" everywhere — the section heading, the standalone page and
+  // its <title> all use it, and a nav that says something else reads as a
+  // different destination.
+  { href: '#recommendations', label: 'Recommendations' },
   { href: '#contact', label: 'Contact' },
 ]
 
@@ -175,6 +178,20 @@ html[data-mode='light'] .brand img {
 .links a:hover {
   color: var(--text);
   background: var(--surface-2);
+}
+
+/* "Recommendations" is the longest label in the bar by some margin, and between
+   the 720px burger breakpoint and roughly 920px the six links plus the logo and
+   the actions cluster no longer clear the 1080px wrap's inner width. Tightening
+   the horizontal padding buys back the ~40px needed; below 720px the links are
+   gone entirely and this stops applying. */
+@media (max-width: 920px) {
+  .links a {
+    padding-inline: 7px;
+  }
+  .bar {
+    gap: 12px;
+  }
 }
 
 .actions {

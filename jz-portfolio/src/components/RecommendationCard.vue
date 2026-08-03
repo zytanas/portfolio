@@ -1,7 +1,7 @@
 <template>
   <figure class="rec" :class="{ 'rec--full': full }">
     <span class="qm" aria-hidden="true">&rdquo;</span>
-    <blockquote>{{ recommendation.quote }}</blockquote>
+    <blockquote>{{ body }}</blockquote>
     <figcaption class="rec-by">
       <span class="av" aria-hidden="true">{{ recommendation.initials }}</span>
       <span class="who">
@@ -13,12 +13,22 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   recommendation: { type: Object, required: true },
-  // The home section shows three teasers, so quotes clamp and roles truncate.
-  // The /recommendation page shows everything in full.
+  // The home section shows three teasers, so they render the curated excerpt
+  // and roles truncate. The /recommendation page shows everything in full.
   full: { type: Boolean, default: false },
 })
+
+/* Teasers render the hand-picked excerpt rather than the whole quote under a
+   line clamp — the clamp is what was cutting them mid-word. Falling back to
+   `quote` means a recommendation added without an excerpt still renders; it
+   just runs to its natural length instead of being truncated badly. */
+const body = computed(() =>
+  props.full ? props.recommendation.quote : props.recommendation.excerpt || props.recommendation.quote,
+)
 </script>
 
 <style scoped>
@@ -46,16 +56,15 @@ defineProps({
 .rec:hover .qm {
   color: var(--text-dim);
 }
+/* No line clamp. Excerpts are picked to fit whole, and the clamp that used to
+   equalise heights here is also what cut them mid-word. Even heights now come
+   from the grid stretching every card to its row's tallest, which does the same
+   job without touching the text. */
 .rec blockquote {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.6;
   color: var(--text);
-  /* clamp to four lines so the cards stay the same height */
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 .rec-by {
   display: grid;
@@ -109,13 +118,8 @@ defineProps({
   text-overflow: ellipsis;
 }
 
-/* Full mode: nothing is cut off — the quote runs to its natural length and the
-   role wraps onto as many lines as it needs. */
-.rec--full blockquote {
-  display: block;
-  -webkit-line-clamp: none;
-  overflow: visible;
-}
+/* Full mode: the role wraps onto as many lines as it needs. The quote needs no
+   rule of its own any more — neither mode clamps it. */
 .rec--full .rl {
   white-space: normal;
   overflow: visible;

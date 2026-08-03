@@ -13,10 +13,15 @@
             Also me. Most teams split that into two roles; I've always thought that was one
             conversation too many.
           </p>
+          <!-- Three buttons, one filled. The work is the highest-value first
+               action on a portfolio, so it takes the solid treatment; "what I
+               do" drops to outlined beside it. GitHub is not repeated here —
+               the contact block at the foot of the page already carries it,
+               and a fourth button would flatten the hierarchy this fixes. -->
           <div class="mt-6 flex flex-wrap gap-[10px]">
-            <a class="btn solid" href="#skills">What I do →</a>
-            <a class="btn ghost" href="https://github.com/zytanas" target="_blank" rel="noopener noreferrer">Github ↗</a>
-            <a class="btn ghost" href="https://www.linkedin.com/in/almoitejuliazyrene/ " target="_blank" rel="noopener noreferrer">Linkedin ↗</a>
+            <a class="btn solid" href="#work">View work →</a>
+            <a class="btn ghost" href="#skills">What I do →</a>
+            <a class="btn ghost" href="https://www.linkedin.com/in/almoitejuliazyrene/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
           </div>
         </div>
       </div>

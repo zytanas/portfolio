@@ -5,7 +5,7 @@
     >
       <span>© {{ year }} Julia Almoite</span>
       <InkPicker />
-      <span class="mono">press <b>T</b> to flip</span>
+      <span class="mono max-lg:hidden">press <b>T</b> to flip</span>
     </footer>
   </div>
 </template>
