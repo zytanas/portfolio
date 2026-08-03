@@ -15,7 +15,7 @@
         <span class="prow-head-tags">
           <span v-for="tech in project.tech.slice(0, 3)" :key="tech" class="tag">{{ tech }}</span>
         </span>
-        <ProjectThumb class="prow-head-thumb" :project="project" :index="index" variant="hover" />
+        <ProjectThumb class="prow-head-thumb" :project="project" variant="hover" />
       </span>
 
       <!-- Visible in both states. Sits above the overlay toggle (z-index) and
@@ -34,14 +34,22 @@
              returns at 768px ("view project" / "open in figma") -->
         <span class="prow-link-label"
           ><span class="prow-link-label-rest">{{ linkLabel.lead }}</span
-          >{{ linkLabel.base
-          }}<span class="prow-link-label-rest">{{ linkLabel.trail }}</span></span
+          >{{ linkLabel.base }}<span class="prow-link-label-rest">{{ linkLabel.trail }}</span></span
         >
         <span class="prow-link-arrow" aria-hidden="true">↗</span>
       </a>
 
       <span class="prow-chevron" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg
+          viewBox="0 0 24 24"
+          width="14"
+          height="14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           <path d="M6 9l6 6 6-6" />
         </svg>
       </span>
@@ -86,7 +94,6 @@
               v-if="showPreview"
               class="prow-preview"
               :project="project"
-              :index="index"
               variant="panel"
             />
           </div>
@@ -267,8 +274,11 @@ defineEmits(['toggle'])
   font-family: var(--font-mono);
   line-height: 1;
   -webkit-tap-highlight-color: transparent;
-  transition: opacity 0.18s var(--ease), transform 0.18s var(--ease),
-    color 0.2s var(--ease), border-color 0.2s var(--ease);
+  transition:
+    opacity 0.18s var(--ease),
+    transform 0.18s var(--ease),
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease);
 }
 /* pressed feedback stands in for the missing box */
 .prow-link:active {

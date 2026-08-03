@@ -13,13 +13,13 @@
       :height="Math.round((WIDTHS[variant] * 10) / 16)"
     />
 
-    <!-- No artwork yet. A tile carrying the project's index keeps the grid
-         composed instead of leaving a hole, and it is marked decorative: the
-         title next to it already says which project this is, and "no image
-         available" is not information a screen reader needs. -->
-    <div v-else class="thumb-fallback" aria-hidden="true">
-      <span class="thumb-fallback-index">{{ index }}</span>
-    </div>
+    <!-- No artwork yet. A hatched plate keeps the grid composed instead of
+         leaving a hole. Deliberately wordless: an earlier version put the
+         project's index here, which sat directly above the card's own index
+         label and read as a duplication rather than a placeholder. Decorative,
+         so it stays out of the accessibility tree entirely — "no image yet" is
+         not something a screen reader needs to hear seven times. -->
+    <div v-else class="thumb-fallback" aria-hidden="true"></div>
   </div>
 </template>
 
@@ -42,7 +42,13 @@ const FILES = import.meta.glob('../assets/images/work/*.{webp,png,jpg,jpeg,avif}
 
 // '../assets/images/work/vibeteams.webp' -> 'vibeteams'
 const BY_SLUG = Object.fromEntries(
-  Object.entries(FILES).map(([path, url]) => [path.split('/').pop().replace(/\.\w+$/, ''), url]),
+  Object.entries(FILES).map(([path, url]) => [
+    path
+      .split('/')
+      .pop()
+      .replace(/\.\w+$/, ''),
+    url,
+  ]),
 )
 
 // Roughly the widest each variant is ever painted, doubled for retina. Only
@@ -51,8 +57,6 @@ const WIDTHS = { card: 720, panel: 640, hover: 128 }
 
 const props = defineProps({
   project: { type: Object, required: true },
-  // Shown in the fallback tile. Already zero-padded by the caller.
-  index: { type: String, required: true },
   variant: {
     type: String,
     default: 'card',
@@ -87,25 +91,20 @@ const alt = computed(() =>
   object-position: top center;
 }
 
-/* ---- fallback tile ----
-   Deliberately flat and typographic rather than a grey box with an icon: it
-   reads as part of the index, not as a broken image. */
+/* ---- fallback plate ----
+   A quiet diagonal hatch in the border tone. Flat enough to read as a
+   deliberate surface rather than a failed <img>, and it uses the same
+   token ramp as everything else, so it works in all six themes without a
+   single per-theme rule. */
 .thumb-fallback {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
-  background: var(--surface-2);
-}
-.thumb-fallback-index {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--text-faint);
-  font-size: 1.4rem;
-}
-.thumb--hover .thumb-fallback-index {
-  font-size: 0.7rem;
+  background-color: var(--surface-2);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--border-soft) 0 1px,
+    transparent 1px 9px
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {

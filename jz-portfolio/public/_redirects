@@ -1,1 +1,4 @@
+# Fallback only — see the comment in netlify.toml. The prerendered pages are
+# real files and Netlify serves them ahead of this rule; never add a `!` (force)
+# suffix, which would shadow them all with the homepage.
 /*    /index.html   200

@@ -20,7 +20,7 @@
   >
     <!-- The work first, then who it is for. A UI/UX index that leads with a
          paragraph asks the reader to take the design on trust. -->
-    <ProjectThumb class="pcard-thumb" :project="project" :index="index" variant="card" />
+    <ProjectThumb class="pcard-thumb" :project="project" variant="card" />
 
     <span class="pcard-index mono" aria-hidden="true">{{ index }}</span>
     <h3 class="pcard-title">{{ project.title }}</h3>

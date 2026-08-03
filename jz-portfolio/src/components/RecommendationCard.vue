@@ -27,7 +27,9 @@ const props = defineProps({
    `quote` means a recommendation added without an excerpt still renders; it
    just runs to its natural length instead of being truncated badly. */
 const body = computed(() =>
-  props.full ? props.recommendation.quote : props.recommendation.excerpt || props.recommendation.quote,
+  props.full
+    ? props.recommendation.quote
+    : props.recommendation.excerpt || props.recommendation.quote,
 )
 </script>
 
@@ -40,7 +42,9 @@ const body = computed(() =>
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 22px;
-  transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+  transition:
+    background 0.25s var(--ease),
+    border-color 0.25s var(--ease);
 }
 .rec:hover {
   background: var(--card-hi);

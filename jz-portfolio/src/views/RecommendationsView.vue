@@ -30,6 +30,14 @@ import { RouterLink } from 'vue-router'
 import RecommendationCard from '../components/RecommendationCard.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 import { recommendations } from '../data/recommendations'
+import { usePageMeta } from '../composables/usePageMeta'
+
+usePageMeta({
+  title: 'Recommendations',
+  description:
+    'What leaders, teammates and mentors say about working with Julia Almoite — straight from LinkedIn.',
+  path: '/recommendation',
+})
 </script>
 
 <style scoped>

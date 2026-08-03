@@ -52,7 +52,12 @@
           {{ link.label }}
         </a>
       </nav>
-      <a class="btn solid talk-lg" href="#contact" :style="{ '--i': links.length }" @click="open = false">
+      <a
+        class="btn solid talk-lg"
+        href="#contact"
+        :style="{ '--i': links.length }"
+        @click="open = false"
+      >
         Let's talk →
       </a>
     </div>
@@ -90,8 +95,10 @@ const open = ref(false)
 watch(open, (isOpen) => {
   document.body.style.overflow = isOpen ? 'hidden' : ''
 })
-// Rotating past the breakpoint leaves the panel hidden but still open.
-const mq = window.matchMedia('(min-width: 721px)')
+/* Rotating past the breakpoint leaves the panel hidden but still open.
+   Created in onMounted rather than here: this setup block also runs during the
+   static build, where there is no window to query. */
+let mq = null
 const onWide = (e) => {
   if (e.matches) open.value = false
 }
@@ -111,13 +118,14 @@ const onKeydown = (e) => {
 onMounted(() => {
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('keydown', onKeydown)
+  mq = window.matchMedia('(min-width: 721px)')
   mq.addEventListener('change', onWide)
   onScroll()
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
   window.removeEventListener('keydown', onKeydown)
-  mq.removeEventListener('change', onWide)
+  mq?.removeEventListener('change', onWide)
   document.body.style.overflow = ''
 })
 </script>
@@ -130,7 +138,9 @@ onUnmounted(() => {
   backdrop-filter: blur(16px);
   background: color-mix(in srgb, var(--bg) 80%, transparent);
   border-bottom: 1px solid transparent;
-  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+  transition:
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease);
 }
 .site-header.stuck {
   border-bottom-color: var(--border-soft);
@@ -221,7 +231,9 @@ onUnmounted(() => {
   height: 1.5px;
   background: currentColor;
   border-radius: 2px;
-  transition: transform 0.3s var(--ease), top 0.3s var(--ease);
+  transition:
+    transform 0.3s var(--ease),
+    top 0.3s var(--ease);
 }
 .bars i:first-child {
   top: 0;
@@ -252,7 +264,9 @@ onUnmounted(() => {
   background: var(--bg);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.28s var(--ease), visibility 0.28s var(--ease);
+  transition:
+    opacity 0.28s var(--ease),
+    visibility 0.28s var(--ease);
 }
 .mobile-nav.open {
   opacity: 1;
@@ -293,7 +307,9 @@ onUnmounted(() => {
 .mobile-nav .talk-lg {
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.32s var(--ease), transform 0.32s var(--ease);
+  transition:
+    opacity 0.32s var(--ease),
+    transform 0.32s var(--ease);
 }
 .mobile-nav.open nav a,
 .mobile-nav.open .talk-lg {

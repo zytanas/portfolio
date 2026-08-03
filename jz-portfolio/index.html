@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="/src/assets/images/jzoa-favico.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Julia Almoite — UI/UX Engineer</title>
-    <meta name="description" content="Julia Almoite — UI/UX engineer and frontend developer. Need a design? Done. Need it built? Also me. Design systems, Vue, React, Nuxt, Tailwind." />
+    <!-- Title, description, canonical and the OG / Twitter cards are not here.
+         They are per-route and come from usePageMeta(), which vite-ssg writes
+         into each prerendered page at build time. Duplicating them here would
+         emit two of each. -->
     <meta name="theme-color" content="#0a0a0a" />
     <!-- same opt-out as the CSS, but in effect before the stylesheet lands -->
     <meta name="color-scheme" content="dark light" />
@@ -40,6 +42,21 @@
         if (meta) meta.setAttribute('content', PAPER[ink][mode])
       })()
     </script>
+
+    <!-- The page is prerendered, so its content is in the HTML whether or not
+         JavaScript runs. But .reveal starts at opacity: 0 and is cleared by an
+         IntersectionObserver, so without JS the text would be there and
+         invisible. This turns the reveals off in that case. -->
+    <noscript>
+      <style>
+        .reveal,
+        .reveal .chip,
+        .reveal-hero > * {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
   </head>
   <body>
     <!-- Hidden form for Netlify Forms detection -->

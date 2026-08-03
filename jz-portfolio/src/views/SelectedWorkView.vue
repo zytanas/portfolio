@@ -29,6 +29,14 @@ import { RouterLink } from 'vue-router'
 import ProjectCard from '../components/ProjectCard.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 import { projects } from '../data/projects'
+import { usePageMeta } from '../composables/usePageMeta'
+
+usePageMeta({
+  title: 'Selected work',
+  description:
+    'Client sites, product UI and prototypes — the full project index, with the stack behind each one.',
+  path: '/selected-work',
+})
 </script>
 
 <style scoped>

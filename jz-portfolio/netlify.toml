@@ -2,7 +2,16 @@
   command = "npm run build"
   publish = "dist"
 
+# The site is statically generated: /, /selected-work and /recommendation each
+# have a real index.html in dist. This rule is only the fallback for paths that
+# do not, so an unknown URL still boots the app instead of returning a bare 404.
+#
+# It must stay unforced. Netlify serves a matching static file in preference to
+# a non-forced redirect, which is what lets the prerendered pages win — adding
+# `force = true` would shadow every one of them with the homepage and quietly
+# undo the prerendering, while looking completely fine in a browser.
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false

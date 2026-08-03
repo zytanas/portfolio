@@ -45,8 +45,7 @@ export const recommendations = [
   {
     quote:
       'We had the opportunity to have Julia as an intern, and I must say, her performance during the time she spent with us was exceptional. She is incredibly dedicated and consistently delivered great results. Beyond her work, Julia was a joy to have on the team. Her cheerful, easygoing nature and open-minded approach made her a perfect fit.',
-    excerpt:
-      'She is incredibly dedicated and consistently delivered great results.',
+    excerpt: 'She is incredibly dedicated and consistently delivered great results.',
     initials: 'CM',
     name: 'Chambelynne Malubay',
     role: 'it project manager · new media services',

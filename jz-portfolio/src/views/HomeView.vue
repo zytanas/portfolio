@@ -21,7 +21,13 @@
           <div class="mt-6 flex flex-wrap gap-[10px]">
             <a class="btn solid" href="#work">View work →</a>
             <a class="btn ghost" href="#skills">What I do →</a>
-            <a class="btn ghost" href="https://www.linkedin.com/in/almoitejuliazyrene/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a
+              class="btn ghost"
+              href="https://www.linkedin.com/in/almoitejuliazyrene/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn ↗</a
+            >
           </div>
         </div>
       </div>
@@ -52,6 +58,11 @@ import Experience from '../sections/Experience.vue'
 import Stack from '../sections/Stack.vue'
 import Recommendations from '../sections/Recommendations.vue'
 import Contact from '../sections/Contact.vue'
+import { usePageMeta } from '../composables/usePageMeta'
+
+// No `title` — the homepage carries the full site title on its own rather than
+// reading "Home — Julia Almoite".
+usePageMeta({ path: '/' })
 </script>
 
 <style scoped>
