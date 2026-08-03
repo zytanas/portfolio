@@ -10,14 +10,21 @@ const PAPER = {
   cool: { dark: '#08090b', light: '#f8fafb' },
 }
 
-const root = document.documentElement
+/* This module runs during the static build as well as in the browser, and
+   there is no document there. Everything below degrades to the defaults that
+   index.html already hardcodes on <html> (dark / neutral), which is exactly
+   what the prerendered HTML should contain — the blocking script in
+   index.html then corrects it from localStorage before first paint, as it
+   always did. */
+const root = typeof document === 'undefined' ? null : document.documentElement
 
 /* Module-scoped, deliberately: every component that calls useTheme() shares
    this one instance instead of getting its own disconnected refs. */
-const mode = ref(root.dataset.mode === 'light' ? 'light' : 'dark')
-const ink = ref(PAPER[root.dataset.ink] ? root.dataset.ink : 'neutral')
+const mode = ref(root?.dataset.mode === 'light' ? 'light' : 'dark')
+const ink = ref(PAPER[root?.dataset.ink] ? root.dataset.ink : 'neutral')
 
 function apply(persist) {
+  if (!root) return
   root.dataset.mode = mode.value
   root.dataset.ink = ink.value
   const meta = document.querySelector('meta[name=theme-color]')

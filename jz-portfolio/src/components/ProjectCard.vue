@@ -18,6 +18,10 @@
         : {}
     "
   >
+    <!-- The work first, then who it is for. A UI/UX index that leads with a
+         paragraph asks the reader to take the design on trust. -->
+    <ProjectThumb class="pcard-thumb" :project="project" variant="card" />
+
     <span class="pcard-index mono" aria-hidden="true">{{ index }}</span>
     <h3 class="pcard-title">{{ project.title }}</h3>
     <p class="pcard-desc">{{ project.description }}</p>
@@ -37,6 +41,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import ProjectThumb from './ProjectThumb.vue'
 
 const props = defineProps({
   project: { type: Object, required: true },
@@ -80,6 +85,19 @@ const linkAria = computed(
 .pcard.is-link:focus-visible {
   outline: 2px solid var(--text-dim);
   outline-offset: 2px;
+}
+
+/* Full-bleed across the card: the 20px padding is pulled back on three sides so
+   the image meets the border, which reads as a plate rather than a picture
+   sitting in a box. The 10px gap below comes from the card's own flex gap. */
+.pcard-thumb {
+  margin: -20px -20px 2px;
+  width: calc(100% + 40px);
+  border-radius: var(--radius) var(--radius) 0 0;
+  border-width: 0 0 1px 0;
+}
+.pcard.is-link:hover .pcard-thumb {
+  border-bottom-color: var(--text-dim);
 }
 
 .pcard-index {
@@ -129,6 +147,11 @@ const linkAria = computed(
 @media (min-width: 768px) {
   .pcard {
     padding: 22px;
+  }
+  /* the bleed has to track the padding it is cancelling */
+  .pcard-thumb {
+    margin: -22px -22px 2px;
+    width: calc(100% + 44px);
   }
   .pcard-desc {
     font-size: 0.88rem;

@@ -25,10 +25,13 @@ const featured = recommendations.slice(0, 3)
 </script>
 
 <style scoped>
+/* align-items is left at stretch (the default) so the three cards match the
+   tallest in the row and sit flush, whatever the excerpt lengths are. It was
+   `start`, which let each card size to its own quote and left the row ragged
+   along the bottom. */
 .recs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 14px;
-  align-items: start;
 }
 </style>

@@ -6,8 +6,12 @@ export const stack = [
     items: ['Figma', 'Elementor', 'Webflow', 'Photoshop', 'Canva'],
   },
   {
+    // HTML, CSS and JavaScript are one entry, not three. Counted separately
+    // they pad the total with things every frontend role assumes you have, and
+    // list a language next to the frameworks written in it as if they were
+    // peers.
     label: 'Development',
-    items: ['Vue', 'Swift UI','React', 'Xcode' ,'Nuxt', 'Reka UI', 'Tailwind', 'HTML', 'CSS', 'JavaScript'],
+    items: ['Vue', 'React', 'Nuxt', 'Reka UI', 'Tailwind', 'HTML/CSS/JS'],
   },
   {
     label: 'AI Tools',

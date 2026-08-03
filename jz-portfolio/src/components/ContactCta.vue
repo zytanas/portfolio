@@ -9,6 +9,15 @@
       <a class="btn" href="https://github.com/zytanas" target="_blank" rel="noopener noreferrer"
         >GitHub ↗</a
       >
+      <!-- Moved down from the hero, where a fourth button was competing with
+           the two that actually route into the page. -->
+      <a
+        class="btn"
+        href="https://www.linkedin.com/in/almoitejuliazyrene/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >LinkedIn ↗</a
+      >
     </div>
   </div>
 </template>
