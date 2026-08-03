@@ -164,11 +164,61 @@ Part of the work, not a follow-up:
   project title.
 - Assert the OG and Twitter tags are present with absolute URLs.
 
+## Deviations found during implementation
+
+Recorded here so the spec matches what shipped.
+
+- **`/about` is not prerendered.** It is still the `npm create vue` stub
+  ("This is an about page"), unlinked from the nav. Prerendering it would
+  publish an indexable placeholder — the opposite of what item 09 is for. It is
+  excluded from `includedRoutes` and carries `noindex, nofollow`. **It should
+  be written or deleted; the route is dead weight either way.**
+- **The fallback tile is a hatched plate, not a numeral.** The first version
+  showed the project index, which landed directly above the card's own index
+  label and read as a duplication rather than a placeholder.
+- **`manualChunks` is client-only.** vite-ssg also runs a server build where
+  `vue` is external, and naming an external in `manualChunks` is a hard rollup
+  error that fails the whole static build.
+- **`dirStyle: 'nested'`.** The default emits `/selected-work.html`, which only
+  resolves on hosts that map extensionless paths to `.html` files and leans on
+  that mapping beating the SPA catch-all. A real directory index cannot be
+  shadowed by the fallback.
+- **SSR-safety fixes.** `useTheme.js` read `document.documentElement` at module
+  scope and `SiteHeader.vue` called `window.matchMedia` in `setup`; both crash
+  during a server render and are now guarded.
+- **`@unhead/vue` is pinned to v2.** npm resolved v3 at the top level while
+  vite-ssg depends on `^2.1.2`. Two copies means `useHead` writes to a
+  different head instance than the one vite-ssg renders — the tags silently
+  never appear. Verified as a single deduped copy.
+- **Contrast is narrower than the request assumed.** `--text-dim` already
+  passed; only `--text-faint` failed. Documented in section 03.
+- **Hero CTA count.** The request's three instructions sum to four buttons.
+  Resolved in section 06.
+
+## Verification results
+
+All committed as runnable scripts, not one-time claims.
+
+- `npm run check-contrast` — 72 pairs, all clear 4.5:1.
+- `npm run verify` (wired to `postbuild`) — asserts each route's HTML contains
+  the hero copy, every project title, the testimonial excerpts, the curated
+  tool count, the CTA hierarchy, the nav label, and absolute OG/Twitter tags.
+- Netlify's serve order simulated locally: each route resolves to its own
+  prerendered file; only unknown paths reach the SPA fallback.
+
 ## Out of scope
 
 Case-study pages and motion work, per the request.
 
-## Blocked
+## Blocked / outstanding
 
-The seven project images. Everything else ships; the fallback tile holds their
-place until the files land in `src/assets/images/work/`.
+- **The seven project images.** Everything else ships; the hatched plate holds
+  their place until files land in `src/assets/images/work/<slug>.webp`.
+- **No live browser pass.** This environment has no headless browser, so the
+  layout changes (02, 05, 06, and the thumbnails in 01) were verified by build
+  output and static assertion, not by looking at rendered pages. The logo was
+  verified visually by rasterising it at nav sizes. A human should look at the
+  running site before merging.
+- **Validate the card with a real debugger** once deployed — LinkedIn Post
+  Inspector and Slack unfurl. `OG_IMAGE` carries a `?v=1` cache-buster to bump
+  when the artwork changes.
