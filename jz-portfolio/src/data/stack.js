@@ -15,7 +15,7 @@ export const stack = [
   },
   {
     label: 'AI Tools',
-    items: ['ChatGPT', 'Claude', 'Microsoft Copilot', 'Gemini', 'GitHub Copilot'],
+    items: ['Claude Code', 'ChatGPT', 'Microsoft Copilot', 'Gemini', 'GitHub Copilot'],
   },
 ]
 
