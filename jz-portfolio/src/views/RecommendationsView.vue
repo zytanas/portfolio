@@ -11,10 +11,13 @@
 
       <!-- Masonry: CSS columns let a long quote sit next to two short ones
            without either card stretching to match the other. -->
-      <div v-reveal class="reveal masonry">
+      <div class="masonry">
         <RecommendationCard
           v-for="(recommendation, i) in recommendations"
           :key="i"
+          v-reveal
+          class="reveal reveal-item"
+          :style="{ '--i': i % 3 }"
           :recommendation="recommendation"
           full
         />

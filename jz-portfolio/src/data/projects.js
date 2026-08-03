@@ -23,7 +23,7 @@ export const projects = [
     description:
       'Corporate site for a B2B SaaS company. Designed the full website in Figma with a cohesive visual language and dev-ready specs.',
     imageAlt: 'CoreProc corporate site homepage — full-width hero over a product feature grid.',
-    tech: ['Web', 'Corporate', 'Figma'],
+    tech: ['Web', 'Corporate',],
     links: [{ label: '↗', href: 'https://coreproc.com/' }],
   },
   {

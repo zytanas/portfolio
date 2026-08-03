@@ -128,7 +128,9 @@ console.log('\nchange request')
   const work = decode(readFileSync(dist('selected-work/index.html'), 'utf8'))
 
   // 06 — hero CTA hierarchy: three buttons, and the filled one is the work.
-  const hero = home.slice(home.indexOf('<h1'), home.indexOf('class="stats"'))
+  // `class="stats` without the closing quote: the row also carries the reveal
+  // classes now, and an exact match silently returned -1 and slurped the page.
+  const hero = home.slice(home.indexOf('<h1'), home.indexOf('class="stats'))
   const heroButtons = [...hero.matchAll(/<a[^>]*class="btn[^"]*"[^>]*>([\s\S]*?)<\/a>/g)].map((m) =>
     m[1].replace(/<[^>]*>/g, '').trim(),
   )

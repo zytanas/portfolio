@@ -34,7 +34,7 @@
 
       <!-- Metrics drawn only from the CV: first role 2023, the tool count summed
            from the stack data, design + development. -->
-      <StatsRow />
+      <StatsRow v-reveal class="reveal" />
     </div>
 
     <CoreSkills />

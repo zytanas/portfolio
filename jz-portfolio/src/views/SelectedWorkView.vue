@@ -10,10 +10,17 @@
         </p>
       </div>
 
-      <div v-reveal class="reveal grid">
+      <!-- Card by card rather than the whole grid at once: the first row is
+           already in view on load and the rest rise as they are scrolled to.
+           --i staggers a row; it wraps at the widest column count (3) so the
+           delay never grows past one row's worth. -->
+      <div class="grid">
         <ProjectCard
           v-for="(project, i) in projects"
           :key="project.title"
+          v-reveal
+          class="reveal reveal-item"
+          :style="{ '--i': i % 3 }"
           :project="project"
           :index="String(i + 1).padStart(2, '0')"
         />

@@ -289,6 +289,13 @@ html[data-mode='light'][data-ink='cool'] {
   transform: none;
 }
 
+/* A grid or column of cards rises one card at a time instead of as one block.
+   Each item is observed on its own, so a row already in view plays on load and
+   the rest wait for the scroll; --i (set per item, wrapped by the caller at the
+   widest column count) staggers the ones that arrive together, so the delay
+   never grows past a single row's worth. */
+.reveal-item { transition-delay: calc(var(--i, 0) * 70ms); }
+
 /* the hero column arrives in sequence on load rather than on scroll */
 .reveal-hero > * {
   opacity: 0;
