@@ -7,10 +7,15 @@
       <span class="prow-index mono" aria-hidden="true">{{ index }}</span>
       <span class="prow-title">{{ project.title }}</span>
 
-      <!-- Collapsed-row chips: hidden below 768px, and hidden while open
-           because the panel already lists the full set. -->
-      <span class="prow-head-tags" aria-hidden="true">
-        <span v-for="tech in project.tech.slice(0, 3)" :key="tech" class="tag">{{ tech }}</span>
+      <!-- Chips and the hover preview share this slot and cross-fade, so the
+           row never changes height or reflows on hover. Both are decorative:
+           hidden below 768px, and hidden while open because the panel carries
+           the full set and a full-size preview. -->
+      <span class="prow-head-aside" aria-hidden="true">
+        <span class="prow-head-tags">
+          <span v-for="tech in project.tech.slice(0, 3)" :key="tech" class="tag">{{ tech }}</span>
+        </span>
+        <ProjectThumb class="prow-head-thumb" :project="project" :index="index" variant="hover" />
       </span>
 
       <!-- Visible in both states. Sits above the overlay toggle (z-index) and
@@ -66,9 +71,24 @@
     >
       <div class="prow-panel-clip">
         <div class="prow-panel-inner">
-          <p class="prow-desc">{{ project.description }}</p>
-          <div class="prow-tags">
-            <span v-for="tech in project.tech" :key="tech" class="tag">{{ tech }}</span>
+          <!-- Preview beside the copy, so an opened row shows the work rather
+               than only describing it. The Clowder row is the exception: it
+               already renders a live prototype below, and a still of the same
+               screens above it would just be the same thing twice. -->
+          <div class="prow-body" :class="{ 'has-preview': showPreview }">
+            <div class="prow-body-text">
+              <p class="prow-desc">{{ project.description }}</p>
+              <div class="prow-tags">
+                <span v-for="tech in project.tech" :key="tech" class="tag">{{ tech }}</span>
+              </div>
+            </div>
+            <ProjectThumb
+              v-if="showPreview"
+              class="prow-preview"
+              :project="project"
+              :index="index"
+              variant="panel"
+            />
           </div>
 
           <!-- Phone prototype: portrait frame, centred, canvas edge to edge.
@@ -104,6 +124,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
+import ProjectThumb from './ProjectThumb.vue'
 
 const props = defineProps({
   project: { type: Object, required: true },
@@ -114,6 +135,9 @@ const props = defineProps({
 
 // Rows for unlaunched / unlinked work simply have no link in the header.
 const primaryLink = computed(() => props.project.links[0] ?? null)
+
+// A figma row's panel is the live prototype; a still would be redundant.
+const showPreview = computed(() => props.project.type !== 'figma')
 
 // Type-aware header label. `lead`/`trail` are the parts that only appear at
 // 768px+, where the link has a box to fill; `base` always shows.
@@ -214,7 +238,7 @@ defineEmits(['toggle'])
   line-height: 1.35;
   color: var(--text);
 }
-.prow-head-tags {
+.prow-head-aside {
   display: none; /* no room until 768px */
 }
 
@@ -301,6 +325,12 @@ defineEmits(['toggle'])
 .prow.is-open .prow-panel-inner {
   opacity: 1;
   transition: opacity 0.3s var(--ease) 0.08s;
+}
+/* Panel body. One column on phones — the preview sits under the copy, which is
+   the right order on a narrow screen; two columns from 768px. */
+.prow-body {
+  display: grid;
+  gap: 16px;
 }
 .prow-desc {
   font-size: 0.86rem;
@@ -418,11 +448,21 @@ defineEmits(['toggle'])
     flex: 0 1 auto;
     font-size: 1rem;
   }
-  .prow-head-tags {
+
+  /* The shared slot. Fixed height and a right-aligned stack, so the chips and
+     the preview can swap without either one moving the row. */
+  .prow-head-aside {
+    position: relative;
     display: flex;
     flex: 1 1 auto;
-    flex-wrap: nowrap;
+    align-items: center;
     justify-content: flex-end;
+    min-width: 0;
+    height: 40px;
+  }
+  .prow-head-tags {
+    display: flex;
+    flex-wrap: nowrap;
     gap: 6px;
     overflow: hidden;
     opacity: 1;
@@ -430,6 +470,38 @@ defineEmits(['toggle'])
   }
   .prow.is-open .prow-head-tags {
     opacity: 0; /* the panel repeats them in full */
+  }
+
+  /* Out of flow so it cannot widen the row, and never a click target — the
+     stretched toggle underneath must keep the whole row activatable. */
+  .prow-head-thumb {
+    position: absolute;
+    right: 0;
+    height: 40px;
+    width: 64px; /* 16:10 at 40px tall */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s var(--ease);
+  }
+
+  /* Hover only where hovering is real. A coarse pointer never resolves this
+     media query, so touch gets the chips and nothing depends on a state it
+     cannot enter. */
+  @media (hover: hover) and (pointer: fine) {
+    .prow:not(.is-open) .prow-head:hover .prow-head-thumb {
+      opacity: 1;
+    }
+    .prow:not(.is-open) .prow-head:hover .prow-head-tags {
+      opacity: 0;
+    }
+  }
+
+  /* Two columns once the panel is wide enough for the copy to keep a readable
+     measure beside an image. */
+  .prow-body.has-preview {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+    gap: 22px;
+    align-items: start;
   }
 }
 
@@ -454,6 +526,8 @@ defineEmits(['toggle'])
   .prow-panel-inner,
   .prow-chevron,
   .prow-link,
+  .prow-head-tags,
+  .prow-head-thumb,
   .prow-proto-iframe {
     transition: none;
   }

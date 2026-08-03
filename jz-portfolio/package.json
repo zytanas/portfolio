@@ -10,7 +10,8 @@
     "format": "prettier --write --experimental-cli src/",
     "optimize-images": "node scripts/optimize-images.mjs",
     "check-contrast": "node scripts/check-contrast.mjs",
-    "og-image": "node scripts/generate-og-image.mjs"
+    "og-image": "node scripts/generate-og-image.mjs",
+    "logo": "node scripts/generate-logo.mjs"
   },
   "dependencies": {
     "vue": "^3.5.27",
