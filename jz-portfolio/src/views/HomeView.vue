@@ -5,10 +5,12 @@
       <div class="hero-split">
         <PortraitFrame />
 
-        <!-- starts in view, so it plays on load instead of waiting for a scroll -->
-        <div v-reveal.now class="reveal-hero">
-          <h1>Julia Almoite</h1>
-          <p class="lede">
+        <!-- Starts in view, so the observer fires on load and the three lines
+             arrive in sequence rather than waiting for a scroll that may never
+             come. -->
+        <div class="hero-copy" data-reveal-stagger>
+          <h1 data-reveal="up">Julia Almoite</h1>
+          <p class="lede" data-reveal="up">
             I'm a <span class="name">UI/UX engineer</span> — need a design? Done. Need it built?
             Also me. Most teams split that into two roles; I've always thought that was one
             conversation too many.
@@ -18,9 +20,21 @@
                do" drops to outlined beside it. GitHub is not repeated here —
                the contact block at the foot of the page already carries it,
                and a fourth button would flatten the hierarchy this fixes. -->
-          <div class="mt-6 flex flex-wrap gap-[10px]">
-            <a class="btn solid" href="#work">View work →</a>
-            <a class="btn ghost" href="#skills">What I do →</a>
+          <div class="mt-6 flex flex-wrap gap-[10px]" data-reveal="up">
+            <!-- Routed rather than bare hashes so the scroll clears the fixed
+                 header, same as the nav. -->
+            <RouterLink
+              class="btn solid"
+              :to="{ path: '/', hash: '#work' }"
+              aria-current-value="false"
+              >View work →</RouterLink
+            >
+            <RouterLink
+              class="btn ghost"
+              :to="{ path: '/', hash: '#skills' }"
+              aria-current-value="false"
+              >What I do →</RouterLink
+            >
             <a
               class="btn ghost"
               href="https://www.linkedin.com/in/almoitejuliazyrene/"
@@ -34,7 +48,7 @@
 
       <!-- Metrics drawn only from the CV: first role 2023, the tool count summed
            from the stack data, design + development. -->
-      <StatsRow v-reveal class="reveal" />
+      <StatsRow data-reveal="up" />
     </div>
 
     <CoreSkills />
@@ -49,6 +63,7 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router'
 import PortraitFrame from '../components/PortraitFrame.vue'
 import StatsRow from '../components/StatsRow.vue'
 import SiteFooter from '../components/SiteFooter.vue'
@@ -107,7 +122,7 @@ usePageMeta({ path: '/' })
   .hero .lede {
     margin-inline: auto;
   }
-  .hero-split .reveal-hero > div {
+  .hero-split .hero-copy > div {
     justify-content: center;
   }
 }

@@ -2,8 +2,8 @@
   <!-- The fading hairline above each section comes from the global
        `section + section::before` rule in main.css, so it only appears where
        one section actually follows another. -->
-  <section v-reveal :id="id" class="wrap reveal">
-    <div class="sec-head">
+  <section :id="id" class="wrap">
+    <div class="sec-head" data-reveal="up">
       <span class="mono">{{ number }}</span>
       <h2>{{ title }}</h2>
       <slot name="action" />

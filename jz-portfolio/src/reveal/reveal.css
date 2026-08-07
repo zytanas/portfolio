@@ -1,0 +1,219 @@
+/* ============================================================
+   REVEAL ENGINE — stylesheet
+   Pairs with ./index.js, which toggles `.is-revealed` as elements
+   cross the viewport. Deliberately unlayered: the class is added at
+   runtime, so it must not be subject to Tailwind's content scanning,
+   and it has to reach elements rendered by scoped child components.
+
+   Motion is expressed as animations rather than transitions on
+   purpose. A transition on `opacity`/`transform` would collide with
+   the transitions components already declare for their own hover
+   states (.pcard, .rec, .chip …) — the `transition` shorthand resets
+   whatever the other rule set. Keyframes compose with those rules
+   instead of fighting them, and re-adding the class restarts the
+   animation for free, which is exactly what re-triggering needs.
+
+   Displacement uses the standalone `translate` / `scale` properties,
+   not `transform`, so a component's own `transform` (chip hover lift,
+   button press) still applies on top of a revealed element.
+   ============================================================ */
+
+:root {
+  --reveal-dur: 0.62s;
+  --reveal-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --reveal-shift: 18px;
+  --reveal-step: 70ms; /* one step of the stagger */
+  --reveal-page-dur: 0.5s;
+}
+
+/* Phones and small tablets: the same travel that reads as a gentle rise on a
+   1440px screen reads as a lurch on a 390px one, and the whole sequence has to
+   finish sooner because far less of the page is on screen at once. Handled
+   entirely by these three tokens — no breakpoint-specific markup anywhere. */
+@media (max-width: 720px) {
+  :root {
+    --reveal-shift: 11px;
+    --reveal-dur: 0.5s;
+    --reveal-step: 52ms;
+    --reveal-page-dur: 0.42s;
+  }
+}
+
+/* ---- resting (hidden) state ----
+   --reveal-i is stamped on staggered children by the JS; everything else
+   defaults to 0, so an unstaggered element plays immediately.
+
+   Opacity is what hides an element here, plus a displacement that leaves the
+   box measurable. Nothing may zero the element's visible box, in this state or
+   during the animation, because IntersectionObserver measures that box and an
+   element it reads as zero-area can never become visible enough to reveal
+   itself — see revealClip for the case that taught us. */
+[data-reveal] {
+  opacity: 0;
+  --reveal-delay: calc(var(--reveal-i, 0) * var(--reveal-step));
+}
+[data-reveal='up'] {
+  translate: 0 var(--reveal-shift);
+}
+[data-reveal='down'] {
+  translate: 0 calc(var(--reveal-shift) * -1);
+}
+[data-reveal='left'] {
+  translate: calc(var(--reveal-shift) * -1) 0;
+}
+[data-reveal='right'] {
+  translate: var(--reveal-shift) 0;
+}
+[data-reveal='scale'] {
+  scale: 0.94;
+}
+
+/* ---- playing state ----
+   Keyed on the attribute rather than the class the engine also toggles.
+   Vue's patchClass assigns `el.className` wholesale, so any element with a
+   `:class` binding — a project row's `is-open`, a card's `is-link` — drops a
+   class added from outside the renderer the next time that binding changes.
+   The attribute is not in the vnode, so the renderer leaves it alone.
+   `.is-revealed` is still toggled, for styling and for anything reading it.
+
+   `both` holds the final frame, so a revealed element keeps its end state for
+   as long as it stays revealed. */
+[data-reveal][data-revealed] {
+  animation-duration: var(--reveal-dur);
+  animation-timing-function: var(--reveal-ease);
+  animation-delay: var(--reveal-delay);
+  animation-fill-mode: both;
+}
+[data-reveal='up'][data-revealed] {
+  animation-name: revealUp;
+}
+[data-reveal='down'][data-revealed] {
+  animation-name: revealDown;
+}
+[data-reveal='left'][data-revealed] {
+  animation-name: revealLeft;
+}
+[data-reveal='right'][data-revealed] {
+  animation-name: revealRight;
+}
+[data-reveal='scale'][data-revealed] {
+  animation-name: revealScale;
+}
+/* The wipe is a mask, not a clip-path. IntersectionObserver measures a target
+   through its own clip-path, so a clipped element reports an intersection ratio
+   of 0 and the observer immediately calls it off screen again — the reveal is
+   torn down mid-animation and the element flickers back to hidden. A mask has
+   no effect on that measurement at all (verified in Chrome: a fully masked-out
+   element still reports ratio 1), so the same wipe survives re-triggering. */
+[data-reveal='clip'][data-revealed] {
+  animation-name: revealClip;
+  mask-repeat: no-repeat;
+  mask-position: top center;
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    translate: 0 var(--reveal-shift);
+  }
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+@keyframes revealDown {
+  from {
+    opacity: 0;
+    translate: 0 calc(var(--reveal-shift) * -1);
+  }
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+@keyframes revealLeft {
+  from {
+    opacity: 0;
+    translate: calc(var(--reveal-shift) * -1) 0;
+  }
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+@keyframes revealRight {
+  from {
+    opacity: 0;
+    translate: var(--reveal-shift) 0;
+  }
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+@keyframes revealScale {
+  from {
+    opacity: 0;
+    scale: 0.94;
+  }
+  to {
+    opacity: 1;
+    scale: none;
+  }
+}
+/* Wipes open from the top edge — for imagery, where a slide would fight the
+   crop and a fade alone is too soft to register. */
+@keyframes revealClip {
+  from {
+    opacity: 0;
+    mask-image: linear-gradient(to bottom, #000, #000);
+    mask-size: 100% 0%;
+  }
+  to {
+    opacity: 1;
+    mask-image: linear-gradient(to bottom, #000, #000);
+    mask-size: 100% 100%;
+  }
+}
+
+/* ---- page enter ----
+   Inner pages are separate route components, so Vue mounts a fresh element
+   every time one is visited and the animation runs on every mount rather than
+   only the first. */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+.page-enter {
+  animation: pageEnter var(--reveal-page-dur) var(--reveal-ease) both;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   main.css already switches every animation and transition off
+   globally, which would leave `opacity: 0` as the resting state and
+   the page blank. Everything therefore has to be reset to its
+   revealed values here — this file is loaded after main.css, so
+   these win.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal][data-revealed] {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: none !important;
+    mask-image: none !important;
+    animation: none !important;
+  }
+  .page-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    translate: none !important;
+  }
+}

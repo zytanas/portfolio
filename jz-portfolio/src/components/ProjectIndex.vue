@@ -1,7 +1,7 @@
 <template>
   <!-- Every title is visible at all times; a row's own header is the only
        control over its detail. No transforms, no stacking, nothing to clip. -->
-  <ul id="work-index" class="pindex">
+  <ul id="work-index" class="pindex" data-reveal-stagger>
     <ProjectRow
       v-for="(project, i) in items"
       :key="project.title"

@@ -1,10 +1,10 @@
 <template>
-  <div class="xp" :class="{ now: item.now, edu: item.education }">
+  <!-- Slides in from the left: the rows read as a timeline, and the sideways
+       entry follows the ledger's left-to-right structure. -->
+  <div class="xp" :class="{ now: item.now, edu: item.education }" data-reveal="left">
     <h3 class="role">{{ item.role }}</h3>
     <div class="body">
-      <p class="org">
-        {{ item.org }}<span v-if="item.education" class="tag-edu">education</span>
-      </p>
+      <p class="org">{{ item.org }}<span v-if="item.education" class="tag-edu">education</span></p>
       <p v-if="item.description" class="desc">{{ item.description }}</p>
     </div>
     <span class="yr">{{ item.period }}</span>

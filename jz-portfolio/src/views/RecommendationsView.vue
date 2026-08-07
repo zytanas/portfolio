@@ -1,23 +1,23 @@
 <template>
-  <main class="relative z-[1]">
+  <!-- page-enter, not a one-off transition: this is a route component, so Vue
+       mounts a fresh element on every visit and the animation replays each
+       time rather than only on the first. -->
+  <main class="relative z-[1] page-enter">
     <div class="wrap page">
-      <div v-reveal.now class="page-head">
+      <div class="page-head">
         <RouterLink class="back" to="/">← back</RouterLink>
-        <h1>recommendations</h1>
-        <p class="lede">
+        <h1 data-reveal="up">recommendations</h1>
+        <p class="lede" data-reveal="up">
           What leaders, teammates, and mentors say about working with me — straight from LinkedIn.
         </p>
       </div>
 
       <!-- Masonry: CSS columns let a long quote sit next to two short ones
            without either card stretching to match the other. -->
-      <div class="masonry">
+      <div class="masonry" data-reveal-stagger="3">
         <RecommendationCard
           v-for="(recommendation, i) in recommendations"
           :key="i"
-          v-reveal
-          class="reveal reveal-item"
-          :style="{ '--i': i % 3 }"
           :recommendation="recommendation"
           full
         />
@@ -29,11 +29,18 @@
 </template>
 
 <script setup>
+import { nextTick, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import RecommendationCard from '../components/RecommendationCard.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 import { recommendations } from '../data/recommendations'
 import { usePageMeta } from '../composables/usePageMeta'
+import Reveal from '../reveal'
+
+// Same as /selected-work: the cards only exist once the list has rendered, so
+// the observer is pointed at them here rather than relying on the app-level
+// route watcher alone.
+onMounted(() => nextTick(() => Reveal.refresh()))
 
 usePageMeta({
   title: 'Recommendations',

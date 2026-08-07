@@ -1,7 +1,6 @@
 <template>
   <SectionBlock id="experience" number="03" title="Experience">
-    <template #action>
-    </template>
+    <template #action> </template>
 
     <ExperienceItem v-for="item in experience" :key="item.role" :item="item" />
   </SectionBlock>

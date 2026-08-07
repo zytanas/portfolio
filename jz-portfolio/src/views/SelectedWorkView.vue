@@ -1,10 +1,13 @@
 <template>
-  <main class="relative z-[1]">
+  <!-- page-enter, not a one-off transition: this is a route component, so Vue
+       mounts a fresh element on every visit and the animation replays each
+       time rather than only on the first. -->
+  <main class="relative z-[1] page-enter">
     <div class="wrap page">
-      <div v-reveal.now class="page-head">
+      <div class="page-head">
         <RouterLink class="back" to="/#work">← back</RouterLink>
-        <h1>selected work</h1>
-        <p class="lede">
+        <h1 data-reveal="up">selected work</h1>
+        <p class="lede" data-reveal="up">
           Every project in full — client sites, product UI, and prototypes, with the stack behind
           each one.
         </p>
@@ -12,15 +15,12 @@
 
       <!-- Card by card rather than the whole grid at once: the first row is
            already in view on load and the rest rise as they are scrolled to.
-           --i staggers a row; it wraps at the widest column count (3) so the
-           delay never grows past one row's worth. -->
-      <div class="grid">
+           The stagger wraps at the widest column count (3) so the delay never
+           grows past one row's worth. -->
+      <div class="grid" data-reveal-stagger="3">
         <ProjectCard
           v-for="(project, i) in projects"
           :key="project.title"
-          v-reveal
-          class="reveal reveal-item"
-          :style="{ '--i': i % 3 }"
           :project="project"
           :index="String(i + 1).padStart(2, '0')"
         />
@@ -32,11 +32,17 @@
 </template>
 
 <script setup>
+import { nextTick, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import ProjectCard from '../components/ProjectCard.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 import { projects } from '../data/projects'
 import { usePageMeta } from '../composables/usePageMeta'
+import Reveal from '../reveal'
+
+// The list is what this page is; re-scanning once it has rendered is what makes
+// the cards reveal on a client-side navigation as well as on a cold load.
+onMounted(() => nextTick(() => Reveal.refresh()))
 
 usePageMeta({
   title: 'Selected work',

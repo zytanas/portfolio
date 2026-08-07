@@ -1,10 +1,10 @@
 <template>
   <div class="cta">
-    <h2>Let's build something<br />worth clicking.</h2>
-    <p class="lede">
+    <h2 data-reveal="up">Let's build something<br />worth clicking.</h2>
+    <p class="lede" data-reveal="up">
       Open to frontend and UI/UX roles, design-system work, and freelance projects.
     </p>
-    <div class="row-center">
+    <div class="row-center" data-reveal="up">
       <a class="btn solid" href="mailto:juliazyrene23@gmail.com">juliazyrene23@gmail.com</a>
       <a class="btn" href="https://github.com/zytanas" target="_blank" rel="noopener noreferrer"
         >GitHub ↗</a

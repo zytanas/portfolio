@@ -4,7 +4,8 @@
       <RouterLink class="more" to="/recommendation">all recommendations →</RouterLink>
     </template>
 
-    <div class="recs">
+    <!-- wraps at 3, the widest the row ever gets -->
+    <div class="recs" data-reveal-stagger="3">
       <RecommendationCard
         v-for="(recommendation, i) in featured"
         :key="i"

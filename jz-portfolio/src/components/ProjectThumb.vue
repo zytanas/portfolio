@@ -1,7 +1,15 @@
 <template>
   <!-- The box reserves its space from the aspect ratio alone, so the row does
-       not jump when a lazy image finally arrives. -->
-  <div class="thumb" :class="`thumb--${variant}`">
+       not jump when a lazy image finally arrives.
+
+       The hover preview is the one variant excluded from the reveal: its
+       visibility is already owned by the row's hover rules, and a revealed
+       element holding opacity 1 would leave it permanently on show. -->
+  <div
+    class="thumb"
+    :class="`thumb--${variant}`"
+    :data-reveal="variant === 'hover' ? null : 'clip'"
+  >
     <img
       v-if="src"
       class="thumb-img"

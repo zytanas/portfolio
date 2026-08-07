@@ -153,14 +153,20 @@ console.log('\nchange request')
   // `class="stats` without the closing quote: the row also carries the reveal
   // classes now, and an exact match silently returned -1 and slurped the page.
   const hero = home.slice(home.indexOf('<h1'), home.indexOf('class="stats'))
-  const heroButtons = [...hero.matchAll(/<a[^>]*class="btn[^"]*"[^>]*>([\s\S]*?)<\/a>/g)].map((m) =>
-    m[1].replace(/<[^>]*>/g, '').trim(),
-  )
+  /* `class="[^"]*btn` rather than `class="btn`, and href checked separately from
+     class: the two section buttons are RouterLinks now, which emit href first
+     and prefix the class with router-link-active. */
+  const heroButtons = [
+    ...hero.matchAll(/<a[^>]*class="[^"]*\bbtn\b[^"]*"[^>]*>([\s\S]*?)<\/a>/g),
+  ].map((m) => m[1].replace(/<[^>]*>/g, '').trim())
   if (heroButtons.length !== 3) fail(`hero has ${heroButtons.length} buttons, expected 3`)
-  if (!/class="btn solid"[^>]*href="#work"/.test(hero))
-    fail('the filled hero button is not "View work" pointing at #work')
-  if (/class="btn solid"[^>]*href="#skills"/.test(hero))
-    fail('"What I do" is still the filled button')
+  // `/#work`, not `#work`: a bare hash resolves against the current path, so the
+  // nav and the hero both address home explicitly.
+  const heroAnchor = (hash) =>
+    new RegExp(`<a(?=[^>]*href="/${hash.replace('#', '\\#')}")[^>]*class="[^"]*\\bbtn solid\\b`)
+  if (!heroAnchor('#work').test(hero))
+    fail('the filled hero button is not "View work" pointing at /#work')
+  if (heroAnchor('#skills').test(hero)) fail('"What I do" is still the filled button')
 
   // 08 — one term everywhere.
   if (home.includes('>Praise<')) fail('nav still says "Praise"')

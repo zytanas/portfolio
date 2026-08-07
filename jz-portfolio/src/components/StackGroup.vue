@@ -1,14 +1,19 @@
 <template>
   <div class="stack-group">
-    <div class="group-head">
+    <div class="group-head" data-reveal="up">
       <span class="sq" aria-hidden="true"></span>
       <h3>{{ group.label }}</h3>
       <span class="rule" aria-hidden="true"></span>
       <!-- zero-padded and derived, so adding a tool can never leave it stale -->
       <span class="count">{{ count }}</span>
     </div>
-    <div class="chips">
-      <span v-for="item in group.items" :key="item" class="chip">{{ item }}</span>
+    <!-- Badges pop rather than rise — a row of a dozen small items all sliding
+         the same direction reads as one block moving, which is the opposite of
+         what the stagger is for. -->
+    <div class="chips" data-reveal-stagger>
+      <span v-for="item in group.items" :key="item" class="chip" data-reveal="scale">{{
+        item
+      }}</span>
     </div>
   </div>
 </template>

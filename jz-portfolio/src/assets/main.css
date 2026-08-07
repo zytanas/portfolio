@@ -273,42 +273,12 @@ html[data-mode='light'][data-ink='cool'] {
 }
 
 /* ============================================================
-   REVEALS AND THE CHIP STAGGER
-   Outside every @layer on purpose: the `in` class is added at
-   runtime by v-reveal, so it must not be subject to content
-   scanning, and `.reveal.in .chip` has to reach chips rendered
-   by a scoped child component.
+   CHIPS
+   Outside every @layer, like the reveal rules in reveal/reveal.css
+   that animate them: the chip stagger used to live here, driven by
+   `.reveal.in .chip`, and is now the engine's `data-reveal-stagger`
+   on the group instead.
    ============================================================ */
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-}
-.reveal.in {
-  opacity: 1;
-  transform: none;
-}
-
-/* A grid or column of cards rises one card at a time instead of as one block.
-   Each item is observed on its own, so a row already in view plays on load and
-   the rest wait for the scroll; --i (set per item, wrapped by the caller at the
-   widest column count) staggers the ones that arrive together, so the delay
-   never grows past a single row's worth. */
-.reveal-item { transition-delay: calc(var(--i, 0) * 70ms); }
-
-/* the hero column arrives in sequence on load rather than on scroll */
-.reveal-hero > * {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-}
-.reveal-hero.in > * {
-  opacity: 1;
-  transform: none;
-}
-.reveal-hero.in > *:nth-child(2) { transition-delay: 0.08s; }
-.reveal-hero.in > *:nth-child(3) { transition-delay: 0.16s; }
-
 .chip {
   font-family: var(--font-mono);
   font-size: 0.76rem;
@@ -321,18 +291,8 @@ html[data-mode='light'][data-ink='cool'] {
   transition: opacity 0.5s var(--ease), transform 0.5s var(--ease),
     color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
 }
-/* chips stagger in as the section reveals */
-.reveal .chip { opacity: 0; transform: translateY(7px); }
-.reveal.in .chip { opacity: 1; transform: none; }
-.reveal.in .chip:nth-child(1) { transition-delay: 0.02s; }
-.reveal.in .chip:nth-child(2) { transition-delay: 0.05s; }
-.reveal.in .chip:nth-child(3) { transition-delay: 0.08s; }
-.reveal.in .chip:nth-child(4) { transition-delay: 0.11s; }
-.reveal.in .chip:nth-child(5) { transition-delay: 0.14s; }
-.reveal.in .chip:nth-child(6) { transition-delay: 0.17s; }
-.reveal.in .chip:nth-child(7) { transition-delay: 0.2s; }
-.reveal.in .chip:nth-child(8) { transition-delay: 0.23s; }
-/* hover last so it wins over the reveal transform */
+/* The reveal engine displaces with `translate`, not `transform`, so this lift
+   composes with it instead of being cancelled by it. */
 .chip:hover {
   background: var(--text);
   border-color: var(--text);
@@ -343,19 +303,15 @@ html[data-mode='light'][data-ink='cool'] {
 
 /* ============================================================
    REDUCED MOTION
-   Resets the reveals, the chip stagger and the hero lines. The
-   work index needs nothing here: its rows open and close by
-   changing a grid track, so with transitions off they just snap.
+   The blanket switch-off. Anything that uses motion to carry
+   meaning has to restore its end state itself — the reveal engine
+   does that in reveal/reveal.css, which loads after this file. The
+   work index needs nothing: its rows open and close by changing a
+   grid track, so with transitions off they just snap.
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
     animation: none !important;
-  }
-  .reveal,
-  .reveal .chip,
-  .reveal-hero > * {
-    opacity: 1 !important;
-    transform: none !important;
   }
 }
