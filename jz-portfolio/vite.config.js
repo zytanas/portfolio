@@ -56,6 +56,24 @@ export default defineConfig(({ mode, isSsrBuild }) => ({
      loudly in review beats shipping an unindexed page. */
   ssgOptions: {
     script: 'async',
+    /* Critical CSS off.
+
+       vite-ssg enables beasties automatically whenever the package resolves,
+       and its default preload mode demotes the head <link rel=stylesheet> to a
+       rel=preload hint, moving the real link to the end of <body>. That trade
+       only pays off if the extracted critical CSS is inlined into <head>, and
+       here it is not: beasties' mergeStylesheets folds every inlined style into
+       the first <style> in the document, which is the noscript reveal fallback
+       in index.html. CSS inside <noscript> is inert in any browser with JS on,
+       so every prerendered page painted completely unstyled until the
+       end-of-body stylesheet arrived — unstyled links, images at full
+       intrinsic size, no layout. Invisible locally, obvious on the deploy.
+
+       Not worth rescuing with mergeStylesheets: false + preload: 'swap': the
+       whole app stylesheet is ~33 KB (~7 KB over the wire), so one blocking
+       same-origin request is cheaper than the machinery. verify-prerender.mjs
+       asserts the stylesheet stays in <head>. */
+    beastiesOptions: false,
     formatting: 'minify',
     /* /selected-work/index.html rather than /selected-work.html. The flat form
        only resolves on hosts that map extensionless paths to .html files, and

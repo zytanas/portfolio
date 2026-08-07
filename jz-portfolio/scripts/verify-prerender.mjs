@@ -102,6 +102,28 @@ for (const page of PAGES) {
   if (!ogUrl) fail('no og:url')
   else if (ogUrl[1] !== page.url) fail(`og:url is ${ogUrl[1]}, expected ${page.url}`)
 
+  /* The stylesheet has to be in <head>, as a real stylesheet.
+
+     vite-ssg turns beasties on by default whenever the package is installed,
+     and beasties' default preload mode demotes the head <link rel=stylesheet>
+     to a bare rel=preload hint and appends the real link at the end of <body>.
+     That is only safe when the critical CSS it extracts is inlined into <head>
+     — and it is not, because mergeStylesheets folds it into the first <style>
+     in the document, which here is the noscript reveal fallback in index.html.
+     CSS inside <noscript> never applies in a browser with JS on.
+
+     The result is a fully prerendered page painted with no CSS at all until
+     the tail-of-body link lands: raw blue links, images at intrinsic size.
+     It looks fine locally, where the file is already warm. */
+  const head = raw.slice(0, raw.indexOf('</head>'))
+  const tail = raw.slice(raw.indexOf('</head>'))
+  if (!/<link[^>]+rel="stylesheet"[^>]+href="\/assets\/[^"]+\.css"/.test(head))
+    fail('no app stylesheet in <head> — the page paints unstyled')
+  if (/<link[^>]+rel="stylesheet"[^>]+href="\/assets\/[^"]+\.css"/.test(tail))
+    fail('app stylesheet is linked after </head> — it cannot style first paint')
+  if (/<noscript>[\s\S]*?--tw-|<noscript>[\s\S]*?\.wrap\{/.test(raw))
+    fail('critical CSS was merged into the <noscript> block, where it is inert')
+
   // A relative og:image is dropped by every unfurler that reads it.
   for (const m of html.matchAll(/<meta[^>]+(?:property|name)="(og:image|twitter:image)"[^>]+content="([^"]+)"/g)) {
     if (!m[2].startsWith('http')) fail(`${m[1]} is not absolute: ${m[2]}`)
