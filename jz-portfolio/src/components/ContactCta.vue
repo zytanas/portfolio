@@ -29,7 +29,19 @@
 
         <div v-for="row in rows" :key="row.label" class="trow">
           <span class="trow-label">{{ row.label }}</span>
-          <span class="trow-value">{{ row.value }}</span>
+          <!-- The value doubles as the mobile tap target: below the breakpoint it
+               sits on its own full-width line, so it carries the row's hit area.
+               Inert above it (pointer-events off, out of the tab order) so the
+               desktop row behaves exactly as before and the action stays the one
+               focusable control per contact. -->
+          <a
+            class="trow-value"
+            tabindex="-1"
+            :href="row.href"
+            :target="row.primary ? null : '_blank'"
+            :rel="row.primary ? null : 'noopener noreferrer'"
+            >{{ row.value }}</a
+          >
           <a
             class="trow-action"
             :class="{ 'is-primary': row.primary }"
@@ -63,13 +75,13 @@ const rows = [
     label: 'github',
     value: 'github.com/zytanas',
     href: 'https://github.com/zytanas',
-    action: 'open',
+    action: 'visit',
   },
   {
     label: 'linkedin',
     value: 'linkedin.com/in/almoitejuliazyrene',
     href: 'https://www.linkedin.com/in/almoitejuliazyrene/',
-    action: 'open',
+    action: 'visit',
   },
 ]
 </script>
@@ -213,21 +225,28 @@ const rows = [
 .trow {
   display: grid;
   grid-template-columns: 72px minmax(0, 1fr) auto;
+  grid-template-areas: 'label value action';
   align-items: center;
   gap: 12px;
-  padding: 5px 0 5px 1.1em;
+  padding: 8px 0 5px 1.1em;
 }
 .trow-label {
+  grid-area: label;
   color: var(--text-faint);
 }
 .trow-value {
+  grid-area: value;
   min-width: 0;
   color: var(--text);
+  text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* inert at this width — the action is the only control in the row */
+  pointer-events: none;
 }
 .trow-action {
+  grid-area: action;
   flex: none;
   display: inline-flex;
   align-items: center;
@@ -297,8 +316,10 @@ html[data-mode='light'] .trow-action.is-primary {
   }
 }
 
-/* ---- mobile: the three-column row cannot hold, so it becomes three stacked
-       lines with a hairline between entries and the URL wrapping in place ---- */
+/* ---- mobile: the three-column row cannot hold, so it folds into two lines —
+       label and action share the first (space-between), the value gets the
+       second to itself and wraps in place. The value line is also the tap
+       target: same destination as the action, but a full-width one. ---- */
 @media (max-width: 560px) {
   .cta {
     padding: 40px 14px;
@@ -311,22 +332,40 @@ html[data-mode='light'] .trow-action.is-primary {
     margin-bottom: 10px;
   }
   .trow {
-    display: block;
-    padding: 10px 0 10px 1.1em;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'label action'
+      'value value';
+    gap: 2px 12px;
+    padding: 10px 0 6px 1.1em;
     border-top: 1px solid var(--border-soft);
   }
-  .trow-label,
   .trow-value {
-    display: block;
-  }
-  .trow-value {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    /* bled out to the row edges so the flash reads as the whole line */
+    margin: 0 -8px;
+    padding: 4px 8px;
+    border-radius: calc(var(--radius) * 0.5);
     white-space: normal;
     overflow: visible;
     overflow-wrap: anywhere;
+    pointer-events: auto;
+    transition: background-color 0.14s var(--ease);
+  }
+  .trow-value:active {
+    background: var(--surface-2);
   }
   .trow-action {
-    margin-top: 7px;
-    padding: 5px 10px;
+    padding: 5px 12px;
+  }
+  /* the filled chip keeps its plate — it dims instead of flashing */
+  .trow-action:not(.is-primary):active {
+    background: var(--surface-2);
+  }
+  .trow-action.is-primary:active {
+    opacity: 0.86;
   }
 }
 
