@@ -41,12 +41,14 @@
         var meta = document.querySelector('meta[name=theme-color]')
         if (meta) meta.setAttribute('content', PAPER[ink][mode])
 
-        /* Second visit in this session: the prerendered overlay is in the
-           HTML, so hide it before paint rather than after hydration. Keep the
-           key in sync with Preloader's storageKey prop. */
+        /* Second visit in this session: the overlay still plays, but the
+           condensed variant. Stamping the class before paint means the first
+           frame is already the short animation — no full-length frames that
+           JS then has to correct. Keep the key in sync with Preloader's
+           storageKey prop. */
         try {
           if (sessionStorage.getItem('jz.preloader.v1'))
-            root.classList.add('jz-intro-seen')
+            root.classList.add('jz-intro-short')
         } catch (e) {}
       })()
     </script>

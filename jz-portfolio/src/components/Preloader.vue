@@ -39,6 +39,12 @@ const props = defineProps({
      so a fast load never cuts the reveal mid-print. */
   minMs: { type: Number, default: 1750 },
   capMs: { type: Number, default: 2500 },
+
+  /* Same animation at half the sweep — see .jz-intro-short in main.css. It
+     lands at ~645ms, so 650 clears it the way 1750 clears the full one. */
+  shortMinMs: { type: Number, default: 650 },
+  shortCapMs: { type: Number, default: 1100 },
+
   exitMs: { type: Number, default: 450 },
 })
 
@@ -55,6 +61,8 @@ let timers = []
 let scrollLock = null
 let dismissed = false
 let startedAt = 0
+/* Resolved in onMounted from the stored flag; onLoad needs it after. */
+let minMs = props.minMs
 
 const store = () => {
   try {
@@ -64,7 +72,8 @@ const store = () => {
   }
 }
 
-function alreadyPlayed() {
+/* The flag no longer means "don't show" — it means "show the short one". */
+function playedBefore() {
   const s = store()
   if (!s) return false
   const raw = s.getItem(props.storageKey)
@@ -140,15 +149,19 @@ function skip() {
 
 function onLoad() {
   const held = performance.now() - startedAt
-  after(Math.max(0, props.minMs - held), dismiss)
+  after(Math.max(0, minMs - held), dismiss)
 }
 
 onMounted(() => {
-  if (alreadyPlayed()) {
-    visible.value = false
-    emit('done')
-    return
-  }
+  const short = playedBefore()
+
+  /* index.html stamps this before paint so the first frame is already the
+     condensed sweep. Re-asserting it here is the fallback for the case that
+     script's storage read threw but this one did not. */
+  if (short) document.documentElement.classList.add('jz-intro-short')
+
+  minMs = short ? props.shortMinMs : props.minMs
+  const capMs = short ? props.shortCapMs : props.capMs
 
   reduced.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   startedAt = performance.now()
@@ -160,7 +173,7 @@ onMounted(() => {
 
   if (reduced.value) {
     /* A beat on the static glyph, then straight out. No sweep. */
-    after(700, dismiss)
+    after(short ? 400 : 700, dismiss)
     return
   }
 
@@ -168,7 +181,7 @@ onMounted(() => {
   else window.addEventListener('load', onLoad, { once: true })
 
   /* The hard ceiling. A stalled font or image never holds the visitor. */
-  after(props.capMs, dismiss)
+  after(capMs, dismiss)
 })
 
 onBeforeUnmount(() => {
@@ -186,6 +199,16 @@ onBeforeUnmount(() => {
   --sweep: cubic-bezier(0.6, 0, 0.4, 1);
   --logo-w: 390px;
   --logo-h: 160px;
+
+  /* Full-intro timings. The short variant overrides these from main.css —
+     custom properties inherit in, so it does not need to reach these
+     selectors, which scoping puts out of its reach. */
+  --scan-dur: 1100ms;
+  --scan-delay: 150ms;
+  --print-dur: 1100ms;
+  --print-delay: 190ms;
+  --caption-dur: 520ms;
+  --caption-delay: 700ms;
 
   position: fixed;
   inset: 0;
@@ -229,7 +252,7 @@ onBeforeUnmount(() => {
 
 .glyph--lit {
   clip-path: inset(0 100% 0 0);
-  animation: glyph-print 1100ms var(--sweep) 190ms forwards;
+  animation: glyph-print var(--print-dur) var(--sweep) var(--print-delay) forwards;
 }
 
 .scan {
@@ -244,7 +267,7 @@ onBeforeUnmount(() => {
     0 0 22px rgba(232, 230, 223, 0.4);
   transform: translateX(-2px);
   opacity: 0;
-  animation: scan-sweep 1100ms var(--sweep) 150ms forwards;
+  animation: scan-sweep var(--scan-dur) var(--sweep) var(--scan-delay) forwards;
 }
 
 .caption {
@@ -261,11 +284,11 @@ onBeforeUnmount(() => {
   text-wrap: balance;
   color: var(--caption-ink);
   opacity: 0;
-  animation: caption-in 520ms ease 700ms forwards;
+  animation: caption-in var(--caption-dur) ease var(--caption-delay) forwards;
 }
 
-/* The lit layer's clip edge starts 40ms behind the bar, so pixels light up
-   just after it crosses them rather than under it. */
+/* The lit layer's clip edge starts just behind the bar (40ms full, 20ms
+   short), so pixels light up after it crosses them rather than under it. */
 @keyframes glyph-print {
   from {
     clip-path: inset(0 100% 0 0);

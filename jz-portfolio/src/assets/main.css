@@ -95,11 +95,40 @@ html[data-mode='light'][data-ink='cool'] {
 }
 
 /* Set by the blocking script in index.html when the intro has already played
-   this session. Suppresses the prerendered overlay before first paint; the
-   component then unmounts itself on mount. Keep the key in sync with
-   Preloader's storageKey prop. */
-.jz-intro-seen #jz-preloader {
-  display: none;
+   this session. The overlay still plays — it just plays condensed. These land
+   before first paint, so a refresh never shows a full-length frame first.
+   Custom properties cross Preloader's scoped-style boundary; the selectors
+   inside the component cannot be reached from here, but these can.
+   Roughly half the full sweep: the print lands at ~645ms rather than ~1290ms.
+   Keep the key in sync with Preloader's storageKey prop. */
+.jz-intro-short #jz-preloader {
+  --scan-dur: 550ms;
+  --scan-delay: 75ms;
+  --print-dur: 550ms;
+  --print-delay: 95ms;
+  --caption-dur: 260ms;
+  --caption-delay: 350ms;
+}
+
+/* Failsafe. The overlay is prerendered into the HTML and only JavaScript ever
+   removes it, so a bundle that fails to parse or arrive leaves the visitor on
+   a black screen for good — <noscript> does not help, because JS is enabled,
+   just broken. This is the CSS-only way out.
+
+   6s is far past the 2500ms cap, so it never fires on a healthy load. Nothing
+   happens during the delay either: animation-fill-mode is forwards, not
+   backwards, so the element is untouched until the animation ends and the
+   normal JS exit always wins the race. visibility, not just opacity, so a
+   stuck overlay stops swallowing clicks and leaves the a11y tree. */
+#jz-preloader {
+  animation: jz-intro-failsafe 1ms linear 6s forwards;
+}
+
+@keyframes jz-intro-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 /* ============================================================
@@ -321,5 +350,13 @@ html[data-mode='light'][data-ink='cool'] {
   * {
     transition: none !important;
     animation: none !important;
+  }
+
+  /* The blanket rule above would disarm the stuck-overlay failsafe, which is
+     the one animation a reduced-motion visitor cannot afford to lose — it is
+     not motion, it is the escape hatch. The ID beats the universal selector
+     at equal !important, so this re-arms it. */
+  #jz-preloader {
+    animation: jz-intro-failsafe 1ms linear 6s forwards !important;
   }
 }
