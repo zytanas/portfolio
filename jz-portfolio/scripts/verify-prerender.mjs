@@ -35,7 +35,7 @@ const PAGES = [
     file: 'selected-work/index.html',
     url: `${SITE}/selected-work`,
     // Every project, not just the five featured on the homepage.
-    contains: ['selected work', ...projects.map((p) => p.title)],
+    contains: ['case studies', ...projects.map((p) => p.title)],
   },
   {
     file: 'recommendation/index.html',

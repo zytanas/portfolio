@@ -5,8 +5,8 @@
   <main class="relative z-[1] page-enter">
     <div class="wrap page">
       <div class="page-head">
-        <RouterLink class="back" to="/#work">← back</RouterLink>
-        <h1 data-reveal="up">selected work</h1>
+        <RouterLink class="back" to="/#work">← Back</RouterLink>
+        <h1 data-reveal="up">case studies</h1>
         <p class="lede" data-reveal="up">
           Every project in full — client sites, product UI, and prototypes, with the stack behind
           each one.
@@ -45,7 +45,7 @@ import Reveal from '../reveal'
 onMounted(() => nextTick(() => Reveal.refresh()))
 
 usePageMeta({
-  title: 'Selected work',
+  title: 'Case studies',
   description:
     'Client sites, product UI and prototypes — the full project index, with the stack behind each one.',
   path: '/selected-work',

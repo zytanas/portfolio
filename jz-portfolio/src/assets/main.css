@@ -94,6 +94,14 @@ html[data-mode='light'][data-ink='cool'] {
   --card: #ffffff; --card-hi: #f1f5f7;
 }
 
+/* Set by the blocking script in index.html when the intro has already played
+   this session. Suppresses the prerendered overlay before first paint; the
+   component then unmounts itself on mount. Keep the key in sync with
+   Preloader's storageKey prop. */
+.jz-intro-seen #jz-preloader {
+  display: none;
+}
+
 /* ============================================================
    BASE
    ============================================================ */

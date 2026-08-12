@@ -150,8 +150,8 @@ const showPreview = computed(() => props.project.type !== 'figma')
 // 768px+, where the link has a box to fill; `base` always shows.
 const linkLabel = computed(() =>
   props.project.type === 'figma'
-    ? { lead: 'open in ', base: 'figma', trail: '' }
-    : { lead: '', base: 'view', trail: ' project' },
+    ? { lead: 'Open in ', base: 'Figma', trail: '' }
+    : { lead: '', base: 'View', trail: ' project' },
 )
 const linkAria = computed(
   () =>

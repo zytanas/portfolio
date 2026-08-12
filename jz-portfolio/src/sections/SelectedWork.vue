@@ -1,9 +1,9 @@
 <template>
   <!-- Each row is opened by its own header, so the only section-level control
        here is the overflow link — and only once there is overflow to explore. -->
-  <SectionBlock id="work" number="02" title="Selected work">
+  <SectionBlock id="work" number="02" title="Case studies">
     <template v-if="hasMore" #action>
-      <RouterLink class="more" to="/selected-work">explore more →</RouterLink>
+      <RouterLink class="more" to="/selected-work">Explore more →</RouterLink>
     </template>
 
     <ProjectIndex :items="featured" />

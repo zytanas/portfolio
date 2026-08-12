@@ -130,7 +130,7 @@ const onHashClick = (e, hash) => {
 
 const links = [
   { hash: '#skills', label: 'Skills' },
-  { hash: '#work', label: 'Work' },
+  { hash: '#work', label: 'Case studies' },
   { hash: '#experience', label: 'Experience' },
   { hash: '#stack', label: 'Stack' },
   // "Recommendations" everywhere — the section heading, the standalone page and

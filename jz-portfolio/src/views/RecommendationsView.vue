@@ -5,7 +5,7 @@
   <main class="relative z-[1] page-enter">
     <div class="wrap page">
       <div class="page-head">
-        <RouterLink class="back" to="/#recommendations">← back</RouterLink>
+        <RouterLink class="back" to="/#recommendations">← Back</RouterLink>
         <h1 data-reveal="up">recommendations</h1>
         <p class="lede" data-reveal="up">
           What leaders, teammates, and mentors say about working with me — straight from LinkedIn.

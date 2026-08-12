@@ -68,20 +68,20 @@ const rows = [
     label: 'mail',
     value: 'juliazyrene23@gmail.com',
     href: 'mailto:juliazyrene23@gmail.com',
-    action: 'email',
+    action: 'Email',
     primary: true,
   },
   {
     label: 'github',
     value: 'github.com/zytanas',
     href: 'https://github.com/zytanas',
-    action: 'visit',
+    action: 'Visit',
   },
   {
     label: 'linkedin',
     value: 'linkedin.com/in/almoitejuliazyrene',
     href: 'https://www.linkedin.com/in/almoitejuliazyrene/',
-    action: 'visit',
+    action: 'Visit',
   },
 ]
 </script>

@@ -40,6 +40,14 @@
         root.dataset.ink = ink
         var meta = document.querySelector('meta[name=theme-color]')
         if (meta) meta.setAttribute('content', PAPER[ink][mode])
+
+        /* Second visit in this session: the prerendered overlay is in the
+           HTML, so hide it before paint rather than after hydration. Keep the
+           key in sync with Preloader's storageKey prop. */
+        try {
+          if (sessionStorage.getItem('jz.preloader.v1'))
+            root.classList.add('jz-intro-seen')
+        } catch (e) {}
       })()
     </script>
 
@@ -49,6 +57,7 @@
          invisible. This turns the reveals off in that case. -->
     <noscript>
       <style>
+        #jz-preloader { display: none !important; }
         .reveal,
         .reveal .chip,
         .reveal-hero > * {

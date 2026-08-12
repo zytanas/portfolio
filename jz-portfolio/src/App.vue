@@ -1,4 +1,5 @@
 <template>
+  <Preloader />
   <DotGrid />
   <SiteHeader />
   <router-view />
@@ -8,6 +9,7 @@
 import { nextTick, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import DotGrid from './components/DotGrid.vue'
+import Preloader from './components/Preloader.vue'
 import SiteHeader from './components/SiteHeader.vue'
 import Reveal from './reveal'
 

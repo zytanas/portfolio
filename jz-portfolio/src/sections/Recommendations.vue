@@ -1,7 +1,7 @@
 <template>
   <SectionBlock id="recommendations" number="05" title="Recommendations">
     <template #action>
-      <RouterLink class="more" to="/recommendation">all recommendations →</RouterLink>
+      <RouterLink class="more" to="/recommendation">All recommendations →</RouterLink>
     </template>
 
     <!-- wraps at 3, the widest the row ever gets -->

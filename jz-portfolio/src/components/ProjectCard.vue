@@ -53,7 +53,7 @@ const primaryLink = computed(() => props.project.links[0] ?? null)
 // Same type-aware wording as the accordion row, so a project reads the same
 // whichever surface you meet it on.
 const isFigma = computed(() => props.project.type === 'figma')
-const linkLabel = computed(() => (isFigma.value ? 'open in figma' : 'view project'))
+const linkLabel = computed(() => (isFigma.value ? 'Open in Figma' : 'View project'))
 const linkAria = computed(
   () => `${isFigma.value ? 'Open in Figma' : 'View project'}: ${props.project.title}`,
 )
