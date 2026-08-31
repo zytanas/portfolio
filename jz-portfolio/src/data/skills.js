@@ -1,12 +1,18 @@
 // Ordered as a continuum: design → the system that joins them → build.
 // Design Systems sits in the middle on purpose; it is the bridge card.
+//
+// The copy argues the *advantage*, not the inventory. Each card names the thing
+// that stops being a problem because one person holds all three — no handoff to
+// lose the intent, no spec to go stale, no design decision that dies on contact
+// with the code. Three disciplines listed side by side is a CV; three
+// disciplines in one pair of hands is the reason to hire.
 export const skills = [
   {
     icon: 'palette',
     eyebrow: 'start · design',
     title: 'UI/UX Design',
     description:
-      'From wireframe to high-fidelity in Figma — I build component systems as I design, so the handoff to code is already half done.',
+      'I design knowing exactly what it costs to build, so nothing gets specced that has to be walked back later. Wireframe to high-fidelity in Figma, already shaped for the code it becomes.',
   },
   {
     icon: 'layers',
@@ -14,14 +20,14 @@ export const skills = [
     title: 'Design Systems',
     bridge: true,
     description:
-      'I build reusable component libraries that keep interfaces consistent at scale — the same system works in Figma and in code.',
+      'One system, defined once, living in Figma and in the components at the same time. There is no translation step to drift out of sync — because there is no translation step.',
   },
   {
     icon: 'code-xml',
     eyebrow: 'end · build',
     title: 'Frontend Development',
     description:
-      'Vue, React, Nuxt, Tailwind — I write the code for what I design. Pixel-faithful, responsive, and production-ready.',
+      'I build what I designed, in Vue, React, Nuxt and Tailwind. The intent survives to production intact — the person defending the details in the code is the one who chose them.',
   },
 ]
 

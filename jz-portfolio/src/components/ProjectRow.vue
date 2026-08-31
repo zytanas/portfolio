@@ -85,7 +85,20 @@
                screens above it would just be the same thing twice. -->
           <div class="prow-body" :class="{ 'has-preview': showPreview }">
             <div class="prow-body-text">
+              <!-- The credit line, in the same mono voice as the lead card's
+                   roleLine. Above the description because the honest scope of
+                   the involvement ("Supporting UI + dev") frames how the rest
+                   of the panel should be read. Only the featured tier carries
+                   one. -->
+              <p v-if="project.role" class="prow-role mono">{{ project.role }}</p>
+
               <p class="prow-desc">{{ project.description }}</p>
+
+              <!-- The result line, in the same box the lead card uses for its
+                   final beat. Only the featured tier carries an `outcome`, so
+                   the rows on /selected-work simply do not render one. -->
+              <CaseOutcome v-if="project.outcome" class="prow-outcome" :outcome="project.outcome" />
+
               <div class="prow-tags">
                 <span v-for="tech in project.tech" :key="tech" class="tag">{{ tech }}</span>
               </div>
@@ -132,6 +145,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import ProjectThumb from './ProjectThumb.vue'
+import CaseOutcome from './CaseOutcome.vue'
 
 const props = defineProps({
   project: { type: Object, required: true },
@@ -342,10 +356,24 @@ defineEmits(['toggle'])
   display: grid;
   gap: 16px;
 }
+/* Sized to match .lead-roleline on the lead card — same size, same tone, so a
+   credit reads identically wherever it appears. */
+.prow-role {
+  font-size: 0.63rem;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+}
 .prow-desc {
   font-size: 0.86rem;
   line-height: 1.6;
   color: var(--text-dim);
+}
+/* Sits between the description and the chips: the chips are metadata and belong
+   last, but the outcome is the point of opening the row. */
+.prow-outcome {
+  margin-top: 14px;
 }
 .prow-tags {
   display: flex;

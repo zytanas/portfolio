@@ -2,7 +2,13 @@
   <!-- Slides in from the left: the rows read as a timeline, and the sideways
        entry follows the ledger's left-to-right structure. -->
   <div class="xp" :class="{ now: item.now, edu: item.education }" data-reveal="left">
-    <h3 class="role">{{ item.role }}</h3>
+    <div class="head">
+      <h3 class="role">{{ item.role }}</h3>
+      <!-- The scope the title does not carry on its own. Set in the mono system
+           at org size but left-aligned under the role, so it reads as part of
+           the title block rather than as the start of the description. -->
+      <p v-if="item.clarifier" class="clarifier">{{ item.clarifier }}</p>
+    </div>
     <div class="body">
       <p class="org">{{ item.org }}<span v-if="item.education" class="tag-edu">education</span></p>
       <p v-if="item.description" class="desc">{{ item.description }}</p>
@@ -35,6 +41,16 @@ defineProps({
 }
 .role {
   font-size: 0.95rem;
+}
+/* Two lines of small mono under the role. Kept to the column's width so it
+   wraps inside the 190px track instead of pushing the middle block over. */
+.clarifier {
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+  margin-top: 7px;
 }
 .org {
   font-family: var(--font-mono);

@@ -5,9 +5,9 @@
     <ProjectRow
       v-for="(project, i) in items"
       :key="project.title"
-      :id="`work-${i}`"
+      :id="`work-${offset + i}`"
       :project="project"
-      :index="String(i + 1).padStart(2, '0')"
+      :index="String(offset + i + 1).padStart(2, '0')"
       :open="openIndex === i"
       @toggle="toggleRow(i)"
     />
@@ -22,6 +22,11 @@ import { projects } from '../data/projects'
 // The home section passes a slice; anything else gets the full list.
 defineProps({
   items: { type: Array, default: () => projects },
+  /* Where this slice starts in the full list. The homepage renders its first
+     project as a lead card and passes the rest here, so the rows have to
+     number from 02 — and their DOM ids have to stay unique against the ones the
+     lead card's own anchor already occupies. */
+  offset: { type: Number, default: 0 },
 })
 
 /* Single source of truth for the accordion: the index of the one open row, or

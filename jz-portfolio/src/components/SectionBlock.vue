@@ -38,19 +38,16 @@ defineProps({
   margin-left: auto;
 }
 
-/* Mobile and tablet: the number/title pair centres, and the action drops onto
-   its own centred line instead of being pushed to an edge that no longer
-   reads as "the right end of the heading". */
+/* Mobile and tablet: the row is too narrow to hold the title and the action
+   side by side, so the action drops onto its own line — but it keeps hugging
+   the right edge, so the heading reads the same way at every width. */
 @media (max-width: 1024px) {
-  .sec-head {
-    justify-content: center;
-    text-align: center;
-  }
   .sec-head :slotted(*) {
     margin-left: 0;
     flex-basis: 100%;
-    /* reaches inside a slotted flex wrapper too, not just centring its text */
-    justify-content: center;
+    text-align: right;
+    /* reaches inside a slotted flex wrapper too, not just its text */
+    justify-content: flex-end;
   }
 }
 </style>

@@ -10,10 +10,17 @@
              come. -->
         <div class="hero-copy" data-reveal-stagger>
           <h1 data-reveal="up">Julia Almoite</h1>
+          <!-- Identity first, then the consequence. The claim is the line that
+               has to land, so it carries at full text strength and one size up;
+               the lede below it explains why it matters and stays dim. Two
+               elements rather than one long paragraph so the stagger delivers
+               the claim before the reasoning. -->
+          <p class="claim" data-reveal="up">
+            Need a design? Done. Need it built? <span class="name">Also me.</span>
+          </p>
           <p class="lede" data-reveal="up">
-            I'm a <span class="name">UI/UX engineer</span> — need a design? Done. Need it built?
-            Also me. Most teams split that into two roles; I've always thought that was one
-            conversation too many.
+            Most teams split that into two roles and lose the product in translation. I keep it one
+            conversation — from wireframe to production Vue.
           </p>
           <!-- Three buttons, one filled. The work is the highest-value first
                action on a portfolio, so it takes the solid treatment; "what I
@@ -101,6 +108,25 @@ usePageMeta({ path: '/' })
   margin-bottom: 20px;
 }
 
+/* The claim. Sized between the name and the lede so the hero reads as three
+   descending steps, and held at full --text strength — it is the sentence the
+   page is arguing, not supporting copy. Measure is wider than .lede's 52ch so
+   the two questions do not break mid-clause on desktop. */
+.hero .claim {
+  font-size: clamp(1.14rem, 2.6vw, 1.42rem);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  max-width: 30ch;
+  margin-bottom: 14px;
+}
+/* .name is the shared hairline-underline treatment from .lede — reused here so
+   the payoff half of the claim is marked the same way the role used to be. */
+.hero .claim .name {
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+
 /* Tablet and below: one column, so the stack centres on itself — portrait,
    name, lede and buttons all on a single axis. 1024px is the shared
    mobile/tablet breakpoint used by every section on the page. */
@@ -119,6 +145,7 @@ usePageMeta({ path: '/' })
     max-width: 100%;
     margin-inline: auto;
   }
+  .hero .claim,
   .hero .lede {
     margin-inline: auto;
   }

@@ -147,7 +147,15 @@ html[data-mode='light'][data-ink='cool'] {
     font-size: 15.5px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    /* Two declarations on purpose, and the order matters.
+       `overflow-x: hidden` makes <body> a scroll container — which silently
+       breaks every `position: sticky` descendant, because their nearest
+       scrolling ancestor becomes a scrollport that never scrolls (the viewport
+       does). `clip` does the same clipping WITHOUT creating a scroll container,
+       so the lead case study's sticky metadata panel works. Engines too old for
+       `clip` ignore the second line and keep the original behaviour. */
     overflow-x: hidden;
+    overflow-x: clip;
     transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
   }
   ::selection {

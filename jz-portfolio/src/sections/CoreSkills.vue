@@ -1,8 +1,17 @@
 <template>
   <SectionBlock id="skills" number="01" title="Core skills">
     <template #action>
-      <span class="more">design and build, not one or the other</span>
+      <span class="more">three disciplines, one pair of hands</span>
     </template>
+
+    <!-- The framing the cards need before they read as an argument rather than
+         an inventory. It says what stops going wrong, which is the only reason
+         the three-card continuum below is worth drawing. -->
+    <p class="skills-lede lede" data-reveal="up">
+      The point isn't that I do all three — it's what stops going wrong when one person does.
+      Fewer handoffs, a faster 0→1, and design decisions that survive into the code instead of
+      being renegotiated there.
+    </p>
 
     <div class="continuum">
       <!-- Decorative: the rail carries no information the cards do not also
@@ -40,6 +49,13 @@ import { skills } from '../data/skills'
 .continuum {
   --skill-gap: 14px;
   --drop: 20px;
+}
+
+/* Wider than .lede's default 52ch: this sits over a full-width three-column
+   grid, and a narrow column of text above it reads as orphaned. */
+.skills-lede {
+  max-width: 68ch;
+  margin-bottom: 30px;
 }
 
 .rail {
