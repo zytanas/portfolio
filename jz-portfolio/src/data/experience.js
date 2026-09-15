@@ -12,7 +12,7 @@
  */
 export const experience = [
   {
-    role: 'UI/UX Engineer',
+    role: 'Jr UI/UX Engineer',
     clarifier: 'Design systems + production Vue — I design the interface and ship the code.',
     org: 'CoreProc, Inc. — Remote',
     description:

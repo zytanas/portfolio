@@ -3,7 +3,11 @@
     <span class="qm" aria-hidden="true">&rdquo;</span>
     <blockquote>{{ body }}</blockquote>
     <figcaption class="rec-by">
-      <span class="av" aria-hidden="true">{{ recommendation.initials }}</span>
+      <!-- A pixel sprite generated from the name rather than initials: no gender,
+           no cultural reading of the name, and a mark that differs per person. -->
+      <span class="av" aria-hidden="true">
+        <PixelAvatar :seed="recommendation.name" />
+      </span>
       <span class="who">
         <span class="nm">{{ recommendation.name }}</span>
         <span class="rl">{{ recommendation.role }}</span>
@@ -14,6 +18,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import PixelAvatar from './PixelAvatar.vue'
 
 const props = defineProps({
   recommendation: { type: Object, required: true },
@@ -86,11 +91,14 @@ const body = computed(() =>
   border: 1px solid var(--border);
   display: grid;
   place-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.04em;
   color: var(--text-faint);
   transition: 0.25s var(--ease);
+}
+/* 20px of a 32px circle: big enough for the 5x5 grid to read as pixels, small
+   enough that the sprite's corners stay clear of the border. */
+.av svg {
+  width: 20px;
+  height: 20px;
 }
 .rec:hover .av {
   background: var(--text);
