@@ -18,13 +18,15 @@ const PAGES = [
   {
     file: 'index.html',
     url: `${SITE}/`,
-    // Hero copy plus every project title the homepage index renders.
+    // Hero copy plus every project title the homepage strip renders.
     contains: [
       'Julia Almoite',
       'UI/UX engineer',
-      "Most teams split that into two roles",
+      'Need it built?',
       'View work',
-      ...projects.slice(0, 5).map((p) => p.title),
+      // Three, matching the cut point in sections/SelectedWork.vue — the rest
+      // of the list is behind "Explore more" now, not on this page.
+      ...projects.slice(0, 3).map((p) => p.title),
       // The three testimonials the homepage teases — sliced from the data
       // rather than hardcoded, so re-ordering the list cannot make this pass
       // against a quote the page no longer shows.
@@ -125,7 +127,9 @@ for (const page of PAGES) {
     fail('critical CSS was merged into the <noscript> block, where it is inert')
 
   // A relative og:image is dropped by every unfurler that reads it.
-  for (const m of html.matchAll(/<meta[^>]+(?:property|name)="(og:image|twitter:image)"[^>]+content="([^"]+)"/g)) {
+  for (const m of html.matchAll(
+    /<meta[^>]+(?:property|name)="(og:image|twitter:image)"[^>]+content="([^"]+)"/g,
+  )) {
     if (!m[2].startsWith('http')) fail(`${m[1]} is not absolute: ${m[2]}`)
   }
 

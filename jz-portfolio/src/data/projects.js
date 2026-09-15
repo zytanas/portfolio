@@ -1,18 +1,16 @@
 // Real project list, carried over from the previous portfolio build.
 //
 // ORDER IS THE HIERARCHY
-// The homepage reads this array as three tiers, by position — see
-// sections/SelectedWork.vue, which owns the cut points:
+// The homepage shows the first three entries only — see sections/SelectedWork.vue,
+// which owns the cut point, and components/ProjectPanels.vue, which renders them
+// as a strip of panels where the hovered one expands. [0] gets the strip open on
+// it by default, so it is the first project a visitor sees — currently CoreProc,
+// the most recognisable client name, with VibeTeams (the only project where the
+// design was *led* and the Vue frontend *built* by the same person) alongside it
+// at [1].
 //
-//   [0]     the lead case study. Rendered as a full always-open card with the
-//           `study` narrative below, not as a row. VibeTeams holds this slot
-//           because it is the only project where the design was *led* and the
-//           Vue frontend *built* by the same person — the argument the whole
-//           page is making.
-//   [1..2]  supporting featured studies — the existing accordion rows.
-//   [3..]   "More work" — a deliberately lighter strip of titles and links.
-//
-// So reordering this array reweights the homepage. Nothing else to change.
+// Everything past [2] lives behind the section's "Explore more" link. So
+// reordering this array reweights the homepage; nothing else to change.
 // /selected-work still renders every entry at equal weight, in this same order.
 //
 // IMAGERY
@@ -21,8 +19,8 @@
 //
 //   src/assets/images/work/<slug>.webp
 //
-// and it appears on the /selected-work card, in the homepage accordion panel,
-// and as the hover preview on the collapsed row. Nothing else to wire up. See
+// and it appears on the /selected-work card and as the backdrop of the
+// project's panel in the homepage strip. Nothing else to wire up. See
 // components/ProjectThumb.vue for the lookup, and the README in that folder
 // for sizing.
 //
@@ -31,6 +29,41 @@
 // screen readers and is worth writing before the file exists.
 export const projects = [
   {
+    slug: 'coreproc-website',
+    title: 'CoreProc, Inc. Website',
+    description:
+      'Corporate site for a B2B SaaS company. Supporting UI and frontend development — contributed design work in Figma and helped build the site against a cohesive visual language and dev-ready specs.',
+    /* ============================================================
+       `blurb` — THE ONE LINE THE HOMEPAGE PANEL SHOWS
+       ============================================================
+       components/ProjectPanels.vue renders the first three entries as hover-
+       expanded panels, and a panel has room for a title and a single line. That
+       is a different job from `description`, which is a full summary on a card
+       with space for three — so it is its own field rather than a truncation.
+       Keep it under ~90 characters; without one the panel falls back to
+       `description` and simply clamps it. */
+    blurb: 'Corporate site for a B2B SaaS company — supporting UI and frontend.',
+    imageAlt: 'CoreProc corporate site homepage — full-width hero over a product feature grid.',
+    tech: ['Web', 'Corporate'],
+    links: [{ label: '↗', href: 'https://coreproc.com/' }],
+
+    /* ============================================================
+       `role` — THE CREDIT LINE ON A SUPPORTING STUDY
+       ============================================================
+       The featured rows state what the involvement actually was, in the same
+       mono voice as the lead card's `study.roleLine` — see the panel in
+       components/ProjectRow.vue. One string, not segments: a row's credit is a
+       single fact, so it has nothing to wrap between.
+
+       It matters most where the honest answer is "supporting", as here: the
+       row says so up front rather than letting the tier imply ownership.
+
+       No `outcome` on this one, deliberately. A support contribution has no
+       result of its own to claim, and an empty box would only advertise the
+       absence — see the note on SynerPark below. */
+    role: 'Supporting UI + dev',
+  },
+  {
     slug: 'vibeteams',
     title: 'VibeTeams',
     /* The one-line summary. The lead card does NOT render this — its narrative
@@ -38,6 +71,8 @@ export const projects = [
        so it stays. */
     description:
       'A chat platform where you consult a team of specialist agents, not a single chatbot. Led the UI/UX for the room and agent system in Figma and built the Vue 3 frontend.',
+    // See the `blurb` note on the CoreProc entry above.
+    blurb: 'Consult a team of specialist agents, not a chatbot. Design led, frontend built.',
     /* Describes the file that is actually in assets/images/work: the marketing
        landing page hero, not the product. ⚠️ Worth replacing the file with a
        shot of a real room — the agent rail plus a live "Consulting 2 agents"
@@ -162,35 +197,12 @@ export const projects = [
     },
   },
   {
-    slug: 'coreproc-website',
-    title: 'CoreProc, Inc. Website',
-    description:
-      'Corporate site for a B2B SaaS company. Supporting UI and frontend development — contributed design work in Figma and helped build the site against a cohesive visual language and dev-ready specs.',
-    imageAlt: 'CoreProc corporate site homepage — full-width hero over a product feature grid.',
-    tech: ['Web', 'Corporate'],
-    links: [{ label: '↗', href: 'https://coreproc.com/' }],
-
-    /* ============================================================
-       `role` — THE CREDIT LINE ON A SUPPORTING STUDY
-       ============================================================
-       The featured rows state what the involvement actually was, in the same
-       mono voice as the lead card's `study.roleLine` — see the panel in
-       components/ProjectRow.vue. One string, not segments: a row's credit is a
-       single fact, so it has nothing to wrap between.
-
-       It matters most where the honest answer is "supporting", as here: the
-       row says so up front rather than letting the tier imply ownership.
-
-       No `outcome` on this one, deliberately. A support contribution has no
-       result of its own to claim, and an empty box would only advertise the
-       absence — see the note on SynerPark below. */
-    role: 'Supporting UI + dev',
-  },
-  {
     slug: 'synerpark',
     title: 'SynerPark',
     description:
       'Smart parking payment platform. Designed the mobile-first UX down to a 3-step QR flow and built the Nuxt frontend, tuned for low-end Android devices.',
+    // See the `blurb` note on the CoreProc entry above.
+    blurb: 'Smart parking payments — a mobile-first UX down to a 3-step QR flow.',
     imageAlt: 'SynerPark mobile parking flow — the three-step QR payment screens.',
     tech: ['Landing Page', 'UX', 'Nuxt'],
     links: [{ label: '↗', href: 'https://synerpark.com/' }],

@@ -24,7 +24,7 @@ export const experience = [
     role: 'Frontend Developer & UI/UX — Freelance',
     org: 'Independent clients · US-based',
     description:
-      'Independent client work — UI/UX + QA on Clowder, an iOS app (Pennsylvania), and a personal portfolio build for a client in Makati. Design and frontend, end to end.',
+      'Independent client work — UI/UX on Clowder, an iOS app, and a personal portfolio build for a client in Makati. Design and frontend, end to end.',
     period: '2026 — present',
     now: true,
   },

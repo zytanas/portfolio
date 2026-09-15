@@ -2,13 +2,15 @@
   <!-- The box reserves its space from the aspect ratio alone, so the row does
        not jump when a lazy image finally arrives.
 
-       The hover preview is the one variant excluded from the reveal: its
-       visibility is already owned by the row's hover rules, and a revealed
-       element holding opacity 1 would leave it permanently on show. -->
+       Two variants are excluded from the reveal. The hover preview's visibility
+       is already owned by the row's hover rules, and a revealed element holding
+       opacity 1 would leave it permanently on show; the fill variant is the
+       backdrop of a panel that reveals as one piece, so a second animation
+       inside it would only fight the first. -->
   <div
     class="thumb"
     :class="`thumb--${variant}`"
-    :data-reveal="variant === 'hover' ? null : 'clip'"
+    :data-reveal="variant === 'card' || variant === 'panel' ? 'clip' : null"
   >
     <img
       v-if="src"
@@ -61,14 +63,14 @@ const BY_SLUG = Object.fromEntries(
 
 // Roughly the widest each variant is ever painted, doubled for retina. Only
 // used for the intrinsic width/height attributes that stop layout shift.
-const WIDTHS = { card: 720, panel: 640, hover: 128 }
+const WIDTHS = { card: 720, panel: 640, hover: 128, fill: 1000 }
 
 const props = defineProps({
   project: { type: Object, required: true },
   variant: {
     type: String,
     default: 'card',
-    validator: (v) => ['card', 'panel', 'hover'].includes(v),
+    validator: (v) => ['card', 'panel', 'hover', 'fill'].includes(v),
   },
 })
 
@@ -97,6 +99,16 @@ const alt = computed(() =>
   object-fit: cover;
   /* the crop favours the top of a screenshot, where the work usually is */
   object-position: top center;
+}
+
+/* The backdrop variant: no ratio of its own, because the element it fills
+   already has one. Its frame comes from the panel around it, so the border and
+   the corner radius come off here rather than doubling up. */
+.thumb--fill {
+  aspect-ratio: auto;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
 }
 
 /* ---- fallback plate ----

@@ -1,38 +1,28 @@
 <template>
-  <!-- Three tiers, not five equals. The lead card carries the argument, the two
-       rows support it, and the strip shows breadth. Each row is still opened by
-       its own header, so the only section-level control here is the overflow
-       link — and only once there is overflow to explore. -->
+  <!-- Three projects, one strip. The homepage's job here is to show the work is
+       real and get you to the studies — not to be the index — so the section is
+       a single control: point at a panel, it opens. Everything past the third
+       project is behind "Explore more". -->
   <SectionBlock id="work" number="02" title="Case studies">
     <template v-if="hasMore" #action>
       <RouterLink class="more" to="/selected-work">Explore more →</RouterLink>
     </template>
 
-    <ProjectLead :project="lead" index="01" />
-
-    <ProjectIndex :items="supporting" :offset="1" />
-
-    <MoreWorkStrip v-if="rest.length" :items="rest" />
+    <ProjectPanels :items="featured" />
   </SectionBlock>
 </template>
 
 <script setup>
 import { RouterLink } from 'vue-router'
 import SectionBlock from '../components/SectionBlock.vue'
-import ProjectLead from '../components/ProjectLead.vue'
-import ProjectIndex from '../components/ProjectIndex.vue'
-import MoreWorkStrip from '../components/MoreWorkStrip.vue'
+import ProjectPanels from '../components/ProjectPanels.vue'
 import { projects } from '../data/projects'
 
-/* The cut points for the tiers described at the top of data/projects.js. One
-   lead, two supporting rows — three studies is the most that can hold "these
-   are the ones that matter" before it reads as a list again. The rest go to the
-   strip; /selected-work is linked whenever the strip is not the whole tail. */
-const LEAD = 1
+/* The cut point for the tier described at the top of data/projects.js. Three is
+   the most the strip can hold before the closed spines stop leaving the open
+   panel room to say anything. */
 const FEATURED = 3
 
-const lead = projects[0]
-const supporting = projects.slice(LEAD, FEATURED)
-const rest = projects.slice(FEATURED)
-const hasMore = rest.length > 0
+const featured = projects.slice(0, FEATURED)
+const hasMore = projects.length > FEATURED
 </script>

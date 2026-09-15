@@ -18,10 +18,6 @@
           <p class="claim" data-reveal="up">
             Need a design? Done. Need it built? <span class="name">Also me.</span>
           </p>
-          <p class="lede" data-reveal="up">
-            Most teams split that into two roles and lose the product in translation. I keep it one
-            conversation — from wireframe to production Vue.
-          </p>
           <!-- Three buttons, one filled. The work is the highest-value first
                action on a portfolio, so it takes the solid treatment; "what I
                do" drops to outlined beside it. GitHub is not repeated here —
