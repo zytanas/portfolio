@@ -2,6 +2,20 @@
   command = "npm run build"
   publish = "dist"
 
+  [build.environment]
+    # Netlify scans the build output for the value of every environment variable
+    # and fails the deploy on a hit. Both of these are `VITE_` vars, which Vite
+    # inlines into the client bundle by design — being in the output is the
+    # whole point, so the scanner would fail every deploy on a true positive
+    # that is not a leak.
+    #
+    # Safe only because of what these two are: a public project URL and the
+    # Supabase anon/publishable key, which is built to ship to browsers and is
+    # governed by row level security. A secret key (sb_secret_... /
+    # service_role) must never be added to this list — it would be silently
+    # published to every visitor.
+    SECRETS_SCAN_OMIT_KEYS = "VITE_SUPABASE_URL,VITE_SUPABASE_ANON_KEY"
+
 # The site is statically generated: /, /selected-work and /recommendation each
 # have a real index.html in dist. This rule is only the fallback for paths that
 # do not, so an unknown URL still boots the app instead of returning a bare 404.

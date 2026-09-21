@@ -1,9 +1,7 @@
 <template>
-  <!-- Rendered only once there is genuinely a crowd. A live counter reading
-       "1 viewing" on a personal site is the owner looking at their own page,
-       and it deflates the thing it is meant to signal. Below `min` the element
-       is absent rather than hidden, so it takes no space in a bar that is
-       already tight. -->
+  <!-- Absent rather than hidden below `min`, so it takes no space in a bar that
+       is already tight. Note that count is 0 until the socket reports back, so
+       even at min 1 the indicator appears a beat after the header paints. -->
   <div v-if="count >= min" class="live" :title="label" role="status" :aria-label="label">
     <span class="faces" aria-hidden="true">
       <span v-for="seed in shown" :key="seed" class="face">
@@ -29,8 +27,9 @@ const props = defineProps({
   // Three sprites plus a "+N" is the most the bar holds before it starts
   // crowding the theme toggle.
   max: { type: Number, default: 3 },
-  // Set to 1 to show the indicator even when the visitor is alone.
-  min: { type: Number, default: 2 },
+  // Lowest count that still renders. 1 means the indicator is up whenever the
+  // socket is connected, including when the only viewer is the visitor.
+  min: { type: Number, default: 1 },
 })
 
 const { viewers, join, leave } = useLivePresence()
@@ -42,7 +41,11 @@ const count = computed(() => viewers.value.length)
 const shown = computed(() => viewers.value.slice(0, props.max))
 const extra = computed(() => Math.max(0, count.value - props.max))
 
-const label = computed(() => `${count.value} people viewing now`)
+// "1 people viewing now" was unreachable while min was 2; at 1 it is the most
+// common state on a personal site, so it is worth getting right.
+const label = computed(() =>
+  count.value === 1 ? '1 person viewing now' : `${count.value} people viewing now`,
+)
 
 onMounted(join)
 onUnmounted(leave)
