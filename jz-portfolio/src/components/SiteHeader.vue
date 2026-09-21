@@ -29,6 +29,7 @@
         </RouterLink>
       </nav>
       <div class="actions">
+        <LiveViewers />
         <button
           class="btn icon ghost"
           type="button"
@@ -98,6 +99,7 @@ import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { scrollToHash } from '../router'
 import { useTheme } from '../composables/useTheme'
+import LiveViewers from './LiveViewers.vue'
 import logo from '../assets/images/jzoa-logo.webp'
 
 const { mode, toggleMode } = useTheme()

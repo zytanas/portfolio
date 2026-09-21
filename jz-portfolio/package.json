@@ -17,6 +17,7 @@
     "postbuild": "npm run verify"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.116.0",
     "vue": "^3.5.27",
     "vue-router": "^5.0.1"
   },

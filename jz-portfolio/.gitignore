@@ -37,3 +37,9 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Local env (Supabase keys for the live viewer count) — .env.example is the
+# committed template.
+.env
+.env.*
+!.env.example
