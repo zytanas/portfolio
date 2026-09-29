@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { INDEXABLE_ROUTES } from './src/data/site.js'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode, isSsrBuild }) => ({
@@ -81,11 +82,15 @@ export default defineConfig(({ mode, isSsrBuild }) => ({
        real directory index is served correctly by every static host and cannot
        be shadowed by the fallback. */
     dirStyle: 'nested',
-    /* The three real routes. /about is deliberately absent — it is still the
-       "This is an about page" stub from the project scaffold, and prerendering
-       it would publish a placeholder that crawlers can index. It carries a
-       noindex tag of its own for the same reason. Delete the route and this
-       comment once it is either written or dropped. */
-    includedRoutes: () => ['/', '/selected-work', '/recommendation'],
+    /* Read from INDEXABLE_ROUTES so prerendering and the sitemap cannot
+       disagree — a route listed in one and not the other is either an
+       uncrawled page or a 404 advertised to Google.
+
+       /about is deliberately absent from that list — it is still the "This is
+       an about page" stub from the project scaffold, and prerendering it would
+       publish a placeholder that crawlers can index. It carries a noindex tag
+       and a robots.txt disallow of its own for the same reason. Delete the
+       route and this comment once it is either written or dropped. */
+    includedRoutes: () => INDEXABLE_ROUTES.map((r) => r.path),
   },
 }))

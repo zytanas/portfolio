@@ -13,8 +13,9 @@
     "og-image": "node scripts/generate-og-image.mjs",
     "logo": "node scripts/generate-logo.mjs",
     "prebuild": "npm run logo && npm run og-image",
+    "sitemap": "node scripts/generate-sitemap.mjs",
     "verify": "node scripts/verify-prerender.mjs",
-    "postbuild": "npm run verify"
+    "postbuild": "npm run sitemap && npm run verify"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",
