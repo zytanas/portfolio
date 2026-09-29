@@ -17,7 +17,7 @@
            climbing top-to-bottom instead of restarting part-way down. -->
       <div class="term-body" data-reveal-stagger="12">
         <p class="tline"><span class="tp" aria-hidden="true">$</span>whoami</p>
-        <p class="tout">julia almoite — ui/ux engineer · remote · gmt+8</p>
+        <p class="tout">julia zyrene almoite — ui/ux engineer · remote · gmt+8</p>
 
         <p class="tline"><span class="tp" aria-hidden="true">$</span>availability --now</p>
         <p class="tout tavail">
@@ -47,7 +47,7 @@
             :class="{ 'is-primary': row.primary }"
             :href="row.href"
             :target="row.primary ? null : '_blank'"
-            :rel="row.primary ? null : 'noopener noreferrer'"
+            :rel="row.primary ? null : 'me noopener noreferrer'"
             :aria-label="`${row.action} ${row.label}: ${row.value}`"
             >{{ row.action }} <span aria-hidden="true">↗</span></a
           >

@@ -42,7 +42,7 @@
               class="btn ghost"
               href="https://www.linkedin.com/in/almoitejuliazyrene/"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="me noopener noreferrer"
               >LinkedIn ↗</a
             >
           </div>

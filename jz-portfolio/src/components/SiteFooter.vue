@@ -3,7 +3,10 @@
     <footer
       class="flex flex-wrap items-center justify-between gap-[18px] border-t border-line-soft pt-9 pb-[60px] text-[.8rem] text-faint max-lg:flex-col max-lg:justify-center max-lg:text-center"
     >
-      <span>© {{ year }} Julia Almoite</span>
+      <!-- The full legal name, once, where a copyright line is the natural place
+           for it. A name search can only match words the page actually contains,
+           and the hero says "Julia Almoite". -->
+      <span>© {{ year }} Julia Zyrene Almoite</span>
       <div class="flex flex-col items-center gap-[13px]">
         <p class="note">
           <span class="slashes">//</span> The colors are hiding in the

@@ -8,6 +8,7 @@ import {
   OG_IMAGE_HEIGHT,
   OG_IMAGE_ALT,
   absolute,
+  jsonLd,
 } from '../data/site'
 
 /**
@@ -54,6 +55,26 @@ export function usePageMeta({ title, description, path }) {
       { name: 'twitter:description', content: desc },
       { name: 'twitter:image', content: image },
       { name: 'twitter:image:alt', content: OG_IMAGE_ALT },
+
+      /* Explicit rather than inherited. The default is index,follow, but
+         `max-image-preview:large` is not — without it Google may show the page
+         with a thumbnail or no image at all in the name result. */
+      {
+        name: 'robots',
+        content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+      },
+      { name: 'author', content: 'Julia Zyrene Almoite' },
+    ],
+    /* Structured data, one script per page. JSON.stringify rather than a raw
+       string so a stray quote in the copy cannot break the block — a malformed
+       JSON-LD block is not partially read, it is discarded whole. */
+    script: [
+      {
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify(
+          jsonLd({ title: fullTitle, description: desc, url, image, isHome: path === '/' }),
+        ),
+      },
     ],
   })
 }
