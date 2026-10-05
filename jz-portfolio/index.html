@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-mode="dark" data-ink="neutral">
+<html lang="en" data-mode="light" data-ink="warm">
   <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="/src/assets/images/jzoa-favico.svg">
@@ -8,9 +8,9 @@
          They are per-route and come from usePageMeta(), which vite-ssg writes
          into each prerendered page at build time. Duplicating them here would
          emit two of each. -->
-    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="theme-color" content="#faf7f2" />
     <!-- same opt-out as the CSS, but in effect before the stylesheet lands -->
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -24,15 +24,15 @@
           warm: { dark: '#0b0a08', light: '#faf7f2' },
           cool: { dark: '#08090b', light: '#f8fafb' },
         }
-        var mode = 'dark'
-        var ink = 'neutral'
+        var mode = 'light'
+        var ink = 'warm'
         try {
           var saved = JSON.parse(localStorage.getItem('julia.theme.v2') || 'null')
           if (saved && PAPER[saved.ink] && PAPER[saved.ink][saved.mode]) {
             mode = saved.mode
             ink = saved.ink
-          } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-            mode = 'light'
+          } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            mode = 'dark'
           }
         } catch (e) {}
         var root = document.documentElement
