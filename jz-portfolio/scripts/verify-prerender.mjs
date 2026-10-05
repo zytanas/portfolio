@@ -8,7 +8,7 @@
 import { readFileSync, existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { projects } from '../src/data/projects.js'
-import { recommendations } from '../src/data/recommendations.js'
+import { recommendations, teaser } from '../src/data/recommendations.js'
 import { SITE_URL, FULL_NAME, PROFILES, INDEXABLE_ROUTES } from '../src/data/site.js'
 
 const dist = (p) => fileURLToPath(new URL(`../dist/${p}`, import.meta.url))
@@ -34,7 +34,7 @@ const PAGES = [
       // The three testimonials the homepage teases — sliced from the data
       // rather than hardcoded, so re-ordering the list cannot make this pass
       // against a quote the page no longer shows.
-      ...recommendations.slice(0, 3).map((r) => r.excerpt),
+      ...recommendations.slice(0, 3).map((r) => teaser(r.quote)),
     ],
   },
   {
@@ -74,6 +74,7 @@ const decode = (s) =>
   s
     .replace(/&#39;|&apos;/g, "'")
     .replace(/&quot;/g, '"')
+    .replace(/&hellip;|&#8230;/g, '…')
     .replace(/&amp;/g, '&')
 
 for (const page of PAGES) {
@@ -242,11 +243,15 @@ console.log('\nchange request')
   if (!/16[\s\S]{0,80}tools in stack/.test(home))
     fail('hero stat bar does not show the curated tool count of 16')
 
-  // 05 — teasers carry the excerpt, and nothing is clamped mid-word.
-  if (!home.includes(recommendations[0].excerpt))
-    fail('homepage testimonial is not the curated excerpt')
+  /* 05 — teasers open with the recommendation as written and trail off rather
+     than being clamped mid-word. recommendations[0] is long enough to be cut,
+     so the full quote must NOT be on the homepage: that is what proves the
+     ellipsis is doing its job and /recommendation still has something to show. */
+  const first = teaser(recommendations[0].quote)
+  if (!home.includes(first)) fail('homepage testimonial is not the quote as written')
+  if (!first.endsWith('…')) fail('the first teaser no longer trails off — nothing invites a click')
   if (home.includes(recommendations[0].quote))
-    fail('homepage is rendering the full quote instead of the excerpt')
+    fail('homepage is rendering the full quote instead of the teaser')
 
   // 01 — one thumbnail per card on the work grid, and images (once supplied)
   // are lazy and described.

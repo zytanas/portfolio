@@ -19,22 +19,18 @@
 <script setup>
 import { computed } from 'vue'
 import PixelAvatar from './PixelAvatar.vue'
+import { teaser } from '../data/recommendations'
 
 const props = defineProps({
   recommendation: { type: Object, required: true },
-  // The home section shows three teasers, so they render the curated excerpt
-  // and roles truncate. The /recommendation page shows everything in full.
+  // The home section shows three teasers: the quote from its start, trailing
+  // off if it is long, and roles truncate. The /recommendation page shows
+  // everything in full.
   full: { type: Boolean, default: false },
 })
 
-/* Teasers render the hand-picked excerpt rather than the whole quote under a
-   line clamp — the clamp is what was cutting them mid-word. Falling back to
-   `quote` means a recommendation added without an excerpt still renders; it
-   just runs to its natural length instead of being truncated badly. */
 const body = computed(() =>
-  props.full
-    ? props.recommendation.quote
-    : props.recommendation.excerpt || props.recommendation.quote,
+  props.full ? props.recommendation.quote : teaser(props.recommendation.quote),
 )
 </script>
 
@@ -65,15 +61,25 @@ const body = computed(() =>
 .rec:hover .qm {
   color: var(--text-dim);
 }
-/* No line clamp. Excerpts are picked to fit whole, and the clamp that used to
-   equalise heights here is also what cut them mid-word. Even heights now come
-   from the grid stretching every card to its row's tallest, which does the same
-   job without touching the text. */
+/* Teasers are cut to four lines in JS, on a word boundary, so nothing breaks
+   mid-word. The clamp below is a backstop for the widths and fallback fonts the
+   character budget cannot predict: it keeps the card at four lines even if the
+   text would have wrapped to five. Even heights come from the grid stretching
+   every card to its row's tallest. The full page carries no clamp. */
 .rec blockquote {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.6;
   color: var(--text);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+}
+.rec--full blockquote {
+  display: block;
+  overflow: visible;
 }
 .rec-by {
   display: grid;
