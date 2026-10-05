@@ -16,7 +16,7 @@
                elements rather than one long paragraph so the stagger delivers
                the claim before the reasoning. -->
           <p class="claim" data-reveal="up">
-            Need a design? Done. Need it built? <span class="name">Also me.</span>
+            Need a design? Done. Need it built? <span class="hl">Also me.</span>
           </p>
           <!-- Three buttons, one filled. The work is the highest-value first
                action on a portfolio, so it takes the solid treatment; "what I
@@ -116,12 +116,11 @@ usePageMeta({ path: '/' })
   max-width: 30ch;
   margin-bottom: 14px;
 }
-/* .name is the shared hairline-underline treatment from .lede — reused here so
-   the payoff half of the claim is marked the same way the role used to be. */
-.hero .claim .name {
-  font-weight: 500;
-  border-bottom: 1px solid var(--border);
-}
+/* The payoff half of the claim takes the shared marker highlight (.hl in
+   main.css) rather than the hairline underline it used to carry — the hero is
+   the first of the four places on the page that mark a phrase this way. The
+   claim's 1.35 line-height leaves room for the mark's padding when the sentence
+   wraps, so no extra leading is needed here. */
 
 /* Tablet and below: one column, so the stack centres on itself — portrait,
    name, lede and buttons all on a single axis. 1024px is the shared

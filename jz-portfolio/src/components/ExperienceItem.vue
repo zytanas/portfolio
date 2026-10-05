@@ -3,7 +3,11 @@
        entry follows the ledger's left-to-right structure. -->
   <div class="xp" :class="{ now: item.now, edu: item.education }" data-reveal="left">
     <div class="head">
-      <h3 class="role">{{ item.role }}</h3>
+      <!-- The current role is the one the ledger is pointing at, so it — and
+           only it — takes the marker highlight. The span exists because the
+           mark has to hug the words: a background on the block-level h3 would
+           paint the full 190px track. -->
+      <h3 class="role"><span :class="{ hl: item.now }">{{ item.role }}</span></h3>
       <!-- The scope the title does not carry on its own. Set in the mono system
            at org size but left-aligned under the role, so it reads as part of
            the title block rather than as the start of the description. -->

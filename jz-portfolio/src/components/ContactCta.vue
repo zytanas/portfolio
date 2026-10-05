@@ -1,6 +1,6 @@
 <template>
   <div class="cta">
-    <h2 data-reveal="up">Let's build something<br />worth clicking.</h2>
+    <h2 data-reveal="up">Let's <span class="hl">build</span> something<br />worth clicking.</h2>
     <p class="lede cta-lede" data-reveal="up">
       No form to fill out — grab what you need and reach out.
     </p>

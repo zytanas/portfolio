@@ -215,6 +215,32 @@ html[data-mode='light'][data-ink='cool'] {
     color: var(--text-faint);
   }
 
+  /* Marker highlight — the page's way of pointing at the one phrase a block is
+     really about. Built from the same two tokens as `.btn.solid` and
+     `::selection`, which is the whole reason it needs no per-theme rule: --text
+     and --bg swap together in all six mode x ink combinations, so the mark is
+     always the inverse of whatever page it lands on. Nothing here is a literal
+     colour, so a new ink gets it for free. */
+  .hl {
+    background: var(--text);
+    color: var(--bg);
+    padding: 0.08em 0.3em;
+    /* A highlight is a phrase, and phrases wrap. `clone` repeats the box and
+       its padding on every line fragment instead of drawing one slab that
+       stretches across the gap at the end of the first line. */
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    /* Matches <body>'s own background/colour transition so the mark crosses a
+       theme flip with the page rather than snapping a frame ahead of it. */
+    transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+  /* ::selection is --text on --bg, which is exactly the mark — selecting it
+     would make the text vanish. Invert the inversion. */
+  .hl::selection {
+    background: var(--bg);
+    color: var(--text);
+  }
+
   /* lede paragraph — hero and contact both use it */
   .lede {
     font-size: clamp(0.97rem, 2vw, 1.07rem);

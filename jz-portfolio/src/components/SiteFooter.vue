@@ -10,7 +10,7 @@
       <div class="flex flex-col items-center gap-[13px]">
         <p class="note">
           <span class="slashes">//</span> The colors are hiding in the
-          <span class="hint">case studies</span>.
+          <span class="hl hint">case studies</span>.
         </p>
         <InkPicker />
       </div>
@@ -37,10 +37,13 @@ const year = new Date().getFullYear()
 .slashes {
   color: var(--text-faint);
 }
-/* The one phrase the sentence points at, marked the way a comment marks an
-   aside: dotted, never solid — a solid rule here would read as a link. */
+/* The one phrase the sentence points at, carrying the shared marker highlight
+   (.hl in main.css) — the same mark the hero claim, the current role and the
+   contact heading use, so "the thing being pointed at" reads identically in all
+   four places. It replaces a dotted underline, which an underline of any kind
+   risked reading as a link. The mono box sits a touch tighter than the sans
+   ones: mono's wider glyph advance already pads the phrase optically. */
 .hint {
-  border-bottom: 2px dotted var(--border);
-  padding-bottom: 1px;
+  padding-inline: 0.22em;
 }
 </style>
