@@ -5,9 +5,9 @@
 // which owns the cut point, and components/ProjectPanels.vue, which renders them
 // as a strip of panels where the hovered one expands. [0] gets the strip open on
 // it by default, so it is the first project a visitor sees — currently CoreProc,
-// the most recognisable client name, with VibeTeams (the only project where the
-// design was *led* and the Vue frontend *built* by the same person) alongside it
-// at [1].
+// the most recognisable client name. Halden sits at [1] and VibeTeams at [2];
+// note that VibeTeams is the entry carrying the deep case study, so it reads as
+// the lead wherever it lands in the strip.
 //
 // Everything past [2] lives behind the section's "Explore more" link. So
 // reordering this array reweights the homepage; nothing else to change.
@@ -60,8 +60,26 @@ export const projects = [
 
        No `outcome` on this one, deliberately. A support contribution has no
        result of its own to claim, and an empty box would only advertise the
-       absence — see the note on SynerPark below. */
+       absence — see the `outcome` note on the VibeTeams entry below. */
     role: 'Supporting UI + dev',
+  },
+  {
+    slug: 'halden',
+    title: 'Halden Mobile Detailing',
+    description:
+      'Self-initiated concept site for a mobile car-detailing service — a premium, photo-led landing page built in Astro, with a quote builder that prices a job live from postcode, car size, package and add-ons.',
+    // See the `blurb` note on the CoreProc entry above.
+    blurb: 'Concept site for a mobile detailing service — photo-led, with a live quote builder.',
+    imageAlt:
+      'Halden Mobile Detailing homepage — “Showroom finish. On your driveway.” beside a glossy red convertible.',
+    tech: ['Concept', 'Landing Page', 'Astro'],
+    links: [{ label: '↗', href: 'https://halden-mobile-detailing.vercel.app/' }],
+
+    /* See the `role` note on the CoreProc entry above. Self-initiated rather
+       than client work, and the credit says so instead of borrowing the weight
+       of an engagement. No `outcome` for the same reason as CoreProc: a concept
+       build has no shipped result of its own to claim. */
+    role: 'Personal concept — design + build',
   },
   {
     slug: 'vibeteams',
@@ -185,9 +203,25 @@ export const projects = [
       ],
     },
 
-    /* The fifth beat, and the one every featured study carries — see the
-       `outcome` note further down this file. Written, so it renders with the
-       lime rule rather than as a draft. */
+    /* ============================================================
+       `outcome` — ONE CONCRETE RESULT
+       ============================================================
+       The fifth beat, and the one every featured study carries. Rendered in
+       components/CaseOutcome.vue: the lead card shows it as the last beat of
+       its narrative, a supporting row at the foot of its panel. It is the only
+       line in a study that is a claim rather than a description, which is why
+       it gets its own box and the lime rule.
+
+       An empty `body` renders the `todo` prompt as a visible draft, and the
+       box withholds the accent until the result is real — so a placeholder can
+       never read as a shipped number. Fill in `body`; do not invent a metric.
+       A project with no result of its own to claim simply omits the key —
+       CoreProc and Halden do, and so does most of the "More work" tier. The
+       test is whether there is a result, not which tier the project is in:
+       SynerPark sits below the cut and still carries one.
+
+       This one is written, so it renders with the lime rule rather than as a
+       draft. */
     outcome: {
       body:
         'Shipped end to end in ~3 months and live in production at vibeteams.ai — ' +
@@ -197,6 +231,11 @@ export const projects = [
     },
   },
   {
+    /* First entry past the [2] cut, so this is the top of the "More work"
+       tier — on the homepage it lives behind "Explore more", while
+       /selected-work still renders it at the same weight as everything above.
+       It kept its `outcome`: the tier is about homepage real estate, not about
+       whether a project has a result worth stating. */
     slug: 'synerpark',
     title: 'SynerPark',
     description:
@@ -210,19 +249,7 @@ export const projects = [
     // See the `role` note on the CoreProc entry above.
     role: 'Lead UI/UX + frontend',
 
-    /* ============================================================
-       `outcome` — ONE CONCRETE RESULT
-       ============================================================
-       Rendered in components/CaseOutcome.vue: the lead card shows it as the
-       last beat of its narrative, a supporting row at the foot of its panel.
-       It is the only line in a study that is a claim rather than a
-       description, which is why it gets its own box and the lime rule.
-
-       An empty `body` renders the `todo` prompt as a visible draft, and the
-       box withholds the accent until the result is real — so a placeholder can
-       never read as a shipped number. Fill in `body`; do not invent a metric.
-       A project with no result of its own to claim (CoreProc, and everything
-       in the "More work" tier) simply omits the key. */
+    // See the `outcome` note on the VibeTeams entry above.
     outcome: {
       body:
         'Live in production — the payment flow I designed and built is deployed in ' +

@@ -15,11 +15,12 @@ Current slugs:
 | Slug | Project |
 | --- | --- |
 | `coreproc-website` | CoreProc, Inc. Website |
+| `halden` | Halden Mobile Detailing |
 | `vibeteams` | VibeTeams |
+| `synerpark` | SynerPark |
 | `clowder` | Clowder |
 | `my-shopping-box` | My Shopping Box |
 | `prestige-paper-products` | Prestige Paper Products |
-| `synerpark` | SynerPark |
 | `adrians-portfolio` | Adrian's Portfolio |
 
 ## Sizing
