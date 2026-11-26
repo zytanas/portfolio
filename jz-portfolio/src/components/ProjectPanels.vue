@@ -1,6 +1,6 @@
 <template>
-  <!-- Three panels sharing one row. The pointed-at panel takes most of the
-       width and shows its name, its line and its link; the other two fall back
+  <!-- Four panels sharing one row. The pointed-at panel takes most of the
+       width and shows its name, its line and its link; the others fall back
        to a spine — the name set vertically, nothing else. One project is always
        open, so the section never reads as three closed doors.
 

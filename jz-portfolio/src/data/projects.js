@@ -1,15 +1,15 @@
 // Real project list, carried over from the previous portfolio build.
 //
 // ORDER IS THE HIERARCHY
-// The homepage shows the first three entries only — see sections/SelectedWork.vue,
+// The homepage shows the first four entries only — see sections/SelectedWork.vue,
 // which owns the cut point, and components/ProjectPanels.vue, which renders them
 // as a strip of panels where the hovered one expands. [0] gets the strip open on
 // it by default, so it is the first project a visitor sees — currently CoreProc,
-// the most recognisable client name. Halden sits at [1] and VibeTeams at [2];
-// note that VibeTeams is the entry carrying the deep case study, so it reads as
-// the lead wherever it lands in the strip.
+// the most recognisable client name. Halden sits at [1], VibeTeams at [2] and
+// Eeny Meeny Eats at [3]; note that VibeTeams is the entry carrying the deep
+// case study, so it reads as the lead wherever it lands in the strip.
 //
-// Everything past [2] lives behind the section's "Explore more" link. So
+// Everything past [3] lives behind the section's "Explore more" link. So
 // reordering this array reweights the homepage; nothing else to change.
 // /selected-work still renders every entry at equal weight, in this same order.
 //
@@ -231,7 +231,23 @@ export const projects = [
     },
   },
   {
-    /* First entry past the [2] cut, so this is the top of the "More work"
+    slug: 'eme',
+    title: 'Eeny Meeny Eats',
+    description:
+      'Self-initiated food discovery app for “kahit saan” eaters — browse nearby restaurants and cafes, then let the randomizer pick. Fast food is left out on purpose; the neo-brutalist UI uses my own retro food illustrations.',
+    // See the `blurb` note on the CoreProc entry above.
+    blurb: 'Food discovery for “kahit saan” eaters — browse nearby, then let the randomizer pick.',
+    imageAlt:
+      'Eeny Meeny Eats homepage — “Kahit saan.” “Ikaw bahala.” in bold type on pink, ringed by retro food illustrations above a “Bahala na!” button.',
+    tech: ['Web App', 'Self-initiated', 'Vue'],
+    links: [{ label: '↗', href: 'https://emechos.netlify.app/' }],
+
+    /* See the `role` note on the CoreProc entry above. Self-initiated like
+       Halden, and credited the same way. No `outcome` for the same reason. */
+    role: 'Personal project — design + build',
+  },
+  {
+    /* First entry past the [3] cut, so this is the top of the "More work"
        tier — on the homepage it lives behind "Explore more", while
        /selected-work still renders it at the same weight as everything above.
        It kept its `outcome`: the tier is about homepage real estate, not about

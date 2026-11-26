@@ -17,6 +17,7 @@ Current slugs:
 | `coreproc-website` | CoreProc, Inc. Website |
 | `halden` | Halden Mobile Detailing |
 | `vibeteams` | VibeTeams |
+| `eme` | Eeny Meeny Eats |
 | `synerpark` | SynerPark |
 | `clowder` | Clowder |
 | `my-shopping-box` | My Shopping Box |
