@@ -23,13 +23,14 @@ export const SITE_NAME = 'Julia Almoite'
 
 /* The legal name, spelled out. Google matches a name query against the words
    actually on the page and in the structured data — "Julia Zyrene Almoite"
-   could not rank for a page that never said it. It appears in the title, the
-   description, the Person schema and the footer for that reason. */
+   could not rank for a page that never said it. It appears in the
+   description, the Person schema and the footer for that reason. The tab
+   title uses the short name, by choice. */
 export const FULL_NAME = 'Julia Zyrene Almoite'
 export const NAME_VARIANTS = ['Julia Almoite', 'Julia Zyrene Almoite', 'Julia Z. Almoite']
 
 export const JOB_TITLE = 'UI/UX Engineer'
-export const SITE_TITLE = 'Julia Zyrene Almoite — UI/UX Engineer & Frontend Developer'
+export const SITE_TITLE = 'Julia Almoite — UI/UX Engineer & Frontend Developer'
 export const SITE_DESCRIPTION =
   'Portfolio of Julia Zyrene Almoite (Julia Almoite) — UI/UX engineer and frontend developer. Need a design? Done. Need it built? Also me. Design systems, Vue, React, Nuxt, Tailwind.'
 

@@ -5,32 +5,32 @@
  *
  * `clarifier` is an optional sub-line under the role title, for when the title
  * alone under-describes the scope. "UI/UX Engineer" reads as one discipline;
- * the clarifier is where the entry says it is two. Only the lead role needs
- * one — used on every row it would stop being a signal.
+ * the clarifier is where the entry says it is two. No entry uses one right
+ * now; if one comes back, keep it to a single row, since a clarifier on every
+ * row stops being a signal.
  *
  * This list is final copy. Nothing here is a placeholder.
  */
 export const experience = [
   {
     role: 'Jr UI/UX Engineer',
-    clarifier: 'Design systems + production Vue — I design the interface and ship the code.',
     org: 'CoreProc, Inc. — Remote',
     description:
-      'I take products from Figma to production. Led design and frontend on VibeTeams (live at vibeteams.ai), a multi-agent AI platform, and on client products — Synerpark, a smart-parking platform, and Prestige Paper, an editorial e-commerce revamp. Also supporting UI/dev on the CoreProc corporate site. I own both the design system and the code that ships it.',
+      'I take products from Figma to production. Led design and frontend on VibeTeams (live at vibeteams.ai), a multi-agent AI platform, and on client products — Synerpark, a smart-parking platform, and Prestige Paper, an editorial e-commerce revamp. Also supporting UI/dev on the CoreProc corporate site.',
     period: '2024 — present',
     now: true,
   },
   {
-    role: 'Frontend Developer & UI/UX — Freelance',
+    role: 'UI/UX Developer — Freelance',
     org: 'Independent clients · US-based',
     description:
-      'Independent client work — UI/UX on Clowder, an iOS app, and a personal portfolio build for a client in Makati. Design and frontend, end to end.',
+      'UI/UX and design QA on Clowder, an iOS app for a US-based client: Figma prototypes, design tokens, and QA of builds against design specs. Plus a personal portfolio build for a client in Makati. Design and frontend, end to end.',
     period: '2026 — present',
     now: true,
   },
   {
     role: 'Front-End Developer',
-    org: 'New Jersey, USA — Freelance',
+    org: 'Florida, USA — Freelance',
     description: 'Branding, landing pages, and UI design for independent clients.',
     period: '2023 — 2024',
   },

@@ -309,6 +309,12 @@ export const projects = [
     imageAlt: 'Prestige Paper Products storefront after the revamp — responsive product gallery.',
     tech: ['Revamp', 'E-commerce', 'Vue'],
     links: [],
+    /* `status`: the line a /selected-work card shows in place of
+       "View project ↗" when there is nothing to link to. Same mono cue type
+       as the link, but plain text: no arrow, no hover, not a target. Only
+       read when `links` is empty, so it can stay on an entry that later gains
+       a URL. Here the client contract ended and the live site is no longer
+       public. */
   },
   {
     slug: 'adrians-portfolio',

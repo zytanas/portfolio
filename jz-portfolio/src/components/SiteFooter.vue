@@ -6,7 +6,7 @@
       <!-- The full legal name, once, where a copyright line is the natural place
            for it. A name search can only match words the page actually contains,
            and the hero says "Julia Almoite". -->
-      <span>© {{ year }} Julia Zyrene Almoite</span>
+      <span>© {{ year }} Julia Almoite</span>
       <div class="flex flex-col items-center gap-[13px]">
         <p class="note">
           <span class="slashes">//</span> The colors are hiding in the

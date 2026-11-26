@@ -2,7 +2,7 @@
   <!-- One project as a card. Where the accordion row hides its detail behind a
        toggle, the card has nothing to hide — description and the full chip set
        are always on. A project with a link renders as an <a> so the whole card
-       is the target; the two unlinked ones render as a plain <article>. -->
+       is the target; an unlinked one renders as a plain <article>. -->
   <component
     :is="primaryLink ? 'a' : 'article'"
     class="pcard"
@@ -35,6 +35,16 @@
     <span v-if="primaryLink" class="pcard-link" aria-hidden="true">
       <span class="pcard-link-label">{{ linkLabel }}</span>
       <span class="pcard-link-arrow">↗</span>
+    </span>
+
+    <!-- No link: the project's `status` sits in the same slot, same type, so
+         the bottom line still lines up across the row. It reuses .pcard-link
+         for type and spacing only; every hover rule is scoped to .is-link,
+         which an unlinked card never has, and it carries no arrow. Not
+         aria-hidden like the cue above: here it is the only place this fact
+         is stated. -->
+    <span v-else-if="project.status" class="pcard-link pcard-status">
+      {{ project.status }}
     </span>
   </component>
 </template>

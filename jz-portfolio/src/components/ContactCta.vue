@@ -1,9 +1,6 @@
 <template>
   <div class="cta">
     <h2 data-reveal="up">Let's build something<br />worth clicking.</h2>
-    <p class="lede cta-lede" data-reveal="up">
-      No form to fill out — grab what you need and reach out.
-    </p>
 
     <!-- A formless contact "session": the same directory-index language the work
          section speaks, so the page ends in the voice it was written in. -->
@@ -17,9 +14,11 @@
            climbing top-to-bottom instead of restarting part-way down. -->
       <div class="term-body" data-reveal-stagger="12">
         <p class="tline"><span class="tp" aria-hidden="true">$</span>whoami</p>
-        <p class="tout">julia zyrene almoite — ui/ux engineer · remote · gmt+8</p>
+        <p class="tout">julia almoite — ui/ux engineer · remote · gmt+8</p>
 
-        <p class="tline"><span class="tp" aria-hidden="true">$</span>availability --now</p>
+        <p class="tline">
+          <span class="tp" aria-hidden="true">$</span>availability --now
+        </p>
         <p class="tout tavail">
           <span class="tdot" aria-hidden="true"></span>
           <span>open · frontend · ui/ux · design systems · freelance</span>
@@ -65,25 +64,25 @@
 <script setup>
 const rows = [
   {
-    label: 'mail',
-    value: 'juliazyrene23@gmail.com',
-    href: 'mailto:juliazyrene23@gmail.com',
-    action: 'Email',
+    label: "mail",
+    value: "juliazyrene23@gmail.com",
+    href: "mailto:juliazyrene23@gmail.com",
+    action: "Email",
     primary: true,
   },
   {
-    label: 'github',
-    value: 'github.com/zytanas',
-    href: 'https://github.com/zytanas',
-    action: 'Visit',
+    label: "github",
+    value: "github.com/zytanas",
+    href: "https://github.com/zytanas",
+    action: "Visit",
   },
   {
-    label: 'linkedin',
-    value: 'linkedin.com/in/almoitejuliazyrene',
-    href: 'https://www.linkedin.com/in/almoitejuliazyrene/',
-    action: 'Visit',
+    label: "linkedin",
+    value: "linkedin.com/in/almoitejuliazyrene",
+    href: "https://www.linkedin.com/in/almoitejuliazyrene/",
+    action: "Visit",
   },
-]
+];
 </script>
 
 <style scoped>
@@ -98,10 +97,7 @@ const rows = [
   line-height: 1.2;
   margin: 16px 0 18px;
 }
-.cta-lede {
-  max-width: 44ch;
-  margin: 0 auto 30px;
-}
+
 
 /* ---- terminal window ----
    Chrome only: 1px hairline, the section radius, surface fill. Everything
@@ -200,7 +196,7 @@ const rows = [
   background: var(--status);
 }
 .tdot::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: 50%;
@@ -225,7 +221,7 @@ const rows = [
 .trow {
   display: grid;
   grid-template-columns: 72px minmax(0, 1fr) auto;
-  grid-template-areas: 'label value action';
+  grid-template-areas: "label value action";
   align-items: center;
   gap: 12px;
   padding: 8px 0 5px 1.1em;
@@ -259,9 +255,7 @@ const rows = [
   font-size: 12px;
   line-height: 1.5;
   white-space: nowrap;
-  transition:
-    color 0.2s var(--ease),
-    border-color 0.2s var(--ease),
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease),
     opacity 0.2s var(--ease);
 }
 .trow-action:hover {
@@ -278,7 +272,7 @@ const rows = [
   color: var(--bg);
   font-weight: 500;
 }
-html[data-mode='light'] .trow-action.is-primary {
+html[data-mode="light"] .trow-action.is-primary {
   background: var(--text);
   border-color: var(--text);
 }
@@ -334,8 +328,8 @@ html[data-mode='light'] .trow-action.is-primary {
   .trow {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-      'label action'
-      'value value';
+      "label action"
+      "value value";
     gap: 2px 12px;
     padding: 10px 0 6px 1.1em;
     border-top: 1px solid var(--border-soft);
